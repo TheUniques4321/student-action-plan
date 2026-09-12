@@ -260,8 +260,14 @@
       </div>
       
       <div class="student-switcher">
-        <input type="text" id="switch-input" placeholder="Enter Student ID (e.g. PETER, SARAH)">
+        <input type="text" id="switch-input" placeholder="Enter Student ID (e.g. PETER-KIM, PAUL-KIM)">
         <button onclick="switchStudent()">Load Tasks</button>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center;">
+        <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Quick Select:</span>
+        <button onclick="selectStudent('PETER-KIM')" style="background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; border-radius:16px; padding:4px 12px; font-size:12px; font-weight:600; cursor:pointer;">Peter Kim</button>
+        <button onclick="selectStudent('PAUL-KIM')" style="background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; border-radius:16px; padding:4px 12px; font-size:12px; font-weight:600; cursor:pointer;">Paul Kim</button>
       </div>
     </div>
 
@@ -284,6 +290,11 @@
     function updateStudentDisplay(student) {
       document.getElementById('student-name').innerText = student;
       document.getElementById('switch-input').value = student;
+    }
+
+    function selectStudent(studentId) {
+      document.getElementById('switch-input').value = studentId;
+      switchStudent();
     }
 
     function switchStudent() {
