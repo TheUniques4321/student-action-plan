@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Action Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --tag-bg: #eff6ff;
+      --tag-text: #1d4ed8;
+      --warning-bg: #fef2f2;
+      --warning-text: #dc2626;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 32px 16px;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .header-card {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .student-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .student-switcher {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .student-switcher input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .student-switcher input:focus {
+      border-color: var(--primary);
+    }
+
+    .student-switcher button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .student-switcher button:hover {
+      background: var(--primary-hover);
+    }
+
+    .status-msg {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      color: var(--text-muted);
+      font-size: 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary);
+      margin-bottom: 14px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08);
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    .meta-item strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .card-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.025em;
+    }
+
+    .waiting-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: var(--warning-bg);
+      color: var(--warning-text);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .empty-state {
+      background: var(--card-bg);
+      padding: 36px 20px;
+      border-radius: var(--radius);
+      text-align: center;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .empty-state-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .error-card {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      padding: 16px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header-card">
+      <div class="header-top">
+        <h1>📋 Student Action Plan</h1>
+        <div class="student-badge" id="student-badge">
+          <span>👤</span>
+          <span id="student-name">Loading...</span>
+        </div>
+      </div>
+      
+      <div class="student-switcher">
+        <input type="text" id="switch-input" placeholder="Enter Student ID (e.g. PETER, SARAH)">
+        <button onclick="switchStudent()">Load Tasks</button>
+      </div>
+    </div>
+
+    <div id="status-container" class="status-msg">
+      <div class="spinner"></div>
+      <span>Syncing latest actions with Google Sheets...</span>
+    </div>
+
+    <!-- Tasks list -->
+    <div id="todo-container"></div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRDqgOWTpGLO8MRGgvB6d5CIa89ZIEttgDLfucXWA6j-hewSFDFyAyJo9b6_X-KB_1-g/exec";
+    
+    // Get student from query param, localStorage, or fallback to 'PETER'
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentStudent = urlParams.get('student') || localStorage.getItem('last_student_id') || "PETER";
+
+    function updateStudentDisplay(student) {
+      document.getElementById('student-name').innerText = student;
+      document.getElementById('switch-input').value = student;
+    }
+
+    function switchStudent() {
+      const input = document.getElementById('switch-input').value.trim();
+      if (!input) return;
+      currentStudent = input;
+      localStorage.setItem('last_student_id', currentStudent);
+      
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.set('student', currentStudent);
+      window.history.pushState({}, '', newUrl);
+      
+      loadDashboard();
+    }
+
+    document.getElementById('switch-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') switchStudent();
+    });
+
+    async function loadDashboard() {
+      const statusEl = document.getElementById('status-container');
+      const container = document.getElementById('todo-container');
+      
+      updateStudentDisplay(currentStudent);
+      statusEl.style.display = 'flex';
+      statusEl.className = 'status-msg';
+      statusEl.innerHTML = `<div class="spinner"></div><span>Syncing latest actions for <strong>${currentStudent}</strong>...</span>`;
+      container.innerHTML = '';
+
+      try {
+        const response = await fetch(`${SCRIPT_URL}?student=${encodeURIComponent(currentStudent)}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        statusEl.style.display = 'none';
+
+        if (!data.todos || data.todos.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-icon">🎉</div>
+              <h3 style="color: var(--text-main);">All caught up!</h3>
+              <p style="margin-top: 6px; font-size: 14px;">No pending action items found for <strong>${currentStudent}</strong>.</p>
+            </div>
+          `;
+          return;
+        }
+
+        data.todos.forEach(task => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="title">${task.title || "Untitled Action Item"}</div>
+            <div class="meta-grid">
+              <div class="meta-item"><strong>Project:</strong> ${task.projectName || "General"}</div>
+              <div class="meta-item"><strong>Due Date:</strong> ${task.dueDate || "Not Set"}</div>
+            </div>
+            <div class="card-footer">
+              <span class="status-badge">${task.itemStatus || "Active"}</span>
+              ${task.waitingOn ? `<span class="waiting-badge">⏳ Waiting on: ${task.waitingOn}</span>` : ""}
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      } catch (error) {
+        statusEl.style.display = 'block';
+        statusEl.className = 'error-card';
+        statusEl.innerHTML = `
+          <strong>⚠️ Unable to load action plan</strong>
+          <p style="margin-top: 4px; font-size: 13px;">Please make sure the Google Apps Script Web App is deployed with <em>"Who has access: Anyone"</em>.</p>
+        `;
+        console.error("Fetch error:", error);
+      }
+    }
+
+    // Run on startup
+    loadDashboard();
+  </script>
+
+</body>
+</html>
