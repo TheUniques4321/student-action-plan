@@ -314,7 +314,7 @@
       container.innerHTML = '';
 
       try {
-        const response = await fetch(`${SCRIPT_URL}?student=${encodeURIComponent(currentStudent)}`);
+        const response = await fetch(`${SCRIPT_URL}?student=${encodeURIComponent(currentStudent)}&_t=${Date.now()}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -322,12 +322,28 @@
         const data = await response.json();
         statusEl.style.display = 'none';
 
+        if (data.availableStudents && data.availableStudents.length > 0) {
+          const matched = data.availableStudents.find(s => 
+            s.studentId.toLowerCase() === currentStudent.toLowerCase() || 
+            s.displayName.toLowerCase().includes(currentStudent.toLowerCase())
+          );
+          if (matched) {
+            document.getElementById('student-name').innerText = `${matched.displayName} (${matched.studentId})`;
+          }
+        }
+
         if (!data.todos || data.todos.length === 0) {
+          let extraHelp = '';
+          if (data.availableStudents && data.availableStudents.length > 0) {
+            extraHelp = `<div style="margin-top:12px; font-size:13px; color:#64748b;">Available Students in Sheet: ` + 
+              data.availableStudents.map(s => `<a href="?student=${encodeURIComponent(s.studentId)}" style="color:#2563eb; text-decoration:none; font-weight:600; margin-left:4px;">${s.displayName} (${s.studentId})</a>`).join(', ') + `</div>`;
+          }
           container.innerHTML = `
             <div class="empty-state">
               <div class="empty-state-icon">🎉</div>
               <h3 style="color: var(--text-main);">All caught up!</h3>
               <p style="margin-top: 6px; font-size: 14px;">No pending action items found for <strong>${currentStudent}</strong>.</p>
+              ${extraHelp}
             </div>
           `;
           return;
