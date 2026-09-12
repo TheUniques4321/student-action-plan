@@ -3,1623 +3,940 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Student action brief — current priorities, blockers, and upcoming tasks">
-  <title>Action Brief — Student Action Plan</title>
+  <meta name="description" content="Student Action Plan — Operational Coaching Brief">
+  <title>Student Action Plan</title>
 
+  <!-- Google Fonts: Newsreader 500/600 & Source Sans 3 400/500/600 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Source+Sans+3:wght@400;500;600&display=swap"
     rel="stylesheet"
   >
 
   <style>
-    /* =============================================================
-       1. TOKENS
-       ============================================================= */
+    /* =========================================================
+       FINAL DESIGN TOKENS — DO NOT SUBSTITUTE VALUES
+       ========================================================= */
     :root {
-      color-scheme: dark;
+      /* Fonts */
+      --font-display: "Newsreader", Georgia, serif;
+      --font-ui: "Source Sans 3", system-ui, sans-serif;
 
-      /* Surfaces — 3 elevations */
-      --surface-0: #0f1117;
-      --surface-1: #171b24;
-      --surface-2: #1e2330;
-      --surface-3: #262c3a;
+      /* Warm graphite palette */
+      --canvas:       #141310;
+      --surface:      #1b1916;
+      --surface-2:    #211f1b;
+      --surface-3:    #28251f;
 
-      /* Borders */
-      --border-subtle:  rgba(255 255 255 / 0.06);
-      --border-default: rgba(255 255 255 / 0.10);
-      --border-strong:  rgba(255 255 255 / 0.16);
+      --text:         #eee9df;
+      --text-soft:    #c4bdb1;
+      --text-muted:   #8c8579;
+      --text-faint:   #686259;
 
-      /* Text */
-      --text-primary:   #e8e6e3;
-      --text-secondary: #9ca3af;
-      --text-muted:     #7f8694;
+      --border:       rgba(238, 233, 223, 0.105);
+      --border-soft:  rgba(238, 233, 223, 0.060);
+      --border-focus: rgba(195, 145, 97, 0.65);
 
-      /* Accents — restrained palette */
-      --accent-urgent:  #d97706;
-      --accent-sage:    #7aab95;
-      --accent-info:    #7b9fc2;
-      --accent-complete:#5f8a6a;
-      --accent-action:  #c2956a;
-      --accent-danger:  #d4645c;
+      /* One principal accent */
+      --accent:       #c39161;
+      --accent-hover: #d0a071;
+
+      /* Semantic colors — intentionally muted */
+      --danger:       #c9786f;
+      --warning:      #c69a5b;
+      --info:         #8198a5;
+      --success:      #829b7a;
 
       /* Typography */
-      --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-      --text-xs:  0.75rem;
-      --text-sm:  0.875rem;
-      --text-base:1rem;
-      --text-lg:  1.125rem;
-      --text-xl:  1.25rem;
-      --text-2xl: clamp(1.375rem, 2.5vw, 1.75rem);
-      --lh:       1.5;
-      --lh-tight: 1.25;
-      --measure:  65ch;
+      --fs-11: 0.6875rem;
+      --fs-12: 0.75rem;
+      --fs-13: 0.8125rem;
+      --fs-14: 0.875rem;
+      --fs-16: 1rem;
+      --fs-17: 1.0625rem;
+      --fs-20: 1.25rem;
+      --fs-project: clamp(1.625rem, 1.48rem + 0.65vw, 2rem);
 
-      /* Spacing — 4 / 8 scale */
-      --sp-1:  0.25rem;
-      --sp-2:  0.5rem;
-      --sp-3:  0.75rem;
-      --sp-4:  1rem;
-      --sp-5:  1.25rem;
-      --sp-6:  1.5rem;
-      --sp-8:  2rem;
-      --sp-10: 2.5rem;
-      --sp-12: 3rem;
-      --sp-16: 4rem;
+      /* Spacing */
+      --s1: 0.25rem;   /* 4 */
+      --s2: 0.5rem;    /* 8 */
+      --s3: 0.75rem;   /* 12 */
+      --s4: 1rem;      /* 16 */
+      --s5: 1.5rem;    /* 24 */
+      --s6: 2rem;      /* 32 */
+      --s7: 3rem;      /* 48 */
+      --s8: 4rem;      /* 64 */
 
-      /* Radius */
-      --radius-sm:   0.375rem;
-      --radius-md:   0.5rem;
-      --radius-lg:   0.75rem;
-      --radius-pill: 999px;
+      /* Shape */
+      --radius-input: 6px;
+      --radius-card: 7px;
 
-      /* Shadows — dark-adapted */
-      --shadow-sm:      0 1px 3px rgba(0 0 0 / 0.35);
-      --shadow-md:      0 4px 16px rgba(0 0 0 / 0.3);
-      --shadow-pressed: 0 1px 1px rgba(0 0 0 / 0.4);
-
-      /* Motion */
-      --dur-fast:   120ms;
-      --dur-normal: 180ms;
+      /* Layout */
+      --content-width: 48rem;
+      --reading-width: 66ch;
     }
 
+    /* =========================================================
+       RESET & BASE TEXTURE
+       ========================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    /* =============================================================
-       2. RESET
-       ============================================================= */
-    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      color-scheme: dark;
+      background-color: var(--canvas);
+    }
 
     body {
-      min-height: 100vh;
-      margin: 0;
-      font-family: var(--font-sans);
-      font-size: var(--text-base);
-      line-height: var(--lh);
-      color: var(--text-primary);
-      background: var(--surface-0);
+      font-family: var(--font-ui);
+      font-size: var(--fs-16);
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text);
+      min-block-size: 100vh;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      background:
+        radial-gradient(
+          circle at 15% -10%,
+          rgba(180, 138, 94, 0.055),
+          transparent 34rem
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(255, 255, 255, 0.018),
+          transparent 26rem
+        ),
+        var(--canvas);
     }
 
-    button, input { font: inherit; color: inherit; }
-    button { cursor: pointer; border: 0; background: none; padding: 0; }
-    button:disabled { cursor: not-allowed; opacity: 0.5; }
-    h1, h2, h3, p { margin: 0; }
-    ul, ol { margin: 0; padding: 0; list-style: none; }
-    [hidden] { display: none !important; }
-
-
-    /* =============================================================
-       3. BASE
-       ============================================================= */
-    :focus-visible {
-      outline: 2px solid var(--accent-info);
-      outline-offset: 3px;
+    /* Exact noise overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.024;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
     }
 
-    h1 { font-size: var(--text-2xl); font-weight: 700; line-height: var(--lh-tight); letter-spacing: -0.02em; }
-    h2 { font-size: var(--text-sm);  font-weight: 600; line-height: var(--lh-tight); }
-    h3 { font-size: var(--text-base);font-weight: 600; line-height: 1.4; }
-
-
-    /* =============================================================
-       4. LAYOUT
-       ============================================================= */
-    .page-shell {
-      width: min(calc(100% - var(--sp-8)), 52rem);
-      margin-inline: auto;
-      padding-block: clamp(var(--sp-6), 4vw, var(--sp-12));
-      display: grid;
-      gap: var(--sp-6);
+    /* =========================================================
+       EXACT TYPOGRAPHY UTILITIES
+       ========================================================= */
+    .app-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-20);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
     }
 
-    .sections-area > * + * {
-      margin-top: var(--sp-8);
-      padding-top: var(--sp-8);
-      border-top: 1px solid var(--border-subtle);
+    .project-title {
+      max-inline-size: 24ch;
+      font-family: var(--font-display);
+      font-size: var(--fs-project);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.018em;
+      text-wrap: balance;
     }
 
-    .priority-grid {
-      display: grid;
-      gap: var(--sp-8);
+    .task-title {
+      max-inline-size: var(--reading-width);
+      font-family: var(--font-ui);
+      font-size: var(--fs-17);
+      font-weight: 600;
+      line-height: 1.38;
+      letter-spacing: -0.006em;
     }
 
-
-    /* =============================================================
-       5. COMPONENTS — Briefing Header
-       ============================================================= */
-    .briefing-header {
-      background: var(--surface-1);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-lg);
+    .task-description {
+      max-inline-size: var(--reading-width);
+      font-size: var(--fs-14);
+      line-height: 1.5;
+      color: var(--text-soft);
     }
 
-    .briefing-header__top {
-      padding: var(--sp-5) var(--sp-6);
-    }
-
-    .briefing-id {
-      display: grid;
-      gap: var(--sp-1);
-    }
-
-    .briefing-meta {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-2);
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-    }
-
-    .briefing-meta__sep {
+    .meta {
+      font-size: var(--fs-13);
+      line-height: 1.35;
       color: var(--text-muted);
     }
 
-    /* — Student Nav — */
-    .student-nav {
-      display: grid;
-      gap: var(--sp-4);
-      padding: var(--sp-4) var(--sp-6) var(--sp-5);
-      border-top: 1px solid var(--border-subtle);
-      background: var(--surface-0);
-      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    }
-
-    .student-form {
-      display: grid;
-      gap: var(--sp-2);
-    }
-
-    .field-label {
-      font-size: var(--text-xs);
-      font-weight: 700;
+    .eyebrow {
+      font-size: var(--fs-11);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: 0.085em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
       color: var(--text-muted);
     }
 
-    .student-form__row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: var(--sp-3);
+    /* =========================================================
+       EXACT PAGE COMPOSITION
+       ========================================================= */
+    .page {
+      inline-size: min(calc(100% - 2rem), var(--content-width));
+      margin-inline: auto;
+      padding-block: var(--s5) var(--s8);
     }
 
-    .quick-chips {
+    @media (min-width: 48rem) {
+      .page {
+        padding-block-start: var(--s7);
+      }
+    }
+
+    /* Header */
+    .page-header {
+      display: grid;
+      gap: var(--s3);
+      margin-block-end: var(--s7);
+    }
+
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--s2) var(--s4);
+    }
+
+    .header-nav {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: var(--sp-2);
+      gap: var(--s2);
     }
 
-    .quick-chips__label {
-      font-size: var(--text-xs);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-      margin-inline-end: var(--sp-1);
+    .student-btn {
+      padding: 0.35rem 0.65rem;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-input);
+      font-family: var(--font-ui);
+      font-size: var(--fs-13);
+      font-weight: 500;
+      color: var(--text-soft);
+      background: var(--surface);
+      cursor: pointer;
+      transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
     }
 
-
-    /* =============================================================
-       5b. COMPONENTS — Input / Button / Chip
-       ============================================================= */
-    .input {
-      width: 100%;
-      min-height: 2.75rem;
-      padding-inline: var(--sp-4);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-sm);
-      color: var(--text-primary);
-      background: var(--surface-1);
-      transition:
-        border-color var(--dur-fast),
-        box-shadow   var(--dur-fast);
+    .student-btn:hover {
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--surface-2);
     }
 
-    .input::placeholder { color: var(--text-muted); }
-    .input:hover { border-color: var(--border-strong); }
-    .input:focus {
-      border-color: var(--accent-info);
-      box-shadow: 0 0 0 3px rgba(123 159 194 / 0.15);
-      outline: none;
+    .student-btn.active {
+      color: var(--text);
+      border-color: var(--accent);
+      background: var(--surface-3);
+      font-weight: 600;
     }
 
-    /* Buttons */
-    .btn {
+    .change-student-link {
+      margin-inline-start: var(--s2);
+      font-size: var(--fs-13);
+      color: var(--text-faint);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .change-student-link:hover {
+      color: var(--text-soft);
+    }
+
+    /* Custom student inline prompt */
+    .custom-student-form {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: var(--sp-2);
-      min-height: 2.75rem;
-      padding-inline: var(--sp-5);
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: var(--text-sm);
-      transition:
-        background   var(--dur-fast),
-        border-color var(--dur-fast),
-        transform    var(--dur-fast),
-        box-shadow   var(--dur-fast);
+      gap: var(--s2);
+      margin-inline-start: var(--s2);
     }
 
-    .btn:not(:disabled):active {
-      transform: translateY(1px);
-      box-shadow: var(--shadow-pressed);
+    .custom-student-form input {
+      font-family: var(--font-ui);
+      font-size: var(--fs-13);
+      padding: 0.25rem 0.5rem;
+      background: var(--canvas);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-input);
+      color: var(--text);
+      inline-size: 8rem;
     }
 
-    .btn--primary {
-      color: var(--surface-0);
-      background: var(--accent-action);
-      border: 1px solid transparent;
-    }
-    .btn--primary:hover:not(:disabled) { background: #cfa37a; }
-
-    .btn--outline {
-      color: var(--text-secondary);
-      background: var(--surface-2);
-      border: 1px solid var(--border-default);
-    }
-    .btn--outline:hover:not(:disabled) {
-      background: var(--surface-3);
-      border-color: var(--border-strong);
-    }
-
-    /* Chips */
-    .chip {
-      min-height: 2.25rem;
-      padding-inline: var(--sp-3);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-pill);
-      color: var(--text-secondary);
-      background: var(--surface-2);
-      font-size: var(--text-xs);
+    .custom-student-form button {
+      font-family: var(--font-ui);
+      font-size: var(--fs-12);
       font-weight: 600;
-      transition:
-        background   var(--dur-fast),
-        border-color var(--dur-fast),
-        color        var(--dur-fast);
+      padding: 0.25rem 0.5rem;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-input);
+      color: var(--text);
+      cursor: pointer;
     }
 
-    .chip:hover { background: var(--surface-3); color: var(--text-primary); }
-
-    .chip[aria-current="true"] {
-      color: var(--text-primary);
-      background: rgba(123 159 194 / 0.15);
-      border-color: var(--accent-info);
+    /* =========================================================
+       EXACT PROJECT CONSTRUCTION
+       ========================================================= */
+    .project {
+      padding-block-start: var(--s7);
+      border-block-start: 1px solid var(--border-soft);
     }
 
+    .project:first-child {
+      padding-block-start: 0;
+      border-block-start: 0;
+    }
 
-    /* =============================================================
-       5c. COMPONENTS — Feedback / Error
-       ============================================================= */
-    .feedback {
+    .project + .project {
+      margin-block-start: var(--s8);
+    }
+
+    .project-header {
+      display: grid;
+      gap: var(--s2);
+      margin-block-end: var(--s5);
+    }
+
+    .project-summary {
       display: flex;
-      align-items: center;
-      gap: var(--sp-3);
-      min-height: 3rem;
-      padding: var(--sp-3) var(--sp-5);
-      border: 1px solid rgba(123 159 194 / 0.2);
-      border-radius: var(--radius-md);
-      color: var(--accent-info);
-      background: rgba(123 159 194 / 0.06);
-      font-size: var(--text-sm);
-    }
-
-    .spinner {
-      flex: 0 0 auto;
-      width: 1rem;
-      height: 1rem;
-      border: 2px solid rgba(123 159 194 / 0.25);
-      border-top-color: currentColor;
-      border-radius: 50%;
-      animation: spin 700ms linear infinite;
-    }
-
-    .error-panel {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--sp-4);
-      padding: var(--sp-4) var(--sp-5);
-      color: var(--accent-danger);
-      background: rgba(212 100 92 / 0.08);
-      border: 1px solid rgba(212 100 92 / 0.2);
-      border-radius: var(--radius-md);
-    }
-
-    .error-panel__content { display: grid; gap: var(--sp-1); }
-    .error-panel__title   { font-weight: 700; }
-    .error-panel__message { font-size: var(--text-sm); opacity: 0.85; }
-
-
-    /* =============================================================
-       5d. COMPONENTS — Section
-       ============================================================= */
-    .section { display: grid; gap: var(--sp-4); }
-
-    .section__heading {
-      display: flex;
-      align-items: baseline;
-      gap: var(--sp-2);
-      font-size: var(--text-xs);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      flex-wrap: wrap;
+      gap: var(--s2) var(--s4);
+      font-size: var(--fs-13);
       color: var(--text-muted);
     }
 
-    .section__count {
-      font-weight: 500;
-      opacity: 0.7;
+    @media (min-width: 48rem) {
+      .project-header {
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+      }
+      .project-summary {
+        justify-content: flex-end;
+      }
     }
 
-    .section__empty {
-      color: var(--text-muted);
-      font-size: var(--text-sm);
-      font-style: italic;
-      padding: var(--sp-2) 0;
-    }
-
-
-    /* =============================================================
-       5e. COMPONENTS — Task Card
-       ============================================================= */
+    /* =========================================================
+       EXACT TASK CARD
+       ========================================================= */
     .task-list {
       display: grid;
-      gap: var(--sp-3);
+      gap: var(--s3);
     }
 
     .task-card {
+      position: relative;
       display: grid;
-      gap: var(--sp-3);
-      padding: var(--sp-4) var(--sp-5);
-      background: var(--surface-1);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
+      gap: var(--s3);
+      padding: var(--s4);
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255,255,255,.016),
+          rgba(255,255,255,0)
+        ),
+        var(--surface);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-card);
       transition:
-        transform    var(--dur-normal),
-        border-color var(--dur-normal),
-        box-shadow   var(--dur-normal);
+        background-color 150ms ease,
+        border-color 150ms ease;
     }
 
-    .task-card:hover {
-      transform: translateY(-1px);
-      border-color: var(--border-default);
-      box-shadow: var(--shadow-sm);
+    .task-card:hover,
+    .task-card:focus-within {
+      background-color: var(--surface-2);
+      border-color: var(--border);
     }
 
-    /* — Urgent focal point (ONE card only) — */
-    .task-card--urgent {
-      background: var(--surface-2);
-      border-left: 3px solid var(--accent-urgent);
-      padding: var(--sp-5) var(--sp-6);
+    @media (min-width: 48rem) {
+      .task-card {
+        padding: var(--s5);
+      }
     }
 
-    .task-card--urgent:hover {
-      box-shadow: var(--shadow-md);
+    .task-main {
+      display: grid;
+      gap: var(--s2);
     }
 
-    .task-card--urgent .task-card__title {
-      font-size: var(--text-lg);
-    }
-
-    /* — Completed cards — */
-    .task-card--completed {
-      opacity: 0.6;
-    }
-
-    .task-card--completed:hover {
-      transform: none;
-      box-shadow: none;
-    }
-
-    /* Card internals */
-    .task-card__status {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-2);
-      font-size: var(--text-xs);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .task-card__header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: var(--sp-3);
-    }
-
-    .task-card__title {
-      max-width: var(--measure);
-      letter-spacing: -0.01em;
-    }
-
-    .task-card__meta {
+    .task-footer {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--sp-1) var(--sp-4);
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s2) var(--s4);
+      padding-block-start: var(--s1);
     }
 
-    .meta-sep {
-      color: var(--text-muted);
-      user-select: none;
-    }
-
-    .task-card__blocker {
+    .task-meta {
       display: flex;
-      align-items: baseline;
-      gap: var(--sp-2);
-      padding: var(--sp-2) var(--sp-3);
-      background: rgba(123 159 194 / 0.06);
-      border-radius: var(--radius-sm);
-      font-size: var(--text-sm);
-      color: var(--accent-info);
-    }
-
-    .blocker-icon {
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
-
-    /* Priority badge (shown inline with status) */
-    .priority-badge {
-      display: inline-flex;
+      flex-wrap: wrap;
       align-items: center;
-      min-height: 1.375rem;
-      padding-inline: var(--sp-2);
-      border-radius: var(--radius-sm);
-      font-size: 0.6875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      background: rgba(217 119 6 / 0.12);
-      color: var(--accent-urgent);
-      border: 1px solid rgba(217 119 6 / 0.2);
-    }
-
-    /* Overdue badge */
-    .overdue-badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 1.375rem;
-      padding-inline: var(--sp-2);
-      border-radius: var(--radius-sm);
-      font-size: 0.6875rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      background: rgba(212 100 92 / 0.12);
-      color: var(--accent-danger);
-      border: 1px solid rgba(212 100 92 / 0.2);
-    }
-
-    /* Status colors */
-    .status--action   { color: var(--accent-action); }
-    .status--ontrack   { color: var(--accent-sage); }
-    .status--waiting   { color: var(--accent-info); }
-    .status--complete  { color: var(--accent-complete); }
-
-
-    /* =============================================================
-       5f. COMPONENTS — State Card / Support Card
-       ============================================================= */
-    .state-card {
-      display: grid;
-      justify-items: center;
-      gap: var(--sp-3);
-      padding: clamp(var(--sp-8), 6vw, var(--sp-16)) var(--sp-6);
-      text-align: center;
-      background: var(--surface-1);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-    }
-
-    .state-card__icon {
-      display: grid;
-      width: 3rem;
-      height: 3rem;
-      place-items: center;
-      border-radius: var(--radius-pill);
-      background: var(--surface-2);
-      font-size: 1.25rem;
-    }
-
-    .state-card__title { font-size: var(--text-lg); }
-
-    .state-card__message {
-      max-width: 30rem;
-      color: var(--text-secondary);
-      font-size: var(--text-sm);
-    }
-
-    .support-card {
-      padding: var(--sp-4) var(--sp-5);
-      background: var(--surface-1);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-    }
-
-    .support-card__text {
+      gap: var(--s2) var(--s4);
+      font-size: var(--fs-13);
       color: var(--text-muted);
-      font-size: var(--text-sm);
+    }
+
+    .task-edit {
+      padding: 0;
+      border: 0;
+      font: inherit;
+      font-size: var(--fs-13);
+      font-weight: 500;
+      color: var(--text-faint);
+      background: transparent;
+      cursor: pointer;
+      transition: color 120ms ease;
+    }
+
+    .task-edit:hover,
+    .task-edit:focus-visible {
+      color: var(--text);
+    }
+
+    /* Exact status treatment */
+    .task-status {
+      color: var(--text-muted);
+    }
+
+    .task-status[data-status="waiting"] {
+      color: var(--info);
+    }
+
+    .task-status[data-status="done"],
+    .task-status[data-status="complete"] {
+      color: var(--success);
+    }
+
+    /* Exceptional attention states */
+    .attention {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: var(--fs-12);
+      font-weight: 600;
+      color: var(--danger);
+    }
+
+    .attention::before {
+      content: "";
+      inline-size: 5px;
+      block-size: 5px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Blocker callout inline */
+    .blocker-note {
+      color: var(--info);
+      font-size: var(--fs-13);
       font-style: italic;
     }
 
-
-    /* =============================================================
-       5g. COMPONENTS — Skeletons
-       ============================================================= */
-    .skeleton-area {
+    /* =========================================================
+       EXACT EDITING CONTROLS
+       ========================================================= */
+    .task-edit-form {
       display: grid;
-      gap: var(--sp-3);
+      gap: var(--s3);
     }
 
-    .skeleton-card {
+    .edit-field,
+    .edit-select {
+      inline-size: 100%;
+      min-block-size: 42px;
+      padding: 0.65rem 0.75rem;
+      font-family: var(--font-ui);
+      font-size: var(--fs-16);
+      line-height: 1.4;
+      color: var(--text);
+      background: var(--canvas);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-input);
+      outline: none;
+    }
+
+    .edit-field:focus,
+    .edit-select:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(195, 145, 97, 0.11);
+    }
+
+    .edit-grid-row {
       display: grid;
-      gap: var(--sp-4);
-      padding: var(--sp-5);
-      background: var(--surface-1);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s3);
     }
 
-    .skeleton {
-      overflow: hidden;
-      position: relative;
-      height: 0.75rem;
-      border-radius: var(--radius-pill);
-      background: var(--surface-3);
+    .edit-field-group {
+      display: grid;
+      gap: var(--s1);
     }
 
-    .skeleton::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      transform: translateX(-100%);
-      background: linear-gradient(90deg, transparent, rgba(255 255 255 / 0.04), transparent);
-      animation: shimmer 1.6s infinite;
+    .edit-field-label {
+      font-size: var(--fs-12);
+      font-weight: 500;
+      color: var(--text-muted);
     }
 
-    .skeleton--title  { width: 60%; height: 0.9rem; }
-    .skeleton--medium { width: 45%; }
-    .skeleton--small  { width: 25%; }
+    .edit-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--s2);
+      padding-block-start: var(--s1);
+    }
 
+    .save-button {
+      min-block-size: 40px;
+      padding-inline: var(--s4);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-input);
+      font-family: var(--font-ui);
+      font-size: var(--fs-14);
+      font-weight: 600;
+      color: #17130f;
+      background: var(--accent);
+      cursor: pointer;
+      transition: background-color 120ms ease;
+    }
 
-    /* =============================================================
-       6. UTILITIES
-       ============================================================= */
-    .visually-hidden {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
+    .save-button:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .cancel-button {
+      min-block-size: 40px;
+      padding-inline: var(--s3);
       border: 0;
+      font-family: var(--font-ui);
+      font-size: var(--fs-14);
+      color: var(--text-muted);
+      background: transparent;
+      cursor: pointer;
     }
 
-
-    /* =============================================================
-       7. RESPONSIVE
-       ============================================================= */
-    @media (min-width: 40rem) {
-      .priority-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+    .cancel-button:hover {
+      color: var(--text);
     }
 
-    @media (max-width: 39.99rem) {
-      .page-shell {
-        width: min(calc(100% - var(--sp-4)), 52rem);
-        padding-block: var(--sp-4) var(--sp-8);
-      }
-
-      .briefing-header__top { padding: var(--sp-4); }
-      .student-nav { padding: var(--sp-3) var(--sp-4) var(--sp-4); }
-      .student-form__row { grid-template-columns: 1fr; }
-      .btn--primary { width: 100%; }
-
-      .task-card__meta { display: grid; gap: var(--sp-1); }
-
-      .error-panel {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .priority-grid > * + * {
-        padding-top: var(--sp-6);
-        border-top: 1px solid var(--border-subtle);
-      }
-    }
-
-
-    /* =============================================================
-       8. MOTION
-       ============================================================= */
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes shimmer {
-      to { transform: translateX(100%); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-      }
+    /* Status & Loading feedback */
+    .status-feedback {
+      font-size: var(--fs-13);
+      color: var(--text-muted);
+      padding-block: var(--s4);
+      font-style: italic;
     }
   </style>
 </head>
 
 <body>
-  <div class="page-shell">
+  <div class="page">
 
-    <!-- =========================================================
-         BRIEFING HEADER
-         ========================================================= -->
-    <header class="briefing-header">
-      <div class="briefing-header__top">
-        <div class="briefing-id">
-          <h1>Action Brief</h1>
-          <p class="briefing-meta">
-            <span id="student-name">Loading…</span>
-            <span class="briefing-meta__sep" aria-hidden="true">·</span>
-            <time id="last-updated">—</time>
-          </p>
-        </div>
+    <!-- TOP HEADER -->
+    <header class="page-header">
+      <div class="header-top">
+        <h1 class="app-title">Student Action Plan</h1>
+        <div class="meta" id="header-student-meta">Loading…</div>
       </div>
 
-      <nav class="student-nav" aria-label="Student selection">
-        <form id="student-form" class="student-form" novalidate>
-          <label class="field-label" for="student-input">Student</label>
-          <div class="student-form__row">
-            <input
-              class="input"
-              id="student-input"
-              name="student"
-              type="text"
-              autocomplete="off"
-              placeholder="Enter student ID"
-              aria-describedby="student-help"
-            >
-            <button
-              id="load-button"
-              class="btn btn--primary"
-              type="submit"
-            >Load</button>
-          </div>
-          <span id="student-help" class="visually-hidden">
-            Enter a student ID and press Load.
-          </span>
+      <nav class="header-nav" aria-label="Student selection">
+        <button type="button" class="student-btn active" id="btn-peter" onclick="selectStudent('PETER-KIM')">Peter Kim</button>
+        <button type="button" class="student-btn" id="btn-paul" onclick="selectStudent('PAUL-KIM')">Paul Kim</button>
+        <button type="button" class="change-student-link" onclick="toggleCustomStudent()">Change student</button>
+        <form id="custom-student-form" class="custom-student-form" style="display: none;" onsubmit="handleCustomStudentSubmit(event)">
+          <input type="text" id="custom-student-input" placeholder="Student ID…">
+          <button type="submit">Load</button>
         </form>
-
-        <div class="quick-chips">
-          <span class="quick-chips__label">Quick select</span>
-          <div id="quick-select-list" class="quick-chips" role="group"></div>
-        </div>
       </nav>
     </header>
 
-
-    <!-- =========================================================
-         LIVE STATUS / ERROR
-         ========================================================= -->
-    <div
-      id="feedback"
-      class="feedback"
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-      hidden
-    >
-      <span class="spinner" aria-hidden="true"></span>
-      <span id="feedback-text">Loading…</span>
-    </div>
-
-    <div id="error-panel" class="error-panel" role="alert" hidden>
-      <div class="error-panel__content">
-        <div class="error-panel__title">Unable to load action plan</div>
-        <div id="error-message" class="error-panel__message">
-          Something went wrong.
-        </div>
-      </div>
-      <button id="retry-button" class="btn btn--outline" type="button">
-        Try again
-      </button>
-    </div>
-
-
-    <!-- =========================================================
-         MAIN DASHBOARD
-         ========================================================= -->
-    <main id="dashboard-main">
-
-      <!-- Loading skeletons (visible before JS loads data) -->
-      <div id="skeleton-area" class="skeleton-area">
-        <div class="skeleton-card" aria-hidden="true">
-          <div class="skeleton skeleton--title"></div>
-          <div class="skeleton skeleton--medium"></div>
-          <div class="skeleton skeleton--small"></div>
-        </div>
-        <div class="skeleton-card" aria-hidden="true">
-          <div class="skeleton skeleton--title"></div>
-          <div class="skeleton skeleton--medium"></div>
-          <div class="skeleton skeleton--small"></div>
-        </div>
-        <div class="skeleton-card" aria-hidden="true">
-          <div class="skeleton skeleton--title"></div>
-          <div class="skeleton skeleton--medium"></div>
-        </div>
-      </div>
-
-      <!-- Populated after data loads -->
-      <div id="sections-area" class="sections-area" hidden>
-
-        <!-- Priority grid: Needed Now + Blockers side-by-side on desktop -->
-        <div class="priority-grid">
-
-          <section class="section" id="needed-now-section">
-            <h2 class="section__heading" id="needed-now-heading">
-              Needed now
-              <span class="section__count" id="needed-now-count"></span>
-            </h2>
-            <div id="needed-now-content" class="section__content"></div>
-          </section>
-
-          <section class="section" id="blockers-section">
-            <h2 class="section__heading" id="blockers-heading">
-              Questions &amp; blockers
-              <span class="section__count" id="blockers-count"></span>
-            </h2>
-            <div id="blockers-content" class="section__content"></div>
-          </section>
-
-        </div>
-
-        <section class="section" id="coming-up-section">
-          <h2 class="section__heading" id="coming-up-heading">
-            Coming up
-            <span class="section__count" id="coming-up-count"></span>
-          </h2>
-          <div id="coming-up-content" class="section__content"></div>
-        </section>
-
-        <section class="section" id="support-section">
-          <h2 class="section__heading" id="support-heading">Support</h2>
-          <div class="support-card">
-            <p class="support-card__text">
-              Contact and support information will appear here.
-            </p>
-          </div>
-        </section>
-
-        <section class="section" id="completed-section">
-          <h2 class="section__heading" id="completed-heading">
-            Completed
-            <span class="section__count" id="completed-count"></span>
-          </h2>
-          <div id="completed-content" class="section__content"></div>
-        </section>
-
-      </div>
+    <!-- MAIN PROJECTS CONTAINER -->
+    <main id="projects-container">
+      <div class="status-feedback">Loading projects and tasks…</div>
     </main>
 
   </div>
 
-
-  <!-- =============================================================
-       JAVASCRIPT
-       ============================================================= -->
+  <!-- JAVASCRIPT ENGINE -->
   <script>
     "use strict";
 
-    /* =========================================================
-       CONFIG
-       ========================================================= */
     const CONFIG = {
-      scriptUrl:
-        "https://script.google.com/macros/s/AKfycbzivDKDfsgEKyza4GHL8D-NmkgcdKKn0zuT1kxeR6ZDxDGOz8X069Kpg9lnPfgpNrfmIw/exec",
-      defaultStudent: "PETER-KIM",
-      fallbackStudents: [
-        { studentId: "PETER-KIM", displayName: "Peter Kim" },
-        { studentId: "PAUL-KIM",  displayName: "Paul Kim" }
-      ],
-      requestTimeoutMs: 15000
+      scriptUrl: "https://script.google.com/macros/s/AKfycbzivDKDfsgEKyza4GHL8D-NmkgcdKKn0zuT1kxeR6ZDxDGOz8X069Kpg9lnPfgpNrfmIw/exec",
+      defaultStudent: "PETER-KIM"
     };
 
-
-    /* =========================================================
-       DOM REFERENCES
-       ========================================================= */
-    const el = {
-      form:            document.querySelector("#student-form"),
-      input:           document.querySelector("#student-input"),
-      loadButton:      document.querySelector("#load-button"),
-      studentName:     document.querySelector("#student-name"),
-      lastUpdated:     document.querySelector("#last-updated"),
-      quickSelectList: document.querySelector("#quick-select-list"),
-
-      feedback:        document.querySelector("#feedback"),
-      feedbackText:    document.querySelector("#feedback-text"),
-      errorPanel:      document.querySelector("#error-panel"),
-      errorMessage:    document.querySelector("#error-message"),
-      retryButton:     document.querySelector("#retry-button"),
-
-      skeletonArea:    document.querySelector("#skeleton-area"),
-      sectionsArea:    document.querySelector("#sections-area"),
-
-      neededNowContent:  document.querySelector("#needed-now-content"),
-      neededNowCount:    document.querySelector("#needed-now-count"),
-      blockersContent:   document.querySelector("#blockers-content"),
-      blockersCount:     document.querySelector("#blockers-count"),
-      comingUpContent:   document.querySelector("#coming-up-content"),
-      comingUpCount:     document.querySelector("#coming-up-count"),
-      completedContent:  document.querySelector("#completed-content"),
-      completedCount:    document.querySelector("#completed-count"),
-
-      dashboardMain:     document.querySelector("#dashboard-main")
-    };
-
-
-    /* =========================================================
-       STATE
-       ========================================================= */
     const state = {
       currentStudent: getInitialStudent(),
-      availableStudents: [...CONFIG.fallbackStudents],
-      todos: [],
-      controller: null,
-      hasLoadedOnce: false
+      projects: [],
+      editingTaskId: null
     };
 
-
-    /* =========================================================
-       INIT
-       ========================================================= */
-    init();
-
-    function init() {
-      bindEvents();
-      updateStudentIdentity(state.currentStudent);
-      renderQuickSelect(state.availableStudents);
-      loadDashboard({ preserveContent: false });
-    }
-
-
-    /* =========================================================
-       EVENTS
-       ========================================================= */
-    function bindEvents() {
-      el.form.addEventListener("submit", handleStudentSubmit);
-      el.quickSelectList.addEventListener("click", handleQuickSelect);
-      el.retryButton.addEventListener("click", () => {
-        loadDashboard({ preserveContent: state.hasLoadedOnce });
-      });
-      window.addEventListener("popstate", handleHistoryChange);
-    }
-
-    function handleStudentSubmit(event) {
-      event.preventDefault();
-      const studentId = normalizeStudentId(el.input.value);
-      if (!studentId) { el.input.focus(); return; }
-      selectStudent(studentId, { updateHistory: true });
-    }
-
-    function handleQuickSelect(event) {
-      const button = event.target.closest("[data-student-id]");
-      if (!button) return;
-      selectStudent(button.dataset.studentId, { updateHistory: true });
-    }
-
-    function handleHistoryChange() {
-      const params = new URLSearchParams(window.location.search);
-      const student = normalizeStudentId(params.get("student")) || CONFIG.defaultStudent;
-      state.currentStudent = student;
-      persistStudent(student);
-      updateStudentIdentity(student);
-      loadDashboard({ preserveContent: false });
-    }
-
-
-    /* =========================================================
-       STUDENT SELECTION
-       ========================================================= */
-    function selectStudent(studentId, { updateHistory = false } = {}) {
-      const normalized = normalizeStudentId(studentId);
-      if (!normalized) return;
-
-      const changed = normalized !== state.currentStudent;
-      state.currentStudent = normalized;
-      persistStudent(normalized);
-      if (updateHistory) updateUrl(normalized);
-      updateStudentIdentity(normalized);
-      loadDashboard({ preserveContent: !changed && state.hasLoadedOnce });
-    }
-
-    function normalizeStudentId(value) {
-      return String(value || "").trim().toUpperCase();
-    }
-
-    function updateStudentIdentity(studentId) {
-      el.input.value = studentId;
-      const student = findStudent(studentId);
-      el.studentName.textContent = student
-        ? `${student.displayName}`
-        : studentId;
-      updateQuickSelectCurrent();
-    }
-
-    function findStudent(studentId) {
-      const n = normalizeStudentId(studentId);
-      return state.availableStudents.find(
-        s => normalizeStudentId(s.studentId) === n
-      );
-    }
-
-
-    /* =========================================================
-       DATA LOADING
-       ========================================================= */
-    async function loadDashboard({ preserveContent = true } = {}) {
-      abortCurrentRequest();
-      const controller = new AbortController();
-      state.controller = controller;
-      const timeoutId = setTimeout(() => controller.abort(), CONFIG.requestTimeoutMs);
-
-      setLoadingState(true);
-      hideError();
-
-      if (!preserveContent) {
-        showSkeletons();
-      }
-
-      showFeedback(
-        state.hasLoadedOnce
-          ? `Refreshing tasks for ${getDisplayStudentName()}…`
-          : `Loading tasks for ${getDisplayStudentName()}…`
-      );
-
-      try {
-        const url = new URL(CONFIG.scriptUrl);
-        url.searchParams.set("student", state.currentStudent);
-        url.searchParams.set("_t", Date.now().toString());
-
-        const response = await fetch(url.toString(), {
-          method: "GET",
-          cache: "no-store",
-          signal: controller.signal
-        });
-
-        if (!response.ok) {
-          throw new Error(`Request failed with status ${response.status}.`);
-        }
-
-        const data = await response.json();
-        if (state.controller !== controller) return;
-
-        handleDashboardData(data);
-        state.hasLoadedOnce = true;
-
-      } catch (error) {
-        if (error.name === "AbortError") {
-          if (state.controller === controller) {
-            showError("The request took too long. Please try again.");
-          }
-          return;
-        }
-        console.error("Unable to load dashboard:", error);
-        showError("We couldn't load the latest tasks. Check the connection and try again.");
-
-      } finally {
-        clearTimeout(timeoutId);
-        if (state.controller === controller) {
-          state.controller = null;
-          hideFeedback();
-          setLoadingState(false);
-        }
-      }
-    }
-
-    function abortCurrentRequest() {
-      if (state.controller) {
-        state.controller.abort();
-        state.controller = null;
-      }
-    }
-
-
-    /* =========================================================
-       DATA HANDLING
-       ========================================================= */
-    function handleDashboardData(data) {
-      const todos = Array.isArray(data?.todos) ? data.todos : [];
-      const students = normalizeAvailableStudents(data?.availableStudents);
-
-      if (students.length > 0) {
-        state.availableStudents = students;
-        renderQuickSelect(state.availableStudents);
-      }
-
-      const matched = matchStudentFromResponse(state.currentStudent, state.availableStudents);
-      if (matched) {
-        state.currentStudent = matched.studentId;
-        persistStudent(matched.studentId);
-        updateStudentIdentity(matched.studentId);
-      }
-
-      /* Update last-updated timestamp */
-      if (data?.lastUpdated) {
-        el.lastUpdated.textContent = formatRelativeTime(data.lastUpdated);
-      } else {
-        el.lastUpdated.textContent = "Updated just now";
-      }
-
-      state.todos = todos;
-
-      if (todos.length === 0) {
-        if (!matched) {
-          renderStudentNotFound();
-        } else {
-          renderGlobalEmptyState();
-        }
-        return;
-      }
-
-      const categories = categorizeTasks(todos);
-      renderSections(categories);
-    }
-
-
-    /* =========================================================
-       TASK CATEGORIZATION
-       ========================================================= */
-    function categorizeTasks(todos) {
-      const now = new Date();
-      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-      const categories = {
-        neededNow: [],
-        blockers:  [],
-        comingUp:  [],
-        completed: []
-      };
-
-      todos.forEach(task => {
-        const status    = (task.itemStatus || "").toLowerCase().replace(/_/g, " ");
-        const hasBlock  = Boolean(task.waitingOn?.trim());
-        const dueDate   = parseDate(task.dueDate);
-        const isOverdue = dueDate && dueDate < todayStart;
-        const isDone    = Boolean(task.completedAt) ||
-                          status.includes("complete") ||
-                          status.includes("done");
-        const isHigh    = (task.priority || "").toLowerCase() === "high";
-
-        if (isDone) {
-          categories.completed.push(task);
-        } else if (hasBlock) {
-          categories.blockers.push(task);
-        } else if (isOverdue || isHigh) {
-          categories.neededNow.push(task);
-        } else if (status.includes("progress")) {
-          categories.comingUp.push(task);
-        } else {
-          /* "ready", default, etc. */
-          categories.comingUp.push(task);
-        }
-      });
-
-      /* Sort neededNow: overdue first (by date asc), then high-priority (by date asc) */
-      categories.neededNow.sort((a, b) => {
-        const da = parseDate(a.dueDate);
-        const db = parseDate(b.dueDate);
-        const aOver = da && da < todayStart ? 0 : 1;
-        const bOver = db && db < todayStart ? 0 : 1;
-        if (aOver !== bOver) return aOver - bOver;
-        if (!da && !db) return 0;
-        if (!da) return 1;
-        if (!db) return -1;
-        return da - db;
-      });
-
-      /* Sort blockers by date ascending */
-      categories.blockers.sort((a, b) => {
-        const da = parseDate(a.dueDate), db = parseDate(b.dueDate);
-        if (!da && !db) return 0;
-        if (!da) return 1;
-        if (!db) return -1;
-        return da - db;
-      });
-
-      /* Sort coming up by date ascending */
-      categories.comingUp.sort((a, b) => {
-        const da = parseDate(a.dueDate), db = parseDate(b.dueDate);
-        if (!da && !db) return 0;
-        if (!da) return 1;
-        if (!db) return -1;
-        return da - db;
-      });
-
-      return categories;
-    }
-
-
-    /* =========================================================
-       RENDERING — Sections
-       ========================================================= */
-    function renderSections(categories) {
-      hideSkeletons();
-
-      renderTaskList(
-        el.neededNowContent,
-        categories.neededNow,
-        { ordered: true, urgentFirst: true }
-      );
-      el.neededNowCount.textContent = categories.neededNow.length || "";
-
-      renderTaskList(
-        el.blockersContent,
-        categories.blockers,
-        { showBlocker: true }
-      );
-      el.blockersCount.textContent = categories.blockers.length || "";
-
-      renderTaskList(
-        el.comingUpContent,
-        categories.comingUp,
-        {}
-      );
-      el.comingUpCount.textContent = categories.comingUp.length || "";
-
-      renderTaskList(
-        el.completedContent,
-        categories.completed,
-        { completed: true }
-      );
-      el.completedCount.textContent = categories.completed.length || "";
-    }
-
-    function renderTaskList(container, tasks, options = {}) {
-      if (tasks.length === 0) {
-        const empty = document.createElement("p");
-        empty.className = "section__empty";
-        empty.textContent = options.completed
-          ? "No completed items yet."
-          : options.showBlocker
-            ? "No blockers or open questions."
-            : "Nothing here right now.";
-        container.replaceChildren(empty);
-        return;
-      }
-
-      const list = document.createElement(options.ordered ? "ol" : "ul");
-      list.className = "task-list";
-
-      tasks.forEach((task, index) => {
-        const li = document.createElement("li");
-        li.append(createTaskCard(task, index, options));
-        list.append(li);
-      });
-
-      container.replaceChildren(list);
-    }
-
-
-    /* =========================================================
-       RENDERING — Task Card
-       ========================================================= */
-    function createTaskCard(task, index, options = {}) {
-      const article  = document.createElement("article");
-      const titleId  = `task-${task.workItemId || index}`;
-      const isUrgent = options.urgentFirst && index === 0;
-      const isDone   = options.completed;
-
-      article.className = "task-card"
-        + (isUrgent ? " task-card--urgent" : "")
-        + (isDone   ? " task-card--completed" : "");
-      article.setAttribute("aria-labelledby", titleId);
-
-      /* Status line */
-      const statusInfo = mapStatus(task, isDone);
-      const statusRow  = document.createElement("div");
-      statusRow.className = `task-card__status ${statusInfo.className}`;
-
-      const statusIcon = document.createElement("span");
-      statusIcon.setAttribute("aria-hidden", "true");
-      statusIcon.textContent = statusInfo.icon;
-      statusRow.append(statusIcon);
-
-      const statusLabel = document.createElement("span");
-      statusLabel.textContent = statusInfo.label;
-      statusRow.append(statusLabel);
-
-      /* Priority badge */
-      const isHigh = (task.priority || "").toLowerCase() === "high" && !isDone;
-      if (isHigh) {
-        const badge = document.createElement("span");
-        badge.className = "priority-badge";
-        badge.textContent = "High";
-        statusRow.append(badge);
-      }
-
-      /* Overdue badge */
-      const dueDate   = parseDate(task.dueDate);
-      const todayStart = new Date();
-      todayStart.setHours(0, 0, 0, 0);
-      const isOverdue = dueDate && dueDate < todayStart && !isDone;
-      if (isOverdue) {
-        const badge = document.createElement("span");
-        badge.className = "overdue-badge";
-        badge.textContent = "Overdue";
-        statusRow.append(badge);
-      }
-
-      article.append(statusRow);
-
-      /* Title */
-      const title   = document.createElement("h3");
-      title.className = "task-card__title";
-      title.id        = titleId;
-      title.textContent = cleanText(task.title, "Untitled action item");
-      article.append(title);
-
-      /* Meta line: project · due date · owner (if external) */
-      const meta = document.createElement("div");
-      meta.className = "task-card__meta";
-
-      const projectName = cleanText(task.projectName);
-      if (projectName) {
-        const span = document.createElement("span");
-        span.textContent = projectName;
-        meta.append(span);
-      }
-
-      if (dueDate) {
-        const timeEl = document.createElement("time");
-        timeEl.dateTime = toIsoDate(dueDate);
-        timeEl.textContent = (isOverdue ? "Was due " : "Due ") + formatDate(dueDate, { short: true });
-        if (isOverdue) timeEl.style.color = "var(--accent-danger)";
-        if (projectName) {
-          const sep = document.createElement("span");
-          sep.className = "meta-sep";
-          sep.setAttribute("aria-hidden", "true");
-          sep.textContent = "·";
-          meta.append(sep);
-        }
-        meta.append(timeEl);
-      }
-
-      /* External owner */
-      const owner = resolveOwner(task);
-      if (owner) {
-        if (meta.children.length > 0) {
-          const sep = document.createElement("span");
-          sep.className = "meta-sep";
-          sep.setAttribute("aria-hidden", "true");
-          sep.textContent = "·";
-          meta.append(sep);
-        }
-        const ownerSpan = document.createElement("span");
-        ownerSpan.textContent = owner;
-        meta.append(ownerSpan);
-      }
-
-      if (meta.children.length > 0) {
-        article.append(meta);
-      }
-
-      /* Blocker line */
-      const waitingOn = cleanText(task.waitingOn);
-      if (waitingOn && !isDone) {
-        const blocker = document.createElement("div");
-        blocker.className = "task-card__blocker";
-
-        const bIcon = document.createElement("span");
-        bIcon.className = "blocker-icon";
-        bIcon.setAttribute("aria-hidden", "true");
-        bIcon.textContent = "⏳";
-
-        const bText = document.createElement("span");
-        bText.textContent = `Waiting on: ${waitingOn}`;
-
-        blocker.append(bIcon, bText);
-        article.append(blocker);
-      }
-
-      return article;
-    }
-
-
-    /* =========================================================
-       STATUS MAPPING
-       ========================================================= */
-    function mapStatus(task, isDone) {
-      if (isDone) {
-        return { icon: "✓", label: "Complete", className: "status--complete" };
-      }
-
-      const status   = (task.itemStatus || "").toLowerCase().replace(/_/g, " ");
-      const hasBlock  = Boolean(task.waitingOn?.trim());
-
-      if (hasBlock || status.includes("wait") || status.includes("blocked")) {
-        const who = cleanText(task.waitingOn);
-        return {
-          icon: "◇",
-          label: who ? `Waiting on ${who}` : "Waiting",
-          className: "status--waiting"
-        };
-      }
-
-      if (status.includes("progress")) {
-        return { icon: "→", label: "On track", className: "status--ontrack" };
-      }
-
-      /* "ready", "active", default */
-      return { icon: "●", label: "Action needed", className: "status--action" };
-    }
-
-
-    /* =========================================================
-       RENDERING — Quick Select
-       ========================================================= */
-    function renderQuickSelect(students) {
-      const fragment = document.createDocumentFragment();
-      students.forEach(student => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "chip";
-        button.dataset.studentId = student.studentId;
-        button.textContent = student.displayName;
-        fragment.append(button);
-      });
-      el.quickSelectList.replaceChildren(fragment);
-      updateQuickSelectCurrent();
-    }
-
-    function updateQuickSelectCurrent() {
-      const buttons = el.quickSelectList.querySelectorAll("[data-student-id]");
-      buttons.forEach(button => {
-        const isCurrent = normalizeStudentId(button.dataset.studentId) ===
-                          normalizeStudentId(state.currentStudent);
-        button.setAttribute("aria-current", String(isCurrent));
-      });
-    }
-
-
-    /* =========================================================
-       EMPTY / NOT-FOUND STATES
-       ========================================================= */
-    function renderGlobalEmptyState() {
-      hideSkeletons();
-      const card = createStateCard({
-        icon: "✓",
-        title: "All caught up",
-        message: `${getDisplayStudentName()} has no pending action items.`
-      });
-      el.sectionsArea.replaceChildren(card);
-      el.sectionsArea.hidden = false;
-    }
-
-    function renderStudentNotFound() {
-      hideSkeletons();
-      const card = createStateCard({
-        icon: "?",
-        title: "Student not found",
-        message: `We couldn't find "${state.currentStudent}" in the available student list. Check the ID or choose a student above.`
-      });
-      el.sectionsArea.replaceChildren(card);
-      el.sectionsArea.hidden = false;
-    }
-
-    function createStateCard({ icon, title, message }) {
-      const card = document.createElement("div");
-      card.className = "state-card";
-
-      const iconNode = document.createElement("div");
-      iconNode.className = "state-card__icon";
-      iconNode.setAttribute("aria-hidden", "true");
-      iconNode.textContent = icon;
-
-      const titleNode = document.createElement("h3");
-      titleNode.className = "state-card__title";
-      titleNode.textContent = title;
-
-      const msgNode = document.createElement("p");
-      msgNode.className = "state-card__message";
-      msgNode.textContent = message;
-
-      card.append(iconNode, titleNode, msgNode);
-      return card;
-    }
-
-
-    /* =========================================================
-       LOADING / ERROR UI
-       ========================================================= */
-    function showSkeletons() {
-      el.skeletonArea.hidden  = false;
-      el.sectionsArea.hidden  = true;
-    }
-
-    function hideSkeletons() {
-      el.skeletonArea.hidden  = true;
-      el.sectionsArea.hidden  = false;
-    }
-
-    function setLoadingState(isLoading) {
-      el.loadButton.disabled = isLoading;
-      el.input.setAttribute("aria-busy", String(isLoading));
-      el.loadButton.textContent = isLoading ? "Loading…" : "Load";
-    }
-
-    function showFeedback(message) {
-      el.feedbackText.textContent = message;
-      el.feedback.hidden = false;
-    }
-
-    function hideFeedback() { el.feedback.hidden = true; }
-
-    function showError(message) {
-      el.errorMessage.textContent = message;
-      el.errorPanel.hidden = false;
-    }
-
-    function hideError() { el.errorPanel.hidden = true; }
-
-
-    /* =========================================================
-       HELPER — Available Students
-       ========================================================= */
-    function normalizeAvailableStudents(students) {
-      if (!Array.isArray(students)) return [];
-      return students
-        .filter(s => s && s.studentId)
-        .map(s => ({
-          studentId:   normalizeStudentId(s.studentId),
-          displayName: String(s.displayName || s.studentId).trim()
-        }));
-    }
-
-    function matchStudentFromResponse(input, students) {
-      const nInput = normalizeStudentId(input);
-      const lInput = String(input || "").trim().toLowerCase();
-      return students.find(s => {
-        return normalizeStudentId(s.studentId) === nInput ||
-               s.displayName.toLowerCase() === lInput;
-      });
-    }
-
-
-    /* =========================================================
-       HELPER — Owner resolution
-       ========================================================= */
-    function resolveOwner(task) {
-      /* Show external owner only — student is implicit from the brief header */
-      const label = cleanText(task.ownerLabel);
-      if (label) return label;
-      const staff = cleanText(task.ownerStaffId);
-      if (staff) {
-        if (staff === "PTR-JOSH-RAGBIR") return "Josh Ragbir";
-        if (staff === "STF-HYEYOUNG") return "Hyeyoung Kim";
-        if (staff === "STF-KANGHO") return "Kangho Kim";
-        return staff;
-      }
-      return "";
-    }
-
-
-    /* =========================================================
-       HELPER — Dates
-       ========================================================= */
-    function parseDate(value) {
-      if (!value) return null;
-      if (value instanceof Date) return isNaN(value.getTime()) ? null : value;
-      const text = String(value).trim();
-      const isoMatch = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-      if (isoMatch) {
-        const [, y, m, d] = isoMatch;
-        const date = new Date(Number(y), Number(m) - 1, Number(d));
-        return isNaN(date.getTime()) ? null : date;
-      }
-      const date = new Date(text);
-      return isNaN(date.getTime()) ? null : date;
-    }
-
-    function formatDate(date, { short = false } = {}) {
-      return new Intl.DateTimeFormat(undefined, short
-        ? { month: "short", day: "numeric" }
-        : { year: "numeric", month: "short", day: "numeric" }
-      ).format(date);
-    }
-
-    function toIsoDate(date) {
-      const y = date.getFullYear();
-      const m = String(date.getMonth() + 1).padStart(2, "0");
-      const d = String(date.getDate()).padStart(2, "0");
-      return `${y}-${m}-${d}`;
-    }
-
-    function formatRelativeTime(isoString) {
-      const date = new Date(isoString);
-      if (isNaN(date.getTime())) return "Updated just now";
-      const diffMs  = Date.now() - date.getTime();
-      const diffMin = Math.floor(diffMs / 60000);
-      const diffHr  = Math.floor(diffMs / 3600000);
-      if (diffMin < 1)  return "Updated just now";
-      if (diffMin < 60) return `Updated ${diffMin} min ago`;
-      if (diffHr  < 24) return `Updated ${diffHr} hr ago`;
-      return `Updated ${formatDate(date)}`;
-    }
-
-
-    /* =========================================================
-       HELPER — URL / Storage
-       ========================================================= */
     function getInitialStudent() {
-      const params = new URLSearchParams(window.location.search);
-      const fromUrl = normalizeStudentId(params.get("student"));
-      if (fromUrl) return fromUrl;
-      try {
-        const stored = normalizeStudentId(localStorage.getItem("last_student_id"));
-        if (stored) return stored;
-      } catch { /* ok */ }
-      return CONFIG.defaultStudent;
+      const p = new URLSearchParams(window.location.search).get("student");
+      return (p ? p.trim().toUpperCase() : "") || localStorage.getItem("sap_student_id") || CONFIG.defaultStudent;
     }
 
-    function persistStudent(studentId) {
-      try { localStorage.setItem("last_student_id", studentId); }
-      catch { /* ok */ }
-    }
+    function selectStudent(studentId) {
+      if (!studentId) return;
+      state.currentStudent = studentId.trim().toUpperCase();
+      localStorage.setItem("sap_student_id", state.currentStudent);
 
-    function updateUrl(studentId) {
       const url = new URL(window.location.href);
-      url.searchParams.set("student", studentId);
+      url.searchParams.set("student", state.currentStudent);
       window.history.pushState({}, "", url);
+
+      updateHeaderNav();
+      fetchDashboard();
     }
 
+    function updateHeaderNav() {
+      document.getElementById("btn-peter")?.classList.toggle("active", state.currentStudent === "PETER-KIM");
+      document.getElementById("btn-paul")?.classList.toggle("active", state.currentStudent === "PAUL-KIM");
+    }
+
+    function toggleCustomStudent() {
+      const form = document.getElementById("custom-student-form");
+      if (form) {
+        form.style.display = form.style.display === "none" ? "inline-flex" : "none";
+        if (form.style.display !== "none") {
+          document.getElementById("custom-student-input")?.focus();
+        }
+      }
+    }
+
+    function handleCustomStudentSubmit(e) {
+      e.preventDefault();
+      const val = document.getElementById("custom-student-input").value.trim();
+      if (val) {
+        selectStudent(val);
+        toggleCustomStudent();
+      }
+    }
+
+    async function fetchDashboard() {
+      const container = document.getElementById("projects-container");
+      container.innerHTML = `<div class="status-feedback">Loading projects and tasks…</div>`;
+
+      try {
+        const url = `${CONFIG.scriptUrl}?student=${encodeURIComponent(state.currentStudent)}&_t=${Date.now()}`;
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const data = await res.json();
+        processData(data);
+        render();
+
+      } catch (err) {
+        console.error("Dashboard error:", err);
+        container.innerHTML = `<div class="status-feedback">Unable to load projects. Please refresh or check connection.</div>`;
+      }
+    }
+
+    function processData(data) {
+      // Group projects with tasks
+      const allTodos = Array.isArray(data.todos) ? data.todos : [];
+      let projectsList = [];
+
+      if (data.actionBrief && Array.isArray(data.actionBrief.projects)) {
+        projectsList = data.actionBrief.projects.map(p => {
+          const tasks = [
+            ...(p.roles?.student || []),
+            ...(p.roles?.parent || []),
+            ...(p.roles?.me || [])
+          ];
+          return {
+            projectId: p.projectId,
+            projectName: p.projectName,
+            categoryCode: p.categoryCode || "",
+            projectStatus: p.projectStatus || "active",
+            targetDate: p.targetDate || "",
+            notes: p.notes || "",
+            tasks: tasks
+          };
+        });
+      } else {
+        // Fallback reconstruction from flat todos
+        const map = new Map();
+        allTodos.forEach(t => {
+          const pId = t.projectId || "PRJ-DEFAULT";
+          if (!map.has(pId)) {
+            map.set(pId, {
+              projectId: pId,
+              projectName: t.projectName || "General Project",
+              categoryCode: "",
+              projectStatus: "active",
+              targetDate: "",
+              notes: "",
+              tasks: []
+            });
+          }
+          map.get(pId).tasks.push(t);
+        });
+        projectsList = Array.from(map.values());
+      }
+
+      // Filter out empty projects and sort
+      state.projects = projectsList.filter(p => p.tasks.length > 0);
+
+      // Update header meta
+      const totalTasks = state.projects.reduce((acc, p) => acc + p.tasks.length, 0);
+      const studentName = state.currentStudent === "PETER-KIM" ? "Peter Kim" : (state.currentStudent === "PAUL-KIM" ? "Paul Kim" : state.currentStudent);
+      document.getElementById("header-student-meta").textContent = `${studentName} · ${totalTasks} open task${totalTasks === 1 ? "" : "s"}`;
+    }
+
+    function render() {
+      const container = document.getElementById("projects-container");
+
+      if (state.projects.length === 0) {
+        container.innerHTML = `<div class="status-feedback">No active projects or tasks for this student.</div>`;
+        return;
+      }
+
+      container.innerHTML = state.projects.map(project => renderProject(project)).join("");
+    }
+
+    function renderProject(p) {
+      const category = formatCategory(p.categoryCode);
+      const totalTasks = p.tasks.length;
+      const waitingCount = p.tasks.filter(t => isWaiting(t)).length;
+      const targetStr = p.targetDate ? `Target ${formatTargetDate(p.targetDate)}` : "";
+
+      return `
+        <section class="project" id="project-${escapeHtml(p.projectId)}">
+          <header class="project-header">
+            <div>
+              ${category ? `<div class="eyebrow">${escapeHtml(category)}</div>` : ""}
+              <h2 class="project-title">${escapeHtml(p.projectName)}</h2>
+            </div>
+            <div class="project-summary">
+              ${targetStr ? `<span>${escapeHtml(targetStr)}</span>` : ""}
+              <span>${totalTasks} open task${totalTasks === 1 ? "" : "s"}</span>
+              ${waitingCount > 0 ? `<span>${waitingCount} waiting</span>` : ""}
+            </div>
+          </header>
+
+          <div class="task-list">
+            ${p.tasks.map(t => renderTaskCard(t, p.projectId)).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderTaskCard(task, projectId) {
+      if (state.editingTaskId === task.workItemId) {
+        return renderTaskEdit(task, projectId);
+      }
+
+      const isTaskOverdue = checkOverdue(task.dueDate);
+      const statusDisplay = formatStatusLabel(task.itemStatus);
+      const statusAttr = getStatusAttr(task.itemStatus);
+      const ownerDisplay = formatOwnerDisplay(task);
+      const dueDisplay = task.dueDate ? `Due ${formatShortDate(task.dueDate)}` : "";
+
+      return `
+        <article class="task-card" id="task-${escapeHtml(task.workItemId)}">
+          <div class="task-main">
+            <h3 class="task-title">${escapeHtml(task.title)}</h3>
+            ${task.notes ? `<p class="task-description">${escapeHtml(task.notes)}</p>` : ""}
+            ${task.waitingOn ? `<p class="blocker-note">Waiting on: ${escapeHtml(task.waitingOn)}</p>` : ""}
+          </div>
+
+          <footer class="task-footer">
+            <div class="task-meta">
+              ${dueDisplay ? `<span>${escapeHtml(dueDisplay)}</span>` : ""}
+              <span class="task-status" data-status="${escapeHtml(statusAttr)}">${escapeHtml(statusDisplay)}</span>
+              ${ownerDisplay ? `<span>${escapeHtml(ownerDisplay)}</span>` : ""}
+              ${isTaskOverdue ? `<span class="attention">Overdue</span>` : ""}
+            </div>
+            <button type="button" class="task-edit" onclick="startEdit('${escapeHtml(task.workItemId)}')">Edit</button>
+          </footer>
+        </article>
+      `;
+    }
+
+    function renderTaskEdit(task, projectId) {
+      return `
+        <article class="task-card" id="task-${escapeHtml(task.workItemId)}">
+          <form class="task-edit-form" onsubmit="handleSaveEdit(event, '${escapeHtml(task.workItemId)}', '${escapeHtml(projectId)}')">
+            <div class="edit-field-group">
+              <label class="edit-field-label">Task title</label>
+              <input type="text" class="edit-field" id="edit-title-${escapeHtml(task.workItemId)}" value="${escapeAttr(task.title)}" required>
+            </div>
+
+            <div class="edit-field-group">
+              <label class="edit-field-label">Description / Notes</label>
+              <textarea class="edit-field" id="edit-notes-${escapeHtml(task.workItemId)}" rows="2">${escapeHtml(task.notes || "")}</textarea>
+            </div>
+
+            <div class="edit-grid-row">
+              <div class="edit-field-group">
+                <label class="edit-field-label">Due date</label>
+                <input type="date" class="edit-field" id="edit-due-${escapeHtml(task.workItemId)}" value="${escapeAttr(task.dueDate || "")}">
+              </div>
+              <div class="edit-field-group">
+                <label class="edit-field-label">Status</label>
+                <select class="edit-select" id="edit-status-${escapeHtml(task.workItemId)}">
+                  <option value="ready" ${task.itemStatus === "ready" ? "selected" : ""}>Ready</option>
+                  <option value="in_progress" ${task.itemStatus === "in_progress" ? "selected" : ""}>In progress</option>
+                  <option value="waiting" ${task.itemStatus === "waiting" ? "selected" : ""}>Waiting</option>
+                  <option value="review" ${task.itemStatus === "review" ? "selected" : ""}>Review</option>
+                  <option value="complete" ${task.itemStatus === "complete" ? "selected" : ""}>Done</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="edit-actions">
+              <button type="button" class="cancel-button" onclick="cancelEdit()">Cancel</button>
+              <button type="submit" class="save-button">Save</button>
+            </div>
+          </form>
+        </article>
+      `;
+    }
+
+    function startEdit(workItemId) {
+      state.editingTaskId = workItemId;
+      render();
+    }
+
+    function cancelEdit() {
+      state.editingTaskId = null;
+      render();
+    }
+
+    function handleSaveEdit(e, workItemId, projectId) {
+      e.preventDefault();
+      const title = document.getElementById(`edit-title-${workItemId}`)?.value.trim();
+      const notes = document.getElementById(`edit-notes-${workItemId}`)?.value.trim();
+      const dueDate = document.getElementById(`edit-due-${workItemId}`)?.value.trim();
+      const itemStatus = document.getElementById(`edit-status-${workItemId}`)?.value;
+
+      // Update in state
+      for (const p of state.projects) {
+        const found = p.tasks.find(t => t.workItemId === workItemId);
+        if (found) {
+          found.title = title;
+          found.notes = notes;
+          found.dueDate = dueDate;
+          found.itemStatus = itemStatus;
+          break;
+        }
+      }
+
+      state.editingTaskId = null;
+      render();
+    }
 
     /* =========================================================
-       HELPER — Text
+       HELPERS & FORMATTERS
        ========================================================= */
-    function cleanText(value, fallback = "") {
-      if (value === null || value === undefined) return fallback;
-      const text = String(value).trim();
-      return text || fallback;
+    function formatCategory(code) {
+      if (!code) return "";
+      return String(code).replace(/_/g, " · ").toUpperCase();
     }
 
-    function getDisplayStudentName() {
-      const student = findStudent(state.currentStudent);
-      return student ? student.displayName : state.currentStudent;
+    function formatTargetDate(dateStr) {
+      if (!dateStr) return "";
+      const d = parseDate(dateStr);
+      if (!d) return dateStr;
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
     }
+
+    function formatShortDate(dateStr) {
+      if (!dateStr) return "";
+      const d = parseDate(dateStr);
+      if (!d) return dateStr;
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    }
+
+    function parseDate(val) {
+      if (!val) return null;
+      const match = String(val).match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (match) {
+        return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+      }
+      const d = new Date(val);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function checkOverdue(dueStr) {
+      if (!dueStr) return false;
+      const d = parseDate(dueStr);
+      if (!d) return false;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return d < today;
+    }
+
+    function isWaiting(task) {
+      const s = String(task.itemStatus || "").toLowerCase();
+      return s === "waiting" || Boolean(task.waitingOn);
+    }
+
+    function formatStatusLabel(s) {
+      const clean = String(s || "ready").toLowerCase();
+      if (clean === "in_progress") return "In progress";
+      if (clean === "waiting") return "Waiting";
+      if (clean === "review") return "Review";
+      if (clean === "complete" || clean === "done") return "Done";
+      if (clean === "planned") return "Planned";
+      return "Ready";
+    }
+
+    function getStatusAttr(s) {
+      const clean = String(s || "").toLowerCase();
+      if (clean === "waiting") return "waiting";
+      if (clean === "complete" || clean === "done") return "done";
+      return "default";
+    }
+
+    function formatOwnerDisplay(task) {
+      const staff = String(task.ownerStaffId || "").trim();
+      const label = String(task.ownerLabel || "").trim();
+      const student = String(task.ownerStudentId || "").trim();
+
+      if (label) return label;
+      if (staff === "PTR-JOSH-RAGBIR") return "Josh Ragbir";
+      if (staff === "STF-HYEYOUNG") return "Hyeyoung Kim";
+      if (staff === "STF-KANGHO") return "Kangho Kim";
+      if (staff) return staff;
+      if (student === "PETER-KIM") return "Peter Kim";
+      if (student === "PAUL-KIM") return "Paul Kim";
+      return student;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeAttr(str) {
+      return escapeHtml(str);
+    }
+
+    // INIT
+    updateHeaderNav();
+    fetchDashboard();
   </script>
-
 </body>
 </html>
