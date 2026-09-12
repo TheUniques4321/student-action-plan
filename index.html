@@ -1103,14 +1103,20 @@
     function getClaimedActor() {
       try {
         const raw = sessionStorage.getItem("sap_claimed_actor");
-        return raw ? JSON.parse(raw) : null;
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (parsed && (parsed.id === "STF-HYEYOUNG" || String(parsed.label || "").toLowerCase().includes("hyeyoung"))) {
+          sessionStorage.removeItem("sap_claimed_actor");
+          return null;
+        }
+        return parsed;
       } catch (e) {
         return null;
       }
     }
 
     function setClaimedActor(actor) {
-      if (actor) {
+      if (actor && actor.id !== "STF-HYEYOUNG" && !String(actor.label || "").toLowerCase().includes("hyeyoung")) {
         sessionStorage.setItem("sap_claimed_actor", JSON.stringify(actor));
       } else {
         sessionStorage.removeItem("sap_claimed_actor");
@@ -1142,13 +1148,14 @@
 
       choicesContainer.innerHTML = "";
 
-      const actors = state.availableActors.length > 0 ? state.availableActors : [
+      const rawActors = state.availableActors.length > 0 ? state.availableActors : [
         { type: "student", id: "STU-001", label: "Peter Kim" },
         { type: "student", id: "STU-002", label: "Paul Kim" },
-        { type: "staff", id: "STF-HYEYOUNG", label: "Hyeyoung Kim" },
         { type: "staff", id: "STF-KANGHO", label: "Kangho Kim" },
         { type: "staff", id: "PTR-JOSH-RAGBIR", label: "Josh Ragbir" }
       ];
+
+      const actors = rawActors.filter(a => a.id !== "STF-HYEYOUNG" && !String(a.label || "").toLowerCase().includes("hyeyoung"));
 
       actors.forEach(actor => {
         const btn = document.createElement("button");
@@ -2026,7 +2033,6 @@
           group: "Staff & Coaches",
           options: [
             { value: "staff:PTR-JOSH-RAGBIR", label: "Josh Ragbir" },
-            { value: "staff:STF-HYEYOUNG", label: "Hyeyoung Kim" },
             { value: "staff:STF-KANGHO", label: "Kangho Kim" }
           ]
         },
@@ -2367,7 +2373,6 @@
 
       const staff = String(task.ownerStaffId || "").trim();
       if (staff === "PTR-JOSH-RAGBIR") return "Josh Ragbir";
-      if (staff === "STF-HYEYOUNG") return "Hyeyoung Kim";
       if (staff === "STF-KANGHO") return "Kangho Kim";
       if (staff) return staff;
 
