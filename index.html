@@ -1138,7 +1138,13 @@
       }
     }
 
-    let onActorSelectedCallback = null;
+    function getActorRoleLabel(actor) {
+      const label = String(actor.label || "").trim().toLowerCase();
+      const id = String(actor.id || "").trim().toUpperCase();
+      if (id === "PTR-JOSH-RAGBIR" || label.includes("josh")) return "Counselor";
+      if (actor.type === "student" || label === "peter kim" || label === "paul kim" || id.startsWith("STU-")) return "Student";
+      return "Collaborator";
+    }
 
     function openActorModal(onSelected) {
       onActorSelectedCallback = onSelected || null;
@@ -1151,11 +1157,23 @@
       const rawActors = state.availableActors.length > 0 ? state.availableActors : [
         { type: "student", id: "STU-001", label: "Peter Kim" },
         { type: "student", id: "STU-002", label: "Paul Kim" },
-        { type: "staff", id: "STF-KANGHO", label: "Kangho Kim" },
-        { type: "staff", id: "PTR-JOSH-RAGBIR", label: "Josh Ragbir" }
+        { type: "staff", id: "PTR-JOSH-RAGBIR", label: "Josh Ragbir" },
+        { type: "staff", id: "STF-KANGHO", label: "Kangho Kim" }
       ];
 
-      const actors = rawActors.filter(a => a.id !== "STF-HYEYOUNG" && !String(a.label || "").toLowerCase().includes("hyeyoung"));
+      // Strict Deduplication & Hyeyoung Kim purge
+      const seen = new Set();
+      const actors = [];
+      rawActors.forEach(a => {
+        const lbl = String(a.label || "").trim();
+        const id = String(a.id || "").trim();
+        const key = lbl.toLowerCase();
+        if (!lbl || id === "STF-HYEYOUNG" || key === "hyeyoung kim") return;
+        if (!seen.has(key)) {
+          seen.add(key);
+          actors.push(a);
+        }
+      });
 
       actors.forEach(actor => {
         const btn = document.createElement("button");
@@ -1178,7 +1196,7 @@
 
         const roleSpan = document.createElement("span");
         roleSpan.className = "actor-choice-role";
-        roleSpan.textContent = actor.type === "student" ? "Student" : (actor.id === "PTR-JOSH-RAGBIR" ? "Counselor" : "Parent / Staff");
+        roleSpan.textContent = getActorRoleLabel(actor);
 
         btn.append(nameSpan, roleSpan);
         choicesContainer.appendChild(btn);
