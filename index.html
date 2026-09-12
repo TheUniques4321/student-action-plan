@@ -1186,10 +1186,27 @@
       onActorSelectedCallback = null;
     }
 
+    /* In-memory & session cache for instant (0ms) Stale-While-Revalidate navigation */
+    const clientCache = new Map();
+
+    function applyStudentData(data, studentId) {
+      if (!data || studentId !== state.currentStudent) return;
+      state.lastUpdated = data.lastUpdated ? new Date(data.lastUpdated) : new Date();
+      state.pendingRequests = Array.isArray(data.pendingRequests) ? data.pendingRequests : [];
+      state.recentResolutions = Array.isArray(data.recentResolutions) ? data.recentResolutions : [];
+      state.availableActors = Array.isArray(data.availableActors) ? data.availableActors : [];
+      state.availableOwners = Array.isArray(data.availableOwners) ? data.availableOwners : [];
+      state.availableStudents = Array.isArray(data.availableStudents) ? data.availableStudents : [];
+
+      parseProjects(data);
+      updateHeaderContext();
+      updateActorHeaderDisplay();
+      renderProjects();
+    }
+
     function selectStudent(studentId) {
       const normalized = studentId.trim().toUpperCase();
       state.currentStudent = normalized;
-      state.projects = [];
       state.editingTaskId = null;
       state.expandedProjects.clear();
       localStorage.setItem("sap_active_student", state.currentStudent);
@@ -1200,23 +1217,29 @@
 
       updateStudentButtons();
 
-      // Immediately provide responsive feedback
-      const globalContainer = document.getElementById("global-next-action-container");
-      if (globalContainer) {
-        globalContainer.innerHTML = "";
-        globalContainer.style.display = "none";
+      // If cached data exists, render IMMEDIATELY (0ms latency)
+      if (clientCache.has(normalized)) {
+        applyStudentData(clientCache.get(normalized), normalized);
+      } else {
+        // Clean slate only on cold cache
+        const globalContainer = document.getElementById("global-next-action-container");
+        if (globalContainer) {
+          globalContainer.innerHTML = "";
+          globalContainer.style.display = "none";
+        }
+
+        const headerContext = document.getElementById("header-context");
+        if (headerContext) {
+          headerContext.textContent = "Loading tasks…";
+        }
+
+        const container = document.getElementById("projects-container");
+        if (container) {
+          container.innerHTML = `<div class="loading-notice">Loading projects and tasks…</div>`;
+        }
       }
 
-      const headerContext = document.getElementById("header-context");
-      if (headerContext) {
-        headerContext.textContent = "Loading tasks…";
-      }
-
-      const container = document.getElementById("projects-container");
-      if (container) {
-        container.innerHTML = `<div class="loading-notice">Loading projects and tasks…</div>`;
-      }
-
+      // Background revalidate from live Google Sheets
       fetchPlan();
     }
 
@@ -1252,45 +1275,43 @@
     }
 
     /* =========================================================
-       DATA FETCHING & NORMALIZATION
+       DATA FETCHING, SWR & PREFETCHING
        ========================================================= */
     let fetchSeq = 0;
 
     async function fetchPlan() {
       const thisSeq = ++fetchSeq;
+      const targetStudent = state.currentStudent;
       const container = document.getElementById("projects-container");
       if (!container) return;
       
-      if (state.projects.length === 0) {
+      if (!clientCache.has(targetStudent) && state.projects.length === 0) {
         container.innerHTML = `<div class="loading-notice">Loading projects and tasks…</div>`;
       }
 
       try {
-        const url = `${CONFIG.scriptUrl}?student=${encodeURIComponent(state.currentStudent)}&_t=${Date.now()}`;
+        const url = `${CONFIG.scriptUrl}?student=${encodeURIComponent(targetStudent)}&_t=${Date.now()}`;
         const res = await fetch(url, { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
         
-        // Discard stale in-flight response from a previous student switch
-        if (thisSeq !== fetchSeq) return;
+        // Cache data for instant future switches
+        clientCache.set(targetStudent, data);
 
-        state.lastUpdated = data.lastUpdated ? new Date(data.lastUpdated) : new Date();
-        state.pendingRequests = Array.isArray(data.pendingRequests) ? data.pendingRequests : [];
-        state.recentResolutions = Array.isArray(data.recentResolutions) ? data.recentResolutions : [];
-        state.availableActors = Array.isArray(data.availableActors) ? data.availableActors : [];
-        state.availableOwners = Array.isArray(data.availableOwners) ? data.availableOwners : [];
-        state.availableStudents = Array.isArray(data.availableStudents) ? data.availableStudents : [];
+        // Discard stale response if user switched away during in-flight fetch
+        if (thisSeq !== fetchSeq || targetStudent !== state.currentStudent) return;
 
-        parseProjects(data);
-        updateHeaderContext();
-        updateActorHeaderDisplay();
-        renderProjects();
+        // Apply fresh data
+        applyStudentData(data, targetStudent);
+
+        // Silently prefetch other students in background so clicking them is instant
+        schedulePrefetches(data);
 
       } catch (err) {
         if (thisSeq !== fetchSeq) return;
         console.error("Fetch error:", err);
-        if (state.projects.length === 0) {
+        if (!clientCache.has(targetStudent) && state.projects.length === 0) {
           container.innerHTML = `
             <div class="loading-notice">
               Unable to load data. Please check connection.
@@ -1298,6 +1319,37 @@
             </div>
           `;
         }
+      }
+    }
+
+    function schedulePrefetches(data) {
+      const studentsToPrefetch = ["PETER-KIM", "PAUL-KIM"];
+      if (Array.isArray(data.availableStudents)) {
+        data.availableStudents.forEach(s => {
+          if (s.studentId && !studentsToPrefetch.includes(s.studentId.toUpperCase())) {
+            studentsToPrefetch.push(s.studentId.toUpperCase());
+          }
+        });
+      }
+
+      studentsToPrefetch.forEach((sId, index) => {
+        if (sId !== state.currentStudent && !clientCache.has(sId)) {
+          setTimeout(() => prefetchStudent(sId), (index + 1) * 600);
+        }
+      });
+    }
+
+    async function prefetchStudent(studentId) {
+      if (clientCache.has(studentId)) return;
+      try {
+        const url = `${CONFIG.scriptUrl}?student=${encodeURIComponent(studentId)}&_t=${Date.now()}`;
+        const res = await fetch(url, { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          clientCache.set(studentId, data);
+        }
+      } catch (e) {
+        // Silent background prefetch fail is benign
       }
     }
 
