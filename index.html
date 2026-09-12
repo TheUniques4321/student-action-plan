@@ -149,203 +149,201 @@
 
     .app-header__top {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 24px;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    @media (max-width: 639px) {
+    @media (min-width: 640px) {
       .app-header__top {
-        display: grid;
-        gap: 7px;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
       }
     }
 
-    .app-title {
-      margin: 0;
-
+    .app-header__title {
       font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 600;
-      line-height: 1.05;
-      letter-spacing: -0.018em;
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
 
       color: var(--text-primary);
     }
 
-    .header-context {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-
+    .app-header__context {
       font-size: 14px;
-      line-height: 1.3;
+      font-weight: 400;
+      line-height: 1.4;
 
       color: var(--text-muted);
     }
 
-    .student-switcher {
+    .app-header__meta-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .student-choice {
-      min-height: 40px;
-
-      padding: 0 13px;
-
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-control);
-
-      font-family: var(--font-ui);
-      font-size: 15px;
-      font-weight: 500;
-
-      color: var(--text-secondary);
-      background: transparent;
-      cursor: pointer;
-      transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
-    }
-
-    .student-choice:hover {
-      border-color: var(--border-strong);
-      color: var(--text-primary);
-    }
-
-    .student-choice[aria-current="true"] {
-      border-color: var(--accent);
-      color: var(--text-primary);
-      background: rgba(195, 145, 97, 0.09);
-    }
-
-    .change-student {
-      display: inline-flex;
-      align-items: center;
-
-      min-height: 40px;
-
-      margin-left: 2px;
-      padding: 0 8px;
-
-      border: 0;
-
-      font-family: var(--font-ui);
-      font-size: 15px;
-      font-weight: 400;
-
-      color: var(--text-interactive);
-      background: transparent;
-
-      text-decoration: underline;
-      text-decoration-color: rgba(170, 161, 149, 0.3);
-      text-underline-offset: 3px;
-      cursor: pointer;
-    }
-
-    .change-student:hover,
-    .change-student:focus-visible {
-      color: var(--text-primary);
-      text-decoration-color: currentColor;
-    }
-
-    .inline-custom-student {
-      display: inline-flex;
+    .app-header__controls {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 8px;
     }
 
-    .inline-custom-student input {
-      font-family: var(--font-ui);
-      font-size: 14px;
-      padding: 6px 10px;
-      background: var(--canvas);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-control);
-      color: var(--text-primary);
-      outline: none;
-      width: 140px;
+    .app-header__actor-tag {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .inline-custom-student input:focus {
-      border-color: var(--accent);
-    }
-
-    .inline-custom-student button {
+    .actor-tag-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
       font-family: var(--font-ui);
       font-size: 13px;
-      font-weight: 600;
-      padding: 6px 12px;
-      background: var(--surface-3);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-control);
-      color: var(--text-primary);
-      cursor: pointer;
+      padding: 0;
+    }
+    .actor-tag-btn:hover {
+      text-decoration: underline;
     }
 
     /* =========================================================
-       5. PROJECT STRUCTURE & TYPOGRAPHY
+       5. STUDENT SELECTOR CHIPS
        ========================================================= */
+    .choice-chip {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 7px 15px;
+
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.2;
+
+      color: var(--text-interactive);
+      background-color: var(--surface-1);
+
+      border: 1px solid var(--border-default);
+      border-radius: 9999px;
+
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+
+      transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
+    }
+
+    .choice-chip:hover {
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+      background-color: var(--surface-2);
+    }
+
+    .choice-chip[aria-current="true"] {
+      color: var(--text-primary);
+      border-color: var(--accent);
+      background-color: var(--surface-2);
+    }
+
+    .choice-chip--ghost {
+      color: var(--text-muted);
+      border-style: dashed;
+      background-color: transparent;
+    }
+
+    .choice-chip--ghost:hover {
+      color: var(--text-primary);
+      border-color: var(--accent);
+      background-color: var(--surface-1);
+    }
+
+    .custom-student-form {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 4px;
+    }
+
+    .custom-student-input {
+      background: var(--surface-2);
+      border: 1px solid var(--border-default);
+      border-radius: 9999px;
+      padding: 6px 12px;
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      outline: none;
+    }
+    .custom-student-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* =========================================================
+       6. PROJECT SECTIONS
+       ========================================================= */
+    .projects-container {
+      display: grid;
+      gap: 60px;
+    }
+
+    .project {
+      display: grid;
+      gap: 20px;
+    }
+
     .project-header {
-      margin-bottom: 28px;
+      display: grid;
+      gap: 6px;
     }
 
     .project-eyebrow {
-      margin-bottom: 7px;
-
-      font-family: var(--font-ui);
       font-size: 12px;
       font-weight: 600;
-      line-height: 1;
-
-      letter-spacing: 0.105em;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
 
-      color: var(--text-muted);
+      color: var(--accent);
     }
 
     .project-title {
-      max-width: 22ch;
-      margin: 0;
-
       font-family: var(--font-display);
-      font-size: clamp(34px, 3.1vw, 44px);
-      font-weight: 600;
-      line-height: 1.03;
-
-      letter-spacing: -0.018em;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
 
       color: var(--text-primary);
-
-      text-wrap: balance;
     }
 
     .project-summary {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 5px 12px;
+      gap: 8px;
 
-      margin-top: 12px;
-
-      font-family: var(--font-ui);
       font-size: 14px;
       font-weight: 400;
-      line-height: 1.3;
+      line-height: 1.4;
 
       color: var(--text-muted);
     }
 
-    .project + .project {
-      margin-top: 64px;
-      padding-top: 48px;
-
-      border-top: 1px solid var(--border-subtle);
-    }
-
     /* =========================================================
-       6. TASK LIST & CARDS
+       7. TASK LIST & TASK CARDS
        ========================================================= */
     .task-list {
       display: grid;
@@ -353,99 +351,71 @@
     }
 
     .task-card {
-      position: relative;
-
       display: grid;
+      gap: 12px;
 
       padding: 22px 24px;
 
-      border: 1px solid var(--border-subtle);
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-default);
       border-radius: var(--radius-card);
 
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.014),
-          rgba(255, 255, 255, 0)
-        ),
-        var(--surface-1);
-
-      box-shadow: none;
-
       transition:
-        background-color var(--transition-fast),
-        border-color var(--transition-fast);
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
     }
 
-    .task-card:hover,
-    .task-card:focus-within {
-      border-color: var(--border-default);
+    .task-card:hover {
+      border-color: var(--border-strong);
       background-color: var(--surface-2);
     }
 
     .task-header {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: start;
-
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
       gap: 16px;
     }
 
     .task-title {
-      max-width: 66ch;
-      margin: 0;
-
       font-family: var(--font-ui);
       font-size: 17px;
       font-weight: 600;
-      line-height: 1.34;
-
-      letter-spacing: -0.004em;
+      line-height: 1.35;
 
       color: var(--text-primary);
     }
 
     .task-edit {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      min-width: 44px;
-      min-height: 40px;
-
-      margin-top: -8px;
-      margin-right: -8px;
-
-      padding: 0 8px;
-
+      appearance: none;
       border: 0;
+      padding: 0;
 
       font-family: var(--font-ui);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       line-height: 1;
 
       color: var(--text-interactive);
       background: transparent;
+
       cursor: pointer;
+      text-decoration: none;
+
+      flex-shrink: 0;
+
       transition: color var(--transition-fast);
     }
 
-    .task-edit:hover,
-    .task-edit:focus-visible {
-      color: var(--text-primary);
+    .task-edit:hover {
+      color: var(--accent);
+      text-decoration: underline;
     }
 
     .task-description {
-      max-width: 58ch;
-
-      margin-top: 8px;
-      margin-bottom: 0;
-
-      font-family: var(--font-ui);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 400;
-      line-height: 1.52;
+      line-height: 1.5;
 
       color: var(--text-secondary);
     }
@@ -454,74 +424,94 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      gap: 14px;
 
-      gap: 6px 20px;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.4;
 
-      margin-top: 18px;
+      color: var(--text-muted);
     }
 
     .task-meta-item {
-      font-family: var(--font-ui);
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 1.3;
-
-      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
     }
 
     .task-attention {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
 
-      font-family: var(--font-ui);
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
 
       color: var(--danger);
     }
 
-    .task-attention::before {
-      content: "";
-
-      width: 6px;
-      height: 6px;
-
-      border-radius: 50%;
-
-      background: currentColor;
-    }
-
-    /* In-place task editing controls */
+    /* =========================================================
+       8. IN-CARD VERTICAL EDIT MODE
+       ========================================================= */
     .task-edit-form {
       display: grid;
-      gap: 12px;
+      gap: 14px;
+      width: 100%;
     }
 
-    .edit-field,
-    .edit-select {
-      inline-size: 100%;
-      min-block-size: 42px;
+    .edit-attribution {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
 
-      padding: 0.65rem 0.75rem;
-
+    .edit-attribution-switch {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
       font-family: var(--font-ui);
-      font-size: 16px;
-      line-height: 1.4;
+      font-size: 12px;
+      padding: 0;
+    }
+    .edit-attribution-switch:hover {
+      text-decoration: underline;
+    }
 
+    .edit-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .edit-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .edit-field {
+      width: 100%;
+      padding: 9px 12px;
+      font-family: var(--font-ui);
+      font-size: 14px;
       color: var(--text-primary);
-      background: var(--canvas);
-
+      background-color: var(--surface-2);
       border: 1px solid var(--border-default);
       border-radius: var(--radius-control);
-
       outline: none;
+      transition: border-color var(--transition-fast);
     }
 
-    .edit-field:focus,
-    .edit-select:focus {
-      border-color: var(--border-strong);
-      box-shadow: 0 0 0 3px rgba(195, 145, 97, 0.11);
+    .edit-field:focus {
+      border-color: var(--accent);
+    }
+
+    .edit-field--textarea {
+      resize: vertical;
+      min-height: 70px;
     }
 
     .edit-row {
@@ -530,173 +520,492 @@
       gap: 12px;
     }
 
-    .edit-group {
-      display: grid;
-      gap: 4px;
-    }
-
-    .edit-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    .edit-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 8px;
-      padding-top: 4px;
-    }
-
-    .save-button {
-      min-block-size: 40px;
-      padding-inline: 16px;
-
-      border: 1px solid var(--accent);
-      border-radius: var(--radius-control);
-
-      font-family: var(--font-ui);
-      font-size: 14px;
-      font-weight: 600;
-
-      color: #17130f;
-      background: var(--accent);
-      cursor: pointer;
-      transition: background-color var(--transition-fast);
-    }
-
-    .save-button:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-hover);
-    }
-
-    .cancel-button {
-      min-block-size: 40px;
-      padding-inline: 12px;
-
-      border: 0;
-      font-family: var(--font-ui);
-      font-size: 14px;
-      color: var(--text-muted);
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .cancel-button:hover {
-      color: var(--text-primary);
-    }
-
-    /* =========================================================
-       7. MOBILE RULES (< 640px)
-       ========================================================= */
-    @media (max-width: 639px) {
-      .task-card {
-        padding: 18px 16px;
-      }
-
-      .task-header {
-        gap: 10px;
-      }
-
-      .project-title {
-        font-size: 34px;
-      }
-
-      .project + .project {
-        margin-top: 56px;
-        padding-top: 40px;
-      }
-
-      .task-footer {
-        gap: 7px 16px;
-      }
-
+    @media (max-width: 480px) {
       .edit-row {
         grid-template-columns: 1fr;
       }
     }
 
-    .loading-notice {
+    .edit-select {
+      width: 100%;
+      padding: 9px 12px;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: var(--text-primary);
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-control);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .edit-select:focus {
+      border-color: var(--accent);
+    }
+
+    .edit-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .cancel-button {
+      padding: 8px 16px;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-interactive);
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      transition: color var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .cancel-button:hover {
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .save-button {
+      padding: 8px 18px;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      color: #141310;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      transition: background-color var(--transition-fast);
+    }
+
+    .save-button:hover:not(:disabled) {
+      background: var(--accent-hover);
+    }
+
+    .save-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* =========================================================
+       9. PENDING REVIEW & RESOLUTION NOTICES
+       ========================================================= */
+    .task-pending-review {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .task-pending-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .task-pending-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .task-pending-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .task-pending-dot--conflict {
+      background: var(--danger);
+    }
+
+    .badge-conflict {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: rgba(207, 119, 110, 0.15);
+      color: var(--danger);
+      border: 1px solid rgba(207, 119, 110, 0.3);
+      margin-left: 6px;
+    }
+
+    .task-pending-actions {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-link {
+      background: none;
+      border: none;
+      color: var(--text-interactive);
+      font-size: 12px;
+      font-family: var(--font-ui);
+      cursor: pointer;
+      padding: 0;
+    }
+    .btn-link:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .btn-link--danger {
+      color: var(--danger);
+    }
+    .btn-link--danger:hover {
+      color: #e08b83;
+    }
+
+    .task-pending-details {
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+
+    .task-resolution-notice {
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: rgba(130, 155, 122, 0.08);
+      border: 1px solid rgba(130, 155, 122, 0.2);
+      border-radius: var(--radius-control);
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .task-resolution-dismiss {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0 4px;
+      line-height: 1;
+    }
+    .task-resolution-dismiss:hover {
+      color: var(--text-primary);
+    }
+
+    /* =========================================================
+       10. ACTOR CLAIM MODAL
+       ========================================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 9, 8, 0.78);
+      backdrop-filter: blur(4px);
+      padding: 16px;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--surface-1);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-card);
+      padding: 26px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .modal-subtitle {
       font-size: 14px;
       color: var(--text-muted);
-      font-style: italic;
-      padding: 24px 0;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .actor-choices {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .actor-choice-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-control);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .actor-choice-btn:hover {
+      background: var(--surface-3);
+      border-color: var(--accent);
+    }
+
+    .actor-choice-role {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: capitalize;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Toast Notification */
+    .toast-notice {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 99999;
+      padding: 12px 18px;
+      background: var(--surface-2);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-card);
+      color: var(--text-primary);
+      font-size: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 200ms ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .loading-notice {
+      padding: 32px 0;
+      font-size: 15px;
+      color: var(--text-muted);
     }
   </style>
 </head>
 
 <body>
-  <div class="page-shell">
-
-    <!-- APPLICATION HEADER -->
+  <main class="page-shell">
+    <!-- Application Header -->
     <header class="app-header">
       <div class="app-header__top">
-        <h1 class="app-title">Student Action Plan</h1>
-        <div class="header-context" id="header-context">Loading…</div>
+        <h1 class="app-header__title">Student Action Plan</h1>
+        <div id="header-context" class="app-header__context">Loading tasks…</div>
       </div>
 
-      <nav class="student-switcher" aria-label="Student selector">
-        <button
-          type="button"
-          class="student-choice"
-          id="choice-peter"
-          aria-current="false"
-          onclick="selectStudent('PETER-KIM')"
-        >Peter Kim</button>
+      <div class="app-header__meta-row">
+        <!-- Student Selector Chips -->
+        <nav class="app-header__controls" aria-label="Student Selection">
+          <button
+            type="button"
+            id="choice-peter"
+            class="choice-chip"
+            onclick="selectStudent('PETER-KIM')"
+          >
+            Peter Kim
+          </button>
+          <button
+            type="button"
+            id="choice-paul"
+            class="choice-chip"
+            onclick="selectStudent('PAUL-KIM')"
+          >
+            Paul Kim
+          </button>
+          <button
+            type="button"
+            id="choice-custom"
+            class="choice-chip choice-chip--ghost"
+            onclick="toggleCustomStudentPrompt()"
+          >
+            + Select student
+          </button>
+          <div id="custom-student-container" style="display: none;" class="custom-student-form">
+            <input
+              type="text"
+              id="custom-student-input"
+              class="custom-student-input"
+              placeholder="Student ID or Name…"
+              onkeydown="if(event.key==='Enter') handleCustomStudentLoad()"
+            />
+            <button type="button" class="choice-chip" onclick="handleCustomStudentLoad()">Load</button>
+          </div>
+        </nav>
 
-        <button
-          type="button"
-          class="student-choice"
-          id="choice-paul"
-          aria-current="false"
-          onclick="selectStudent('PAUL-KIM')"
-        >Paul Kim</button>
-
-        <button
-          type="button"
-          class="change-student"
-          id="btn-change-student"
-          onclick="toggleCustomStudentPrompt()"
-        >Change student</button>
-
-        <div id="custom-student-container" class="inline-custom-student" style="display: none;">
-          <input type="text" id="custom-student-input" placeholder="Enter student ID">
-          <button type="button" onclick="handleCustomStudentLoad()">Load</button>
+        <!-- Claimed Actor Status -->
+        <div id="header-actor-container" class="app-header__actor-tag" style="display: none;">
+          <span>Claimed as: <strong id="header-actor-name" style="color: var(--text-primary);"></strong></span>
+          <button type="button" class="actor-tag-btn" onclick="openActorModal()">(Switch)</button>
         </div>
-      </nav>
+      </div>
     </header>
 
-    <!-- PROJECTS LIST -->
-    <main id="projects-container">
+    <!-- Projects and Task Lists -->
+    <div id="projects-container" class="projects-container">
       <div class="loading-notice">Loading projects and tasks…</div>
-    </main>
+    </div>
+  </main>
 
+  <!-- Actor Selection Modal -->
+  <div id="actor-modal" class="modal-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="actor-modal-title">
+    <div class="modal-card">
+      <h3 id="actor-modal-title" class="modal-title">Who is making this edit?</h3>
+      <p class="modal-subtitle">Select your name so your edit proposal is attributed accurately in the review queue.</p>
+      <div id="actor-choices" class="actor-choices">
+        <!-- Dynamic list of buttons from availableActors -->
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="cancel-button" onclick="closeActorModal()">Cancel</button>
+      </div>
+    </div>
   </div>
 
-  <!-- APPLICATION SCRIPT -->
   <script>
-    "use strict";
-
+    /* =========================================================
+       CONFIG & APPLICATION STATE
+       ========================================================= */
     const CONFIG = {
-      scriptUrl: "https://script.google.com/macros/s/AKfycbzivDKDfsgEKyza4GHL8D-NmkgcdKKn0zuT1kxeR6ZDxDGOz8X069Kpg9lnPfgpNrfmIw/exec",
-      defaultStudent: "PETER-KIM"
+      scriptUrl: "https://script.google.com/macros/s/AKfycbz5RTVvD8zWqEG8RRMQXdis2jfqKDraVB-Sj_jr1g-hXoXI7H5NsDWSGs9q_pgEi0_Srw/exec"
     };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialStudent = urlParams.get("student") || localStorage.getItem("sap_active_student") || "PETER-KIM";
 
     const state = {
-      currentStudent: getInitialStudent(),
+      currentStudent: initialStudent.trim().toUpperCase(),
       projects: [],
+      rawTodos: [],
+      pendingRequests: [],
+      recentResolutions: [],
+      availableActors: [],
+      availableOwners: [],
+      availableStudents: [],
+      lastUpdated: null,
       editingTaskId: null,
-      lastUpdated: null
+      pendingDetailsOpen: new Set(),
+      submittingTaskId: null
     };
 
-    function getInitialStudent() {
-      const param = new URLSearchParams(window.location.search).get("student");
-      return (param ? param.trim().toUpperCase() : "") || localStorage.getItem("sap_active_student") || CONFIG.defaultStudent;
+    /* =========================================================
+       ACTOR CLAIM MANAGEMENT (sessionStorage)
+       ========================================================= */
+    function getClaimedActor() {
+      try {
+        const raw = sessionStorage.getItem("sap_claimed_actor");
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function setClaimedActor(actor) {
+      if (actor) {
+        sessionStorage.setItem("sap_claimed_actor", JSON.stringify(actor));
+      } else {
+        sessionStorage.removeItem("sap_claimed_actor");
+      }
+      updateActorHeaderDisplay();
+    }
+
+    function updateActorHeaderDisplay() {
+      const actor = getClaimedActor();
+      const container = document.getElementById("header-actor-container");
+      const nameEl = document.getElementById("header-actor-name");
+      if (!container || !nameEl) return;
+
+      if (actor && actor.label) {
+        nameEl.textContent = actor.label;
+        container.style.display = "flex";
+      } else {
+        container.style.display = "none";
+      }
+    }
+
+    let onActorSelectedCallback = null;
+
+    function openActorModal(onSelected) {
+      onActorSelectedCallback = onSelected || null;
+      const modal = document.getElementById("actor-modal");
+      const choicesContainer = document.getElementById("actor-choices");
+      if (!modal || !choicesContainer) return;
+
+      choicesContainer.innerHTML = "";
+
+      const actors = state.availableActors.length > 0 ? state.availableActors : [
+        { type: "student", id: "STU-001", label: "Peter Kim" },
+        { type: "student", id: "STU-002", label: "Paul Kim" },
+        { type: "staff", id: "STF-HYEYOUNG", label: "Hyeyoung Kim" },
+        { type: "staff", id: "STF-KANGHO", label: "Kangho Kim" },
+        { type: "staff", id: "PTR-JOSH-RAGBIR", label: "Josh Ragbir" }
+      ];
+
+      actors.forEach(actor => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "actor-choice-btn";
+        btn.onclick = () => {
+          setClaimedActor(actor);
+          closeActorModal();
+          if (onActorSelectedCallback) {
+            onActorSelectedCallback(actor);
+            onActorSelectedCallback = null;
+          }
+          if (state.editingTaskId) {
+            renderProjects();
+          }
+        };
+
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = actor.label;
+
+        const roleSpan = document.createElement("span");
+        roleSpan.className = "actor-choice-role";
+        roleSpan.textContent = actor.type === "student" ? "Student" : (actor.id === "PTR-JOSH-RAGBIR" ? "Counselor" : "Parent / Staff");
+
+        btn.append(nameSpan, roleSpan);
+        choicesContainer.appendChild(btn);
+      });
+
+      modal.style.display = "flex";
+    }
+
+    function closeActorModal() {
+      const modal = document.getElementById("actor-modal");
+      if (modal) modal.style.display = "none";
+      onActorSelectedCallback = null;
     }
 
     function selectStudent(studentId) {
-      if (!studentId) return;
       state.currentStudent = studentId.trim().toUpperCase();
       state.editingTaskId = null;
       localStorage.setItem("sap_active_student", state.currentStudent);
@@ -740,9 +1049,17 @@
       }
     }
 
+    /* =========================================================
+       DATA FETCHING & NORMALIZATION
+       ========================================================= */
     async function fetchPlan() {
       const container = document.getElementById("projects-container");
-      container.innerHTML = `<div class="loading-notice">Loading projects and tasks…</div>`;
+      if (!container) return;
+      
+      // Keep existing project view while refreshing if already loaded
+      if (state.projects.length === 0) {
+        container.innerHTML = `<div class="loading-notice">Loading projects and tasks…</div>`;
+      }
 
       try {
         const url = `${CONFIG.scriptUrl}?student=${encodeURIComponent(state.currentStudent)}&_t=${Date.now()}`;
@@ -751,13 +1068,22 @@
 
         const data = await res.json();
         state.lastUpdated = data.lastUpdated ? new Date(data.lastUpdated) : new Date();
+        state.pendingRequests = Array.isArray(data.pendingRequests) ? data.pendingRequests : [];
+        state.recentResolutions = Array.isArray(data.recentResolutions) ? data.recentResolutions : [];
+        state.availableActors = Array.isArray(data.availableActors) ? data.availableActors : [];
+        state.availableOwners = Array.isArray(data.availableOwners) ? data.availableOwners : [];
+        state.availableStudents = Array.isArray(data.availableStudents) ? data.availableStudents : [];
+
         parseProjects(data);
         updateHeaderContext();
+        updateActorHeaderDisplay();
         renderProjects();
 
       } catch (err) {
         console.error("Fetch error:", err);
-        container.innerHTML = `<div class="loading-notice">Unable to load data. Please check connection and refresh.</div>`;
+        if (state.projects.length === 0) {
+          container.innerHTML = `<div class="loading-notice">Unable to load data. Please check connection and refresh.</div>`;
+        }
       }
     }
 
@@ -814,6 +1140,9 @@
       }
     }
 
+    /* =========================================================
+       PROJECT & CARD RENDERING
+       ========================================================= */
     function renderProjects() {
       const container = document.getElementById("projects-container");
       if (!container) return;
@@ -895,109 +1224,10 @@
       const card = document.createElement("article");
       card.className = "task-card";
 
-      if (state.editingTaskId === task.workItemId) {
-        // Edit Form
-        const form = document.createElement("form");
-        form.className = "task-edit-form";
-        form.onsubmit = (e) => handleSaveTask(e, task.workItemId);
+      const isEditing = state.editingTaskId === task.workItemId;
 
-        // Title
-        const titleGroup = document.createElement("div");
-        titleGroup.className = "edit-group";
-        const titleLabel = document.createElement("label");
-        titleLabel.className = "edit-label";
-        titleLabel.textContent = "Task title";
-        const titleInput = document.createElement("input");
-        titleInput.type = "text";
-        titleInput.className = "edit-field";
-        titleInput.id = `edit-title-${task.workItemId}`;
-        titleInput.value = task.title || "";
-        titleInput.required = true;
-        titleGroup.append(titleLabel, titleInput);
-
-        // Description
-        const descGroup = document.createElement("div");
-        descGroup.className = "edit-group";
-        const descLabel = document.createElement("label");
-        descLabel.className = "edit-label";
-        descLabel.textContent = "Description";
-        const descInput = document.createElement("textarea");
-        descInput.className = "edit-field";
-        descInput.rows = 2;
-        descInput.id = `edit-desc-${task.workItemId}`;
-        descInput.value = task.notes || "";
-        descGroup.append(descLabel, descInput);
-
-        // Row for Due Date & Status
-        const row = document.createElement("div");
-        row.className = "edit-row";
-
-        const dueGroup = document.createElement("div");
-        dueGroup.className = "edit-group";
-        const dueLabel = document.createElement("label");
-        dueLabel.className = "edit-label";
-        dueLabel.textContent = "Due date";
-        const dueInput = document.createElement("input");
-        dueInput.type = "date";
-        dueInput.className = "edit-field";
-        dueInput.id = `edit-due-${task.workItemId}`;
-        dueInput.value = task.dueDate || "";
-        dueGroup.append(dueLabel, dueInput);
-
-        const statusGroup = document.createElement("div");
-        statusGroup.className = "edit-group";
-        const statusLabel = document.createElement("label");
-        statusLabel.className = "edit-label";
-        statusLabel.textContent = "Status";
-        const statusSelect = document.createElement("select");
-        statusSelect.className = "edit-select";
-        statusSelect.id = `edit-status-${task.workItemId}`;
-
-        const statusOptions = [
-          { val: "ready", label: "Ready" },
-          { val: "in_progress", label: "In progress" },
-          { val: "waiting", label: "Waiting" },
-          { val: "planned", label: "Planned" },
-          { val: "review", label: "Review" },
-          { val: "done", label: "Done" }
-        ];
-
-        const curStatus = String(task.itemStatus || "").toLowerCase();
-        statusOptions.forEach(opt => {
-          const optEl = document.createElement("option");
-          optEl.value = opt.val;
-          optEl.textContent = opt.label;
-          if (curStatus === opt.val || (opt.val === "done" && (curStatus === "complete" || curStatus === "done"))) {
-            optEl.selected = true;
-          }
-          statusSelect.appendChild(optEl);
-        });
-
-        statusGroup.append(statusLabel, statusSelect);
-        row.append(dueGroup, statusGroup);
-
-        // Actions
-        const actions = document.createElement("div");
-        actions.className = "edit-actions";
-
-        const cancelBtn = document.createElement("button");
-        cancelBtn.type = "button";
-        cancelBtn.className = "cancel-button";
-        cancelBtn.textContent = "Cancel";
-        cancelBtn.onclick = () => {
-          state.editingTaskId = null;
-          renderProjects();
-        };
-
-        const saveBtn = document.createElement("button");
-        saveBtn.type = "submit";
-        saveBtn.className = "save-button";
-        saveBtn.textContent = "Save";
-
-        actions.append(cancelBtn, saveBtn);
-        form.append(titleGroup, descGroup, row, actions);
-        card.appendChild(form);
-        return card;
+      if (isEditing) {
+        return renderTaskEditForm(task, projectId, card);
       }
 
       // Normal Card View
@@ -1012,10 +1242,7 @@
       editBtn.className = "task-edit";
       editBtn.type = "button";
       editBtn.textContent = "Edit";
-      editBtn.onclick = () => {
-        state.editingTaskId = task.workItemId;
-        renderProjects();
-      };
+      editBtn.onclick = () => handleEditClick(task.workItemId);
 
       taskHeader.append(title, editBtn);
       card.appendChild(taskHeader);
@@ -1064,91 +1291,473 @@
       }
 
       card.appendChild(footer);
+
+      // 5. Attached Pending Review Proposal
+      const pendingReview = state.pendingRequests.find(r => r.workItemId === task.workItemId);
+      if (pendingReview) {
+        card.appendChild(renderPendingReviewSection(task, pendingReview));
+      }
+
+      // 6. Attached Recent Resolution Notice (if not dismissed)
+      const dismissedIds = getDismissedResolutionIds();
+      const resolution = state.recentResolutions.find(r => r.workItemId === task.workItemId && !dismissedIds.has(r.reviewId));
+      if (resolution && !pendingReview) {
+        card.appendChild(renderResolutionNotice(task, resolution));
+      }
+
       return card;
     }
 
-    function handleSaveTask(e, workItemId) {
-      e.preventDefault();
-      const title = document.getElementById(`edit-title-${workItemId}`)?.value.trim();
-      const notes = document.getElementById(`edit-desc-${workItemId}`)?.value.trim();
-      const dueDate = document.getElementById(`edit-due-${workItemId}`)?.value.trim();
-      const status = document.getElementById(`edit-status-${workItemId}`)?.value;
+    function renderTaskEditForm(task, projectId, card) {
+      const actor = getClaimedActor();
 
-      for (const p of state.projects) {
-        const t = p.tasks.find(item => item.workItemId === workItemId);
-        if (t) {
-          t.title = title;
-          t.notes = notes;
-          t.dueDate = dueDate;
-          t.itemStatus = status;
-          break;
+      const form = document.createElement("form");
+      form.className = "task-edit-form";
+      form.onsubmit = (e) => handleSubmitProposal(e, task);
+
+      // Attribution Header
+      const attrRow = document.createElement("div");
+      attrRow.className = "edit-attribution";
+      
+      const attrLabel = document.createElement("span");
+      attrLabel.innerHTML = `Submitting change as: <strong style="color: var(--text-primary);">${actor ? actor.label : "Anonymous"}</strong>`;
+
+      const switchBtn = document.createElement("button");
+      switchBtn.type = "button";
+      switchBtn.className = "edit-attribution-switch";
+      switchBtn.textContent = "(Switch)";
+      switchBtn.onclick = () => openActorModal();
+
+      attrRow.append(attrLabel, switchBtn);
+      form.appendChild(attrRow);
+
+      // 1. Task Title
+      const titleGroup = document.createElement("div");
+      titleGroup.className = "edit-group";
+      const titleLabel = document.createElement("label");
+      titleLabel.className = "edit-label";
+      titleLabel.textContent = "Task title";
+      const titleInput = document.createElement("input");
+      titleInput.type = "text";
+      titleInput.className = "edit-field";
+      titleInput.id = `edit-title-${task.workItemId}`;
+      titleInput.value = task.title || "";
+      titleInput.required = true;
+      titleGroup.append(titleLabel, titleInput);
+
+      // 2. Description / Notes
+      const descGroup = document.createElement("div");
+      descGroup.className = "edit-group";
+      const descLabel = document.createElement("label");
+      descLabel.className = "edit-label";
+      descLabel.textContent = "Description / Notes";
+      const descInput = document.createElement("textarea");
+      descInput.className = "edit-field edit-field--textarea";
+      descInput.id = `edit-desc-${task.workItemId}`;
+      descInput.value = task.notes || "";
+      descGroup.append(descLabel, descInput);
+
+      // 3. Row for Due Date & Status
+      const row = document.createElement("div");
+      row.className = "edit-row";
+
+      // Due Date
+      const dueGroup = document.createElement("div");
+      dueGroup.className = "edit-group";
+      const dueLabel = document.createElement("label");
+      dueLabel.className = "edit-label";
+      dueLabel.textContent = "Due date";
+      const dueInput = document.createElement("input");
+      dueInput.type = "date";
+      dueInput.className = "edit-field";
+      dueInput.id = `edit-due-${task.workItemId}`;
+      dueInput.value = task.dueDate || "";
+      dueGroup.append(dueLabel, dueInput);
+
+      // Status
+      const statusGroup = document.createElement("div");
+      statusGroup.className = "edit-group";
+      const statusLabel = document.createElement("label");
+      statusLabel.className = "edit-label";
+      statusLabel.textContent = "Status";
+      const statusSelect = document.createElement("select");
+      statusSelect.className = "edit-select";
+      statusSelect.id = `edit-status-${task.workItemId}`;
+
+      const statusOptions = [
+        { val: "ready", label: "Ready" },
+        { val: "in_progress", label: "In progress" },
+        { val: "waiting", label: "Waiting" },
+        { val: "planned", label: "Planned" },
+        { val: "review", label: "Review" },
+        { val: "done", label: "Done" }
+      ];
+
+      const curStatus = String(task.itemStatus || "").toLowerCase();
+      statusOptions.forEach(opt => {
+        const optEl = document.createElement("option");
+        optEl.value = opt.val;
+        optEl.textContent = opt.label;
+        if (curStatus === opt.val || (opt.val === "done" && (curStatus === "complete" || curStatus === "done"))) {
+          optEl.selected = true;
         }
+        statusSelect.appendChild(optEl);
+      });
+
+      statusGroup.append(statusLabel, statusSelect);
+      row.append(dueGroup, statusGroup);
+
+      // 4. Owner Select (Grouped)
+      const ownerGroup = document.createElement("div");
+      ownerGroup.className = "edit-group";
+      const ownerLabel = document.createElement("label");
+      ownerLabel.className = "edit-label";
+      ownerLabel.textContent = "Task owner";
+      const ownerSelect = document.createElement("select");
+      ownerSelect.className = "edit-select";
+      ownerSelect.id = `edit-owner-${task.workItemId}`;
+
+      const currentOwnerVal = getCurrentOwnerValue(task);
+      const ownerGroups = state.availableOwners.length > 0 ? state.availableOwners : [
+        {
+          group: "Students",
+          options: [
+            { value: "student:STU-001", label: "Peter Kim" },
+            { value: "student:STU-002", label: "Paul Kim" }
+          ]
+        },
+        {
+          group: "Staff & Coaches",
+          options: [
+            { value: "staff:PTR-JOSH-RAGBIR", label: "Josh Ragbir" },
+            { value: "staff:STF-HYEYOUNG", label: "Hyeyoung Kim" },
+            { value: "staff:STF-KANGHO", label: "Kangho Kim" }
+          ]
+        },
+        {
+          group: "Roles & Family Labels",
+          options: [
+            { value: "label:Parent (General)", label: "Parent (General)" },
+            { value: "label:Paul's Dad", label: "Paul's Dad" },
+            { value: "label:Peter's Dad", label: "Peter's Dad" }
+          ]
+        }
+      ];
+
+      ownerGroups.forEach(grp => {
+        const optGroup = document.createElement("optgroup");
+        optGroup.label = grp.group;
+        grp.options.forEach(opt => {
+          const optEl = document.createElement("option");
+          optEl.value = opt.value;
+          optEl.textContent = opt.label;
+          if (opt.value.toLowerCase() === currentOwnerVal.toLowerCase()) {
+            optEl.selected = true;
+          }
+          optGroup.appendChild(optEl);
+        });
+        ownerSelect.appendChild(optGroup);
+      });
+
+      ownerGroup.append(ownerLabel, ownerSelect);
+
+      // 5. Actions
+      const actions = document.createElement("div");
+      actions.className = "edit-actions";
+
+      const cancelBtn = document.createElement("button");
+      cancelBtn.type = "button";
+      cancelBtn.className = "cancel-button";
+      cancelBtn.textContent = "Cancel";
+      cancelBtn.onclick = () => {
+        state.editingTaskId = null;
+        renderProjects();
+      };
+
+      const isSubmitting = state.submittingTaskId === task.workItemId;
+      const saveBtn = document.createElement("button");
+      saveBtn.type = "submit";
+      saveBtn.className = "save-button";
+      saveBtn.disabled = isSubmitting;
+      saveBtn.textContent = isSubmitting ? "Submitting…" : "Submit for review";
+
+      actions.append(cancelBtn, saveBtn);
+      form.append(titleGroup, descGroup, row, ownerGroup, actions);
+      card.appendChild(form);
+      return card;
+    }
+
+    function renderPendingReviewSection(task, review) {
+      const section = document.createElement("div");
+      section.className = "task-pending-review";
+
+      const header = document.createElement("div");
+      header.className = "task-pending-header";
+
+      const isConflict = review.status === "CONFLICT";
+      const actorLabel = review.actor ? review.actor.label : "User";
+      const timeAgo = formatTimeAgo(review.createdAt);
+
+      const label = document.createElement("div");
+      label.className = "task-pending-label";
+
+      const dot = document.createElement("span");
+      dot.className = isConflict ? "task-pending-dot task-pending-dot--conflict" : "task-pending-dot";
+
+      const text = document.createElement("span");
+      text.textContent = `Awaiting review · Proposed by ${actorLabel} (${timeAgo})`;
+
+      label.append(dot, text);
+
+      if (isConflict) {
+        const badge = document.createElement("span");
+        badge.className = "badge-conflict";
+        badge.textContent = "Version Conflict";
+        label.appendChild(badge);
       }
 
-      state.editingTaskId = null;
-      renderProjects();
+      const actions = document.createElement("div");
+      actions.className = "task-pending-actions";
+
+      const isDetailsOpen = state.pendingDetailsOpen.has(review.reviewId);
+      const viewBtn = document.createElement("button");
+      viewBtn.type = "button";
+      viewBtn.className = "btn-link";
+      viewBtn.textContent = isDetailsOpen ? "Hide details" : "View proposal";
+      viewBtn.onclick = () => {
+        if (state.pendingDetailsOpen.has(review.reviewId)) {
+          state.pendingDetailsOpen.delete(review.reviewId);
+        } else {
+          state.pendingDetailsOpen.add(review.reviewId);
+        }
+        renderProjects();
+      };
+
+      const withdrawBtn = document.createElement("button");
+      withdrawBtn.type = "button";
+      withdrawBtn.className = "btn-link btn-link--danger";
+      withdrawBtn.textContent = "Withdraw";
+      withdrawBtn.onclick = () => handleWithdrawProposal(review);
+
+      actions.append(viewBtn, withdrawBtn);
+      header.append(label, actions);
+      section.appendChild(header);
+
+      if (isDetailsOpen) {
+        const details = document.createElement("div");
+        details.className = "task-pending-details";
+
+        const changes = review.changes || {};
+        const changeLines = [];
+        if (changes.title) changeLines.push(`• Title: "${escapeHtml(changes.title)}"`);
+        if (changes.notes) changeLines.push(`• Description: "${escapeHtml(changes.notes)}"`);
+        if (changes.dueDate) changeLines.push(`• Due date: ${changes.dueDate}`);
+        if (changes.itemStatus) changeLines.push(`• Status: ${formatLifecycleStatus(changes.itemStatus)}`);
+        if (changes.owner) {
+          const ownerLabel = typeof changes.owner === "object" ? changes.owner.label : changes.owner;
+          changeLines.push(`• Owner: ${escapeHtml(ownerLabel)}`);
+        }
+
+        if (changeLines.length === 0 && review.reason) {
+          changeLines.push(`• Reason: ${escapeHtml(review.reason)}`);
+        }
+
+        details.innerHTML = `<strong>Proposed changes:</strong><br>${changeLines.join("<br>")}`;
+        section.appendChild(details);
+      }
+
+      return section;
+    }
+
+    function renderResolutionNotice(task, res) {
+      const notice = document.createElement("div");
+      notice.className = "task-resolution-notice";
+
+      const text = document.createElement("span");
+      const statusText = res.status === "APPLIED" ? "applied" : (res.status === "DISMISSED" ? "withdrawn" : res.status.toLowerCase());
+      const byText = res.resolvedBy ? ` by ${res.resolvedBy}` : "";
+      text.textContent = `Proposal ${statusText}${byText} · ${res.resolution || "Review complete"}`;
+
+      const dismissBtn = document.createElement("button");
+      dismissBtn.type = "button";
+      dismissBtn.className = "task-resolution-dismiss";
+      dismissBtn.setAttribute("aria-label", "Dismiss notification");
+      dismissBtn.innerHTML = "&times;";
+      dismissBtn.onclick = () => dismissResolution(res.reviewId);
+
+      notice.append(text, dismissBtn);
+      return notice;
     }
 
     /* =========================================================
-       EXACT SPECIFICATION HELPERS
+       SUBMISSION & PROPOSAL HANDLERS
        ========================================================= */
-    function getDueAttention(value) {
-      const due = parseDate(value);
-
-      if (!due) {
-        return "";
+    function handleEditClick(workItemId) {
+      const actor = getClaimedActor();
+      if (!actor) {
+        openActorModal((claimed) => {
+          state.editingTaskId = workItemId;
+          renderProjects();
+        });
+      } else {
+        state.editingTaskId = workItemId;
+        renderProjects();
       }
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const dueDay = new Date(
-        due.getFullYear(),
-        due.getMonth(),
-        due.getDate()
-      );
-
-      const dayMs = 24 * 60 * 60 * 1000;
-
-      const difference =
-        Math.round((dueDay - today) / dayMs);
-
-      if (difference < 0) {
-        const days = Math.abs(difference);
-
-        return days === 1
-          ? "1 day overdue"
-          : `${days} days overdue`;
-      }
-
-      if (difference === 0) {
-        return "Due today";
-      }
-
-      if (difference === 1) {
-        return "Due tomorrow";
-      }
-
-      return "";
     }
 
-    function formatLifecycleStatus(value) {
-      const normalized =
-        String(value || "")
-          .trim()
-          .toLowerCase()
-          .replaceAll("_", " ");
+    async function handleSubmitProposal(e, task) {
+      e.preventDefault();
+      const actor = getClaimedActor();
+      if (!actor) {
+        openActorModal(() => handleSubmitProposal(e, task));
+        return;
+      }
 
-      const statuses = {
-        "planned": "Planned",
-        "ready": "Ready",
-        "in progress": "In progress",
-        "waiting": "Waiting",
-        "review": "Review",
-        "done": "Done"
+      const workItemId = task.workItemId;
+      const newTitle = document.getElementById(`edit-title-${workItemId}`)?.value.trim();
+      const newNotes = document.getElementById(`edit-desc-${workItemId}`)?.value.trim();
+      const newDueDate = document.getElementById(`edit-due-${workItemId}`)?.value.trim();
+      const newStatus = document.getElementById(`edit-status-${workItemId}`)?.value;
+      const newOwnerVal = document.getElementById(`edit-owner-${workItemId}`)?.value;
+
+      // Compute Delta
+      const changes = {};
+      if (newTitle !== undefined && newTitle !== (task.title || "")) {
+        changes.title = newTitle;
+      }
+      if (newNotes !== undefined && newNotes !== (task.notes || "")) {
+        changes.notes = newNotes;
+      }
+      if (newDueDate !== undefined && newDueDate !== (task.dueDate || "")) {
+        changes.dueDate = newDueDate;
+      }
+      const curStatus = String(task.itemStatus || "").toLowerCase();
+      if (newStatus !== undefined && newStatus !== curStatus) {
+        changes.itemStatus = newStatus;
+      }
+      const curOwnerVal = getCurrentOwnerValue(task);
+      if (newOwnerVal !== undefined && newOwnerVal.toLowerCase() !== curOwnerVal.toLowerCase()) {
+        changes.owner = newOwnerVal;
+      }
+
+      if (Object.keys(changes).length === 0) {
+        showToast("No changes were made to submit.");
+        state.editingTaskId = null;
+        renderProjects();
+        return;
+      }
+
+      state.submittingTaskId = workItemId;
+      renderProjects();
+
+      const payload = {
+        action: "CREATE_REVIEW_REQUEST",
+        studentId: state.currentStudent,
+        workItemId: workItemId,
+        actor: actor,
+        changes: changes,
+        baseUpdatedAt: task.updatedAt || "",
+        reason: "Proposed update via Student Action Plan web dashboard"
       };
 
-      return statuses[normalized] || value || "Ready";
+      try {
+        const res = await fetch(CONFIG.scriptUrl, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+          redirect: "follow"
+        });
+
+        const result = await res.json();
+        if (result && result.success) {
+          showToast(result.message || "Proposal submitted for review.");
+          state.editingTaskId = null;
+          state.submittingTaskId = null;
+          await fetchPlan();
+        } else {
+          throw new Error(result.message || "Failed to submit change proposal");
+        }
+      } catch (err) {
+        console.error("Submission error:", err);
+        showToast("Error submitting proposal: " + err.message);
+        state.submittingTaskId = null;
+        renderProjects();
+      }
+    }
+
+    async function handleWithdrawProposal(review) {
+      if (!confirm("Are you sure you want to withdraw this change proposal?")) return;
+
+      const actor = getClaimedActor() || { type: "student", id: state.currentStudent, label: "User" };
+      const payload = {
+        action: "CANCEL_REVIEW_REQUEST",
+        reviewId: review.reviewId,
+        actor: actor
+      };
+
+      try {
+        const res = await fetch(CONFIG.scriptUrl, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+          redirect: "follow"
+        });
+
+        const result = await res.json();
+        if (result && result.success) {
+          showToast("Proposal withdrawn.");
+          await fetchPlan();
+        } else {
+          throw new Error(result.message || "Failed to withdraw proposal");
+        }
+      } catch (err) {
+        console.error("Withdraw error:", err);
+        showToast("Error withdrawing proposal: " + err.message);
+      }
+    }
+
+    /* =========================================================
+       LOCAL STORAGE HELPERS (Dismissed notices)
+       ========================================================= */
+    function getDismissedResolutionIds() {
+      try {
+        const raw = localStorage.getItem("sap_dismissed_resolutions");
+        const arr = raw ? JSON.parse(raw) : [];
+        return new Set(Array.isArray(arr) ? arr : []);
+      } catch (e) {
+        return new Set();
+      }
+    }
+
+    function dismissResolution(reviewId) {
+      const dismissed = getDismissedResolutionIds();
+      dismissed.add(reviewId);
+      localStorage.setItem("sap_dismissed_resolutions", JSON.stringify(Array.from(dismissed)));
+      renderProjects();
+    }
+
+    function showToast(msg) {
+      const existing = document.querySelector(".toast-notice");
+      if (existing) existing.remove();
+
+      const toast = document.createElement("div");
+      toast.className = "toast-notice";
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 4000);
+    }
+
+    /* =========================================================
+       SPECIFICATION HELPERS
+       ========================================================= */
+    function getCurrentOwnerValue(task) {
+      if (task.ownerStudentId) return "student:" + task.ownerStudentId;
+      if (task.ownerStaffId) return "staff:" + task.ownerStaffId;
+      if (task.ownerLabel) return "label:" + task.ownerLabel;
+      return "student:" + state.currentStudent;
     }
 
     function resolveOwnerText(task) {
@@ -1162,9 +1771,42 @@
       if (staff) return staff;
 
       const student = String(task.ownerStudentId || "").trim();
-      if (student === "PETER-KIM") return "Peter Kim";
-      if (student === "PAUL-KIM") return "Paul Kim";
+      if (student === "PETER-KIM" || student === "STU-001") return "Peter Kim";
+      if (student === "PAUL-KIM" || student === "STU-002") return "Paul Kim";
       return student;
+    }
+
+    function getDueAttention(value) {
+      const due = parseDate(value);
+      if (!due) return "";
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
+      const dayMs = 24 * 60 * 60 * 1000;
+      const difference = Math.round((dueDay - today) / dayMs);
+
+      if (difference < 0) {
+        const days = Math.abs(difference);
+        return days === 1 ? "1 day overdue" : `${days} days overdue`;
+      }
+      if (difference === 0) return "Due today";
+      if (difference === 1) return "Due tomorrow";
+      return "";
+    }
+
+    function formatLifecycleStatus(value) {
+      const normalized = String(value || "").trim().toLowerCase().replaceAll("_", " ");
+      const statuses = {
+        "planned": "Planned",
+        "ready": "Ready",
+        "in progress": "In progress",
+        "waiting": "Waiting",
+        "review": "Review",
+        "done": "Done"
+      };
+      return statuses[normalized] || value || "Ready";
     }
 
     function formatCategoryEyebrow(code) {
@@ -1183,12 +1825,24 @@
       return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
     }
 
+    function formatTimeAgo(dateStr) {
+      if (!dateStr) return "recently";
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return "recently";
+      const sec = Math.round((Date.now() - d.getTime()) / 1000);
+      if (sec < 60) return "just now";
+      const min = Math.round(sec / 60);
+      if (min < 60) return `${min}m ago`;
+      const hrs = Math.round(min / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      const days = Math.round(hrs / 24);
+      return `${days}d ago`;
+    }
+
     function parseDate(val) {
       if (!val) return null;
       const m = String(val).match(/^(\d{4})-(\d{2})-(\d{2})/);
-      if (m) {
-        return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
-      }
+      if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
       const d = new Date(val);
       return isNaN(d.getTime()) ? null : d;
     }
@@ -1198,8 +1852,19 @@
       return s === "waiting" || Boolean(task.waitingOn);
     }
 
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
     // INITIALIZATION
     updateStudentButtons();
+    updateActorHeaderDisplay();
     fetchPlan();
   </script>
 </body>
