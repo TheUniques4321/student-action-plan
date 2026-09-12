@@ -1187,7 +1187,9 @@
     }
 
     function selectStudent(studentId) {
-      state.currentStudent = studentId.trim().toUpperCase();
+      const normalized = studentId.trim().toUpperCase();
+      state.currentStudent = normalized;
+      state.projects = [];
       state.editingTaskId = null;
       state.expandedProjects.clear();
       localStorage.setItem("sap_active_student", state.currentStudent);
@@ -1197,6 +1199,24 @@
       window.history.pushState({}, "", url);
 
       updateStudentButtons();
+
+      // Immediately provide responsive feedback
+      const globalContainer = document.getElementById("global-next-action-container");
+      if (globalContainer) {
+        globalContainer.innerHTML = "";
+        globalContainer.style.display = "none";
+      }
+
+      const headerContext = document.getElementById("header-context");
+      if (headerContext) {
+        headerContext.textContent = "Loading tasks…";
+      }
+
+      const container = document.getElementById("projects-container");
+      if (container) {
+        container.innerHTML = `<div class="loading-notice">Loading projects and tasks…</div>`;
+      }
+
       fetchPlan();
     }
 
@@ -1234,7 +1254,10 @@
     /* =========================================================
        DATA FETCHING & NORMALIZATION
        ========================================================= */
+    let fetchSeq = 0;
+
     async function fetchPlan() {
+      const thisSeq = ++fetchSeq;
       const container = document.getElementById("projects-container");
       if (!container) return;
       
@@ -1248,6 +1271,10 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
+        
+        // Discard stale in-flight response from a previous student switch
+        if (thisSeq !== fetchSeq) return;
+
         state.lastUpdated = data.lastUpdated ? new Date(data.lastUpdated) : new Date();
         state.pendingRequests = Array.isArray(data.pendingRequests) ? data.pendingRequests : [];
         state.recentResolutions = Array.isArray(data.recentResolutions) ? data.recentResolutions : [];
@@ -1261,9 +1288,15 @@
         renderProjects();
 
       } catch (err) {
+        if (thisSeq !== fetchSeq) return;
         console.error("Fetch error:", err);
         if (state.projects.length === 0) {
-          container.innerHTML = `<div class="loading-notice">Unable to load data. Please check connection and refresh.</div>`;
+          container.innerHTML = `
+            <div class="loading-notice">
+              Unable to load data. Please check connection.
+              <button type="button" class="choice-chip" style="margin-left: 10px; display: inline-flex; vertical-align: middle;" onclick="fetchPlan()">Retry</button>
+            </div>
+          `;
         }
       }
     }
@@ -1309,7 +1342,7 @@
         projectList = Array.from(map.values());
       }
 
-      state.projects = projectList.filter(p => p.tasks && p.tasks.length > 0);
+      state.projects = projectList;
     }
 
     function updateHeaderContext() {
@@ -2379,6 +2412,14 @@
     }
 
     // INITIALIZATION
+    window.addEventListener("popstate", () => {
+      const sp = new URLSearchParams(window.location.search);
+      const s = sp.get("student") || localStorage.getItem("sap_active_student") || "PETER-KIM";
+      if (s.trim().toUpperCase() !== state.currentStudent) {
+        selectStudent(s);
+      }
+    });
+
     updateStudentButtons();
     updateActorHeaderDisplay();
     fetchPlan();
