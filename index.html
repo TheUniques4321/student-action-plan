@@ -144,7 +144,7 @@
       display: grid;
       gap: 18px;
 
-      margin-bottom: 56px;
+      margin-bottom: 48px;
     }
 
     .app-header__top {
@@ -293,16 +293,111 @@
     }
 
     /* =========================================================
-       6. PROJECT SECTIONS
+       6. GLOBAL NEXT ACTION COMPONENT
+       ========================================================= */
+    .global-next-action {
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .global-next-action__eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .global-next-action__card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 22px 24px;
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-card);
+      transition: border-color var(--transition-fast), background-color var(--transition-fast);
+    }
+
+    @media (min-width: 640px) {
+      .global-next-action__card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .global-next-action__card:hover {
+      border-color: var(--border-strong);
+      background-color: var(--surface-2);
+    }
+
+    .global-next-action__title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .global-next-action__meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .global-next-action__btn {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      color: #141310;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: background-color var(--transition-fast);
+    }
+
+    .global-next-action__btn:hover {
+      background: var(--accent-hover);
+    }
+
+    /* =========================================================
+       7. PROJECT SECTIONS & COMPACT / EXPANDABLE LISTS
        ========================================================= */
     .projects-container {
       display: grid;
-      gap: 60px;
     }
 
     .project {
       display: grid;
       gap: 20px;
+    }
+
+    .project + .project {
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    @media (max-width: 639px) {
+      .project + .project {
+        margin-top: 56px;
+        padding-top: 40px;
+      }
     }
 
     .project-header {
@@ -342,8 +437,84 @@
       color: var(--text-muted);
     }
 
+    .project-task-area {
+      display: grid;
+    }
+
+    .project-focus-label {
+      margin: 0 0 9px;
+
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1;
+
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 639px) {
+      .project-focus-label {
+        margin-bottom: 8px;
+      }
+    }
+
+    .project-more {
+      display: inline-flex;
+      align-items: center;
+
+      min-height: 40px;
+
+      margin-top: 10px;
+      margin-left: -8px;
+
+      padding: 0 8px;
+
+      border: 0;
+
+      background: transparent;
+
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+
+      color: var(--text-interactive);
+
+      cursor: pointer;
+    }
+
+    .project-more:hover,
+    .project-more:focus-visible {
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 639px) {
+      .project-more {
+        margin-top: 8px;
+      }
+    }
+
+    .project-complete {
+      margin: 0;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    .project-empty {
+      margin: 0;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
     /* =========================================================
-       7. TASK LIST & TASK CARDS
+       8. TASK LIST & TASK CARDS
        ========================================================= */
     .task-list {
       display: grid;
@@ -368,6 +539,12 @@
     .task-card:hover {
       border-color: var(--border-strong);
       background-color: var(--surface-2);
+    }
+
+    .task-card--located {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 0 1px var(--accent);
+      transition: box-shadow 400ms ease, border-color 400ms ease;
     }
 
     .task-header {
@@ -450,7 +627,7 @@
     }
 
     /* =========================================================
-       8. IN-CARD VERTICAL EDIT MODE
+       9. IN-CARD VERTICAL EDIT MODE
        ========================================================= */
     .task-edit-form {
       display: grid;
@@ -592,7 +769,7 @@
     }
 
     /* =========================================================
-       9. PENDING REVIEW & RESOLUTION NOTICES
+       10. PENDING REVIEW & RESOLUTION NOTICES
        ========================================================= */
     .task-pending-review {
       margin-top: 12px;
@@ -707,7 +884,7 @@
     }
 
     /* =========================================================
-       10. ACTOR CLAIM MODAL
+       11. ACTOR CLAIM MODAL
        ========================================================= */
     .modal-backdrop {
       position: fixed;
@@ -870,6 +1047,9 @@
       </div>
     </header>
 
+    <!-- Global Next Action Container -->
+    <div id="global-next-action-container" style="display: none;"></div>
+
     <!-- Projects and Task Lists -->
     <div id="projects-container" class="projects-container">
       <div class="loading-notice">Loading projects and tasks…</div>
@@ -913,7 +1093,8 @@
       lastUpdated: null,
       editingTaskId: null,
       pendingDetailsOpen: new Set(),
-      submittingTaskId: null
+      submittingTaskId: null,
+      expandedProjects: new Set()
     };
 
     /* =========================================================
@@ -1008,6 +1189,7 @@
     function selectStudent(studentId) {
       state.currentStudent = studentId.trim().toUpperCase();
       state.editingTaskId = null;
+      state.expandedProjects.clear();
       localStorage.setItem("sap_active_student", state.currentStudent);
 
       const url = new URL(window.location.href);
@@ -1056,7 +1238,6 @@
       const container = document.getElementById("projects-container");
       if (!container) return;
       
-      // Keep existing project view while refreshing if already loaded
       if (state.projects.length === 0) {
         container.innerHTML = `<div class="loading-notice">Loading projects and tasks…</div>`;
       }
@@ -1128,11 +1309,14 @@
         projectList = Array.from(map.values());
       }
 
-      state.projects = projectList.filter(p => p.tasks.length > 0);
+      state.projects = projectList.filter(p => p.tasks && p.tasks.length > 0);
     }
 
     function updateHeaderContext() {
-      const totalOpenTasks = state.projects.reduce((acc, p) => acc + p.tasks.length, 0);
+      let totalOpenTasks = 0;
+      state.projects.forEach(p => {
+        totalOpenTasks += getProjectActiveTasks(p.tasks).length;
+      });
       const timeString = formatClockTime(state.lastUpdated);
       const headerContext = document.getElementById("header-context");
       if (headerContext) {
@@ -1141,9 +1325,287 @@
     }
 
     /* =========================================================
+       NEXT ACTION RANKING & SELECTION ENGINE
+       ========================================================= */
+    function normalizeStatus(status) {
+      const s = String(status || "").trim().toUpperCase().replace(/[\s-]+/g, "_");
+      if (s === "COMPLETE" || s === "COMPLETED") return "DONE";
+      return s || "READY";
+    }
+
+    function isDependencyResolved(task, tasksById) {
+      const depId = String(task.dependsOnWorkItemId || "").trim();
+      if (!depId) return true;
+      const depTask = tasksById.get(depId);
+      if (!depTask) return true;
+      return normalizeStatus(depTask.itemStatus) === "DONE";
+    }
+
+    function getNextAction(tasks) {
+      if (!tasks || !tasks.length) return null;
+      const tasksById = new Map(tasks.map(t => [t.workItemId, t]));
+
+      const actionable = tasks.filter(t => {
+        const st = normalizeStatus(t.itemStatus);
+        if (st !== "READY" && st !== "IN_PROGRESS" && st !== "REVIEW") return false;
+        if (String(t.waitingOn || "").trim()) return false;
+        return isDependencyResolved(t, tasksById);
+      });
+
+      if (actionable.length === 0) return null;
+
+      actionable.sort((a, b) => {
+        // 1. Due date (earliest first; tasks with due date before tasks without)
+        const aDate = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+        const bDate = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+        if (aDate !== bDate) return aDate - bDate;
+
+        // 2. Priority: URGENT (3), HIGH (2), NORMAL (1), LOW (0)
+        const prioRank = { "URGENT": 3, "HIGH": 2, "NORMAL": 1, "LOW": 0 };
+        const aPrio = prioRank[String(a.priority || "NORMAL").toUpperCase()] || 1;
+        const bPrio = prioRank[String(b.priority || "NORMAL").toUpperCase()] || 1;
+        if (aPrio !== bPrio) return bPrio - aPrio;
+
+        // 3. Status: IN_PROGRESS (3), READY (2), REVIEW (1)
+        const statusRank = { "IN_PROGRESS": 3, "READY": 2, "REVIEW": 1 };
+        const aSt = statusRank[normalizeStatus(a.itemStatus)] || 0;
+        const bSt = statusRank[normalizeStatus(b.itemStatus)] || 0;
+        if (aSt !== bSt) return bSt - aSt;
+
+        return 0;
+      });
+
+      return actionable[0];
+    }
+
+    function getPrimaryBlocker(tasks) {
+      if (!tasks || !tasks.length) return null;
+      const tasksById = new Map(tasks.map(t => [t.workItemId, t]));
+
+      const blocked = tasks.filter(t => {
+        const st = normalizeStatus(t.itemStatus);
+        if (st === "DONE" || st === "ARCHIVED") return false;
+        return st === "WAITING" || Boolean(String(t.waitingOn || "").trim()) || !isDependencyResolved(t, tasksById);
+      });
+
+      if (blocked.length === 0) return null;
+
+      blocked.sort((a, b) => {
+        const aDate = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+        const bDate = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+        if (aDate !== bDate) return aDate - bDate;
+        return 0;
+      });
+
+      return blocked[0];
+    }
+
+    function getPrimaryPlannedTask(tasks) {
+      if (!tasks || !tasks.length) return null;
+      const planned = tasks.filter(t => normalizeStatus(t.itemStatus) === "PLANNED");
+      if (planned.length === 0) return null;
+
+      planned.sort((a, b) => {
+        const aDate = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+        const bDate = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+        if (aDate !== bDate) return aDate - bDate;
+        return 0;
+      });
+
+      return planned[0];
+    }
+
+    function getProjectFocusTask(projectTasks) {
+      return getNextAction(projectTasks)
+        || getPrimaryBlocker(projectTasks)
+        || getPrimaryPlannedTask(projectTasks)
+        || null;
+    }
+
+    function getProjectActiveTasks(tasks) {
+      return (tasks || []).filter(task => {
+        const status = normalizeStatus(task.itemStatus);
+        return (
+          status !== "DONE" &&
+          status !== "ARCHIVED"
+        );
+      });
+    }
+
+    function orderExpandedProjectTasks(activeTasks, focusTask) {
+      if (!focusTask) {
+        return activeTasks;
+      }
+
+      return [
+        focusTask,
+        ...activeTasks.filter(
+          task => task.workItemId !== focusTask.workItemId
+        )
+      ];
+    }
+
+    function getProjectFocusLabel(projectTasks, focusTask) {
+      if (!focusTask) {
+        return "";
+      }
+
+      const status = normalizeStatus(focusTask.itemStatus);
+
+      const tasksById = new Map(
+        projectTasks.map(task => [
+          task.workItemId,
+          task
+        ])
+      );
+
+      const blocked =
+        status === "WAITING" ||
+        Boolean(String(focusTask.waitingOn || "").trim()) ||
+        !isDependencyResolved(focusTask, tasksById);
+
+      if (blocked) {
+        return "Current blocker";
+      }
+
+      if (status === "PLANNED") {
+        return "Up next";
+      }
+
+      return "Next in this project";
+    }
+
+    function getMoreTasksLabel(count) {
+      if (count === 1) {
+        return "Show 1 more task";
+      }
+      return `Show ${count} more tasks`;
+    }
+
+    function toggleProjectExpansion(projectId) {
+      if (state.expandedProjects.has(projectId)) {
+        state.expandedProjects.delete(projectId);
+      } else {
+        state.expandedProjects.add(projectId);
+      }
+      renderProjects();
+    }
+
+    function sanitizeDomId(str) {
+      return String(str || "").replace(/[^a-zA-Z0-9_-]/g, "_");
+    }
+
+    function renderProjectTerminalState(projectTasks) {
+      const nonArchived = (projectTasks || []).filter(task =>
+        normalizeStatus(task.itemStatus) !== "ARCHIVED"
+      );
+
+      if (!nonArchived.length) {
+        return {
+          type: "empty",
+          text: "No tasks yet"
+        };
+      }
+
+      const allDone = nonArchived.every(task =>
+        normalizeStatus(task.itemStatus) === "DONE"
+      );
+
+      if (allDone) {
+        return {
+          type: "complete",
+          text: "All tasks complete"
+        };
+      }
+
+      return null;
+    }
+
+    /* =========================================================
+       GLOBAL NEXT ACTION RENDERING & OPEN ACTION
+       ========================================================= */
+    function renderGlobalNextAction() {
+      const container = document.getElementById("global-next-action-container");
+      if (!container) return;
+
+      // Collect all tasks across projects
+      const allTasks = [];
+      state.projects.forEach(p => {
+        (p.tasks || []).forEach(t => {
+          allTasks.push(Object.assign({ projectName: p.projectName }, t));
+        });
+      });
+
+      const nextAction = getNextAction(allTasks);
+      if (!nextAction) {
+        container.innerHTML = "";
+        container.style.display = "none";
+        return;
+      }
+
+      container.style.display = "block";
+      container.innerHTML = `
+        <section class="global-next-action" aria-label="Global Next Action">
+          <div class="global-next-action__eyebrow">Next Action</div>
+          <div class="global-next-action__card">
+            <div class="global-next-action__content">
+              <h2 class="global-next-action__title">${escapeHtml(nextAction.title)}</h2>
+              <div class="global-next-action__meta">
+                <span>${escapeHtml(nextAction.projectName || "General")}</span>
+                <span aria-hidden="true">·</span>
+                ${nextAction.dueDate ? `<span>Due ${formatShortMonthDay(nextAction.dueDate)}</span><span aria-hidden="true">·</span>` : ""}
+                <span>${formatLifecycleStatus(nextAction.itemStatus)}</span>
+                ${resolveOwnerText(nextAction) ? `<span aria-hidden="true">·</span><span>${escapeHtml(resolveOwnerText(nextAction))}</span>` : ""}
+              </div>
+            </div>
+            <button type="button" class="global-next-action__btn" id="btn-open-global-next">Open task</button>
+          </div>
+        </section>
+      `;
+
+      document.getElementById("btn-open-global-next")?.addEventListener("click", () => {
+        revealAndOpenTask(nextAction);
+      });
+    }
+
+    function revealAndOpenTask(task) {
+      const project = state.projects.find(p => p.projectId === task.projectId);
+      const focusTask = project ? getProjectFocusTask(project.tasks) : null;
+      const isFocusTask = focusTask && focusTask.workItemId === task.workItemId;
+
+      if (!isFocusTask) {
+        state.expandedProjects.add(task.projectId);
+        renderProjects();
+      }
+
+      requestAnimationFrame(() => {
+        openRecommendedTask(task.workItemId);
+      });
+    }
+
+    function openRecommendedTask(workItemId) {
+      const card = document.querySelector(`[data-task-id="${workItemId}"]`);
+      if (!card) return;
+
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      card.classList.add("task-card--located");
+
+      const editBtn = card.querySelector(".task-edit") || card;
+      if (editBtn && typeof editBtn.focus === "function") {
+        editBtn.focus();
+      }
+
+      setTimeout(() => {
+        card.classList.remove("task-card--located");
+      }, 2200);
+    }
+
+    /* =========================================================
        PROJECT & CARD RENDERING
        ========================================================= */
     function renderProjects() {
+      renderGlobalNextAction();
+
       const container = document.getElementById("projects-container");
       if (!container) return;
 
@@ -1157,6 +1619,7 @@
       state.projects.forEach(project => {
         const projectEl = document.createElement("section");
         projectEl.className = "project";
+        projectEl.setAttribute("data-project-id", project.projectId);
 
         // Header
         const header = document.createElement("header");
@@ -1181,13 +1644,15 @@
         const summary = document.createElement("div");
         summary.className = "project-summary";
 
+        const activeTasks = getProjectActiveTasks(project.tasks);
+
         const parts = [];
         if (project.targetDate) {
           parts.push(`Target ${formatShortMonthDay(project.targetDate)}`);
         }
-        parts.push(`${project.tasks.length} open task${project.tasks.length === 1 ? "" : "s"}`);
+        parts.push(`${activeTasks.length} open task${activeTasks.length === 1 ? "" : "s"}`);
 
-        const waitingCount = project.tasks.filter(t => isWaiting(t)).length;
+        const waitingCount = activeTasks.filter(t => isWaiting(t)).length;
         if (waitingCount > 0) {
           parts.push(`${waitingCount} waiting`);
         }
@@ -1207,15 +1672,60 @@
         header.appendChild(summary);
         projectEl.appendChild(header);
 
-        // Task List
-        const taskList = document.createElement("div");
-        taskList.className = "task-list";
+        // Project Task Area
+        const taskArea = document.createElement("div");
+        taskArea.className = "project-task-area";
 
-        project.tasks.forEach(task => {
-          taskList.appendChild(renderTaskCard(task, project.projectId));
-        });
+        const focusTask = getProjectFocusTask(project.tasks);
+        const expanded = state.expandedProjects.has(project.projectId);
 
-        projectEl.appendChild(taskList);
+        if (!activeTasks.length) {
+          const terminal = renderProjectTerminalState(project.tasks);
+          if (terminal) {
+            const pEl = document.createElement("p");
+            pEl.className = terminal.type === "empty" ? "project-empty" : "project-complete";
+            pEl.textContent = terminal.text;
+            taskArea.appendChild(pEl);
+          }
+        } else {
+          const labelText = getProjectFocusLabel(project.tasks, focusTask);
+          if (labelText) {
+            const focusLabel = document.createElement("p");
+            focusLabel.className = "project-focus-label";
+            focusLabel.textContent = labelText;
+            taskArea.appendChild(focusLabel);
+          }
+
+          const orderedTasks = orderExpandedProjectTasks(activeTasks, focusTask);
+          const visibleTasks = expanded ? orderedTasks : (focusTask ? [focusTask] : []);
+
+          const safeId = sanitizeDomId(project.projectId);
+          const taskList = document.createElement("div");
+          taskList.className = "task-list";
+          taskList.id = `project-tasks-${safeId}`;
+          taskList.setAttribute("data-project-task-list", "");
+
+          visibleTasks.forEach(task => {
+            taskList.appendChild(renderTaskCard(task, project.projectId));
+          });
+
+          taskArea.appendChild(taskList);
+
+          const additionalCount = Math.max(activeTasks.length - 1, 0);
+          if (additionalCount > 0) {
+            const toggleBtn = document.createElement("button");
+            toggleBtn.type = "button";
+            toggleBtn.className = "project-more";
+            toggleBtn.setAttribute("data-project-toggle", "");
+            toggleBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
+            toggleBtn.setAttribute("aria-controls", `project-tasks-${safeId}`);
+            toggleBtn.textContent = expanded ? "Show fewer tasks" : getMoreTasksLabel(additionalCount);
+            toggleBtn.onclick = () => toggleProjectExpansion(project.projectId);
+            taskArea.appendChild(toggleBtn);
+          }
+        }
+
+        projectEl.appendChild(taskArea);
         container.appendChild(projectEl);
       });
     }
@@ -1223,6 +1733,7 @@
     function renderTaskCard(task, projectId) {
       const card = document.createElement("article");
       card.className = "task-card";
+      card.setAttribute("data-task-id", task.workItemId);
 
       const isEditing = state.editingTaskId === task.workItemId;
 
@@ -1242,7 +1753,7 @@
       editBtn.className = "task-edit";
       editBtn.type = "button";
       editBtn.textContent = "Edit";
-      editBtn.onclick = () => handleEditClick(task.workItemId);
+      editBtn.onclick = () => handleEditClick(task.workItemId, projectId);
 
       taskHeader.append(title, editBtn);
       card.appendChild(taskHeader);
@@ -1320,7 +1831,7 @@
       attrRow.className = "edit-attribution";
       
       const attrLabel = document.createElement("span");
-      attrLabel.innerHTML = `Submitting change as: <strong style="color: var(--text-primary);">${actor ? actor.label : "Anonymous"}</strong>`;
+      attrLabel.innerHTML = `Submitting change as: <strong style="color: var(--text-primary);">${actor ? escapeHtml(actor.label) : "Anonymous"}</strong>`;
 
       const switchBtn = document.createElement("button");
       switchBtn.type = "button";
@@ -1505,7 +2016,7 @@
       dot.className = isConflict ? "task-pending-dot task-pending-dot--conflict" : "task-pending-dot";
 
       const text = document.createElement("span");
-      text.textContent = `Awaiting review · Proposed by ${actorLabel} (${timeAgo})`;
+      text.textContent = `Awaiting review · Proposed by ${escapeHtml(actorLabel)} (${timeAgo})`;
 
       label.append(dot, text);
 
@@ -1551,7 +2062,7 @@
         const changeLines = [];
         if (changes.title) changeLines.push(`• Title: "${escapeHtml(changes.title)}"`);
         if (changes.notes) changeLines.push(`• Description: "${escapeHtml(changes.notes)}"`);
-        if (changes.dueDate) changeLines.push(`• Due date: ${changes.dueDate}`);
+        if (changes.dueDate) changeLines.push(`• Due date: ${escapeHtml(changes.dueDate)}`);
         if (changes.itemStatus) changeLines.push(`• Status: ${formatLifecycleStatus(changes.itemStatus)}`);
         if (changes.owner) {
           const ownerLabel = typeof changes.owner === "object" ? changes.owner.label : changes.owner;
@@ -1575,7 +2086,7 @@
 
       const text = document.createElement("span");
       const statusText = res.status === "APPLIED" ? "applied" : (res.status === "DISMISSED" ? "withdrawn" : res.status.toLowerCase());
-      const byText = res.resolvedBy ? ` by ${res.resolvedBy}` : "";
+      const byText = res.resolvedBy ? ` by ${escapeHtml(res.resolvedBy)}` : "";
       text.textContent = `Proposal ${statusText}${byText} · ${res.resolution || "Review complete"}`;
 
       const dismissBtn = document.createElement("button");
@@ -1592,7 +2103,12 @@
     /* =========================================================
        SUBMISSION & PROPOSAL HANDLERS
        ========================================================= */
-    function handleEditClick(workItemId) {
+    function handleEditClick(workItemId, projectId) {
+      // If editing a task inside an expanded project, make sure project stays expanded
+      if (projectId && state.expandedProjects.has(projectId)) {
+        state.expandedProjects.add(projectId);
+      }
+
       const actor = getClaimedActor();
       if (!actor) {
         openActorModal((claimed) => {
