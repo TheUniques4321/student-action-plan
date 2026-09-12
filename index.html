@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Student Action Plan — Operational Coaching Brief">
   <title>Student Action Plan</title>
 
-  <!-- Google Fonts: Newsreader 500/600 & Source Sans 3 400/500/600 -->
+  <!-- Exact Google Fonts Import -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -16,69 +15,55 @@
 
   <style>
     /* =========================================================
-       FINAL DESIGN TOKENS — DO NOT SUBSTITUTE VALUES
+       1. EXACT DESIGN TOKENS
        ========================================================= */
     :root {
-      /* Fonts */
-      --font-display: "Newsreader", Georgia, serif;
-      --font-ui: "Source Sans 3", system-ui, sans-serif;
-
-      /* Warm graphite palette */
-      --canvas:       #141310;
-      --surface:      #1b1916;
-      --surface-2:    #211f1b;
-      --surface-3:    #28251f;
-
-      --text:         #eee9df;
-      --text-soft:    #c4bdb1;
-      --text-muted:   #8c8579;
-      --text-faint:   #686259;
-
-      --border:       rgba(238, 233, 223, 0.105);
-      --border-soft:  rgba(238, 233, 223, 0.060);
-      --border-focus: rgba(195, 145, 97, 0.65);
-
-      /* One principal accent */
-      --accent:       #c39161;
-      --accent-hover: #d0a071;
-
-      /* Semantic colors — intentionally muted */
-      --danger:       #c9786f;
-      --warning:      #c69a5b;
-      --info:         #8198a5;
-      --success:      #829b7a;
+      color-scheme: dark;
 
       /* Typography */
-      --fs-11: 0.6875rem;
-      --fs-12: 0.75rem;
-      --fs-13: 0.8125rem;
-      --fs-14: 0.875rem;
-      --fs-16: 1rem;
-      --fs-17: 1.0625rem;
-      --fs-20: 1.25rem;
-      --fs-project: clamp(1.625rem, 1.48rem + 0.65vw, 2rem);
+      --font-display: "Newsreader", Georgia, serif;
+      --font-ui: "Source Sans 3", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
-      /* Spacing */
-      --s1: 0.25rem;   /* 4 */
-      --s2: 0.5rem;    /* 8 */
-      --s3: 0.75rem;   /* 12 */
-      --s4: 1rem;      /* 16 */
-      --s5: 1.5rem;    /* 24 */
-      --s6: 2rem;      /* 32 */
-      --s7: 3rem;      /* 48 */
-      --s8: 4rem;      /* 64 */
+      /* Surfaces */
+      --canvas: #141310;
+      --surface-1: #1b1916;
+      --surface-2: #211f1b;
+      --surface-3: #28251f;
 
-      /* Shape */
-      --radius-input: 6px;
-      --radius-card: 7px;
+      /* Text */
+      --text-primary: #eee9df;
+      --text-secondary: #c4bdb1;
+      --text-muted: #8c8579;
+      --text-interactive: #aaa195;
+      --text-faint: #686259;
+
+      /* Borders */
+      --border-subtle: rgba(238, 233, 223, 0.06);
+      --border-default: rgba(238, 233, 223, 0.105);
+      --border-strong: rgba(238, 233, 223, 0.18);
+
+      /* Accent */
+      --accent: #c39161;
+      --accent-hover: #d0a071;
+
+      /* Semantic */
+      --danger: #cf776e;
+      --info: #8297a4;
+      --success: #829b7a;
 
       /* Layout */
-      --content-width: 48rem;
-      --reading-width: 66ch;
+      --content-width: 960px;
+
+      /* Shape */
+      --radius-card: 7px;
+      --radius-control: 6px;
+
+      /* Motion */
+      --transition-fast: 150ms ease;
     }
 
     /* =========================================================
-       RESET & BASE TEXTURE
+       2. RESET & BASE
        ========================================================= */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -86,407 +71,472 @@
       padding: 0;
     }
 
-    html {
-      color-scheme: dark;
-      background-color: var(--canvas);
-    }
-
     body {
+      min-height: 100vh;
+      margin: 0;
+
       font-family: var(--font-ui);
-      font-size: var(--fs-16);
+      font-size: 16px;
       font-weight: 400;
       line-height: 1.5;
-      color: var(--text);
-      min-block-size: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+
+      color: var(--text-primary);
+
       background:
         radial-gradient(
-          circle at 15% -10%,
-          rgba(180, 138, 94, 0.055),
-          transparent 34rem
+          circle at 18% -8%,
+          rgba(195, 145, 97, 0.05),
+          transparent 520px
         ),
         radial-gradient(
-          circle at 85% 20%,
-          rgba(255, 255, 255, 0.018),
-          transparent 26rem
+          circle at 88% 28%,
+          rgba(255, 255, 255, 0.015),
+          transparent 440px
         ),
         var(--canvas);
+
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     /* Exact noise overlay */
     body::before {
       content: "";
+
       position: fixed;
       inset: 0;
       z-index: 9999;
+
       pointer-events: none;
-      opacity: 0.024;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+
+      opacity: 0.022;
+
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.55'/%3E%3C/svg%3E");
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
     }
 
     /* =========================================================
-       EXACT TYPOGRAPHY UTILITIES
+       3. PAGE SHELL
        ========================================================= */
-    .app-title {
-      font-family: var(--font-display);
-      font-size: var(--fs-20);
-      font-weight: 600;
-      line-height: 1.1;
-      letter-spacing: -0.015em;
-    }
-
-    .project-title {
-      max-inline-size: 24ch;
-      font-family: var(--font-display);
-      font-size: var(--fs-project);
-      font-weight: 600;
-      line-height: 1.08;
-      letter-spacing: -0.018em;
-      text-wrap: balance;
-    }
-
-    .task-title {
-      max-inline-size: var(--reading-width);
-      font-family: var(--font-ui);
-      font-size: var(--fs-17);
-      font-weight: 600;
-      line-height: 1.38;
-      letter-spacing: -0.006em;
-    }
-
-    .task-description {
-      max-inline-size: var(--reading-width);
-      font-size: var(--fs-14);
-      line-height: 1.5;
-      color: var(--text-soft);
-    }
-
-    .meta {
-      font-size: var(--fs-13);
-      line-height: 1.35;
-      color: var(--text-muted);
-    }
-
-    .eyebrow {
-      font-size: var(--fs-11);
-      font-weight: 600;
-      line-height: 1;
-      letter-spacing: 0.085em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    /* =========================================================
-       EXACT PAGE COMPOSITION
-       ========================================================= */
-    .page {
-      inline-size: min(calc(100% - 2rem), var(--content-width));
+    .page-shell {
+      width: min(calc(100% - 32px), var(--content-width));
       margin-inline: auto;
-      padding-block: var(--s5) var(--s8);
+
+      padding-top: 24px;
+      padding-bottom: 80px;
     }
 
-    @media (min-width: 48rem) {
-      .page {
-        padding-block-start: var(--s7);
+    @media (min-width: 768px) {
+      .page-shell {
+        padding-top: 24px;
       }
     }
 
-    /* Header */
-    .page-header {
+    /* =========================================================
+       4. APPLICATION HEADER
+       ========================================================= */
+    .app-header {
       display: grid;
-      gap: var(--s3);
-      margin-block-end: var(--s7);
+      gap: 18px;
+
+      margin-bottom: 56px;
     }
 
-    .header-top {
+    .app-header__top {
       display: flex;
-      flex-wrap: wrap;
       align-items: baseline;
       justify-content: space-between;
-      gap: var(--s2) var(--s4);
+      gap: 24px;
     }
 
-    .header-nav {
+    @media (max-width: 639px) {
+      .app-header__top {
+        display: grid;
+        gap: 7px;
+      }
+    }
+
+    .app-title {
+      margin: 0;
+
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.018em;
+
+      color: var(--text-primary);
+    }
+
+    .header-context {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      font-size: 14px;
+      line-height: 1.3;
+
+      color: var(--text-muted);
+    }
+
+    .student-switcher {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: var(--s2);
+      gap: 10px;
     }
 
-    .student-btn {
-      padding: 0.35rem 0.65rem;
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-input);
+    .student-choice {
+      min-height: 40px;
+
+      padding: 0 13px;
+
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-control);
+
       font-family: var(--font-ui);
-      font-size: var(--fs-13);
+      font-size: 15px;
       font-weight: 500;
-      color: var(--text-soft);
-      background: var(--surface);
-      cursor: pointer;
-      transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
-    }
 
-    .student-btn:hover {
-      color: var(--text);
-      border-color: var(--border);
-      background: var(--surface-2);
-    }
-
-    .student-btn.active {
-      color: var(--text);
-      border-color: var(--accent);
-      background: var(--surface-3);
-      font-weight: 600;
-    }
-
-    .change-student-link {
-      margin-inline-start: var(--s2);
-      font-size: var(--fs-13);
-      color: var(--text-faint);
+      color: var(--text-secondary);
       background: transparent;
-      border: 0;
       cursor: pointer;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
     }
 
-    .change-student-link:hover {
-      color: var(--text-soft);
+    .student-choice:hover {
+      border-color: var(--border-strong);
+      color: var(--text-primary);
     }
 
-    /* Custom student inline prompt */
-    .custom-student-form {
+    .student-choice[aria-current="true"] {
+      border-color: var(--accent);
+      color: var(--text-primary);
+      background: rgba(195, 145, 97, 0.09);
+    }
+
+    .change-student {
       display: inline-flex;
       align-items: center;
-      gap: var(--s2);
-      margin-inline-start: var(--s2);
+
+      min-height: 40px;
+
+      margin-left: 2px;
+      padding: 0 8px;
+
+      border: 0;
+
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: 400;
+
+      color: var(--text-interactive);
+      background: transparent;
+
+      text-decoration: underline;
+      text-decoration-color: rgba(170, 161, 149, 0.3);
+      text-underline-offset: 3px;
+      cursor: pointer;
     }
 
-    .custom-student-form input {
+    .change-student:hover,
+    .change-student:focus-visible {
+      color: var(--text-primary);
+      text-decoration-color: currentColor;
+    }
+
+    .inline-custom-student {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .inline-custom-student input {
       font-family: var(--font-ui);
-      font-size: var(--fs-13);
-      padding: 0.25rem 0.5rem;
+      font-size: 14px;
+      padding: 6px 10px;
       background: var(--canvas);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-input);
-      color: var(--text);
-      inline-size: 8rem;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-control);
+      color: var(--text-primary);
+      outline: none;
+      width: 140px;
     }
 
-    .custom-student-form button {
+    .inline-custom-student input:focus {
+      border-color: var(--accent);
+    }
+
+    .inline-custom-student button {
       font-family: var(--font-ui);
-      font-size: var(--fs-12);
+      font-size: 13px;
       font-weight: 600;
-      padding: 0.25rem 0.5rem;
+      padding: 6px 12px;
       background: var(--surface-3);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-input);
-      color: var(--text);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-control);
+      color: var(--text-primary);
       cursor: pointer;
     }
 
     /* =========================================================
-       EXACT PROJECT CONSTRUCTION
+       5. PROJECT STRUCTURE & TYPOGRAPHY
        ========================================================= */
-    .project {
-      padding-block-start: var(--s7);
-      border-block-start: 1px solid var(--border-soft);
-    }
-
-    .project:first-child {
-      padding-block-start: 0;
-      border-block-start: 0;
-    }
-
-    .project + .project {
-      margin-block-start: var(--s8);
-    }
-
     .project-header {
-      display: grid;
-      gap: var(--s2);
-      margin-block-end: var(--s5);
+      margin-bottom: 28px;
+    }
+
+    .project-eyebrow {
+      margin-bottom: 7px;
+
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+
+      letter-spacing: 0.105em;
+      text-transform: uppercase;
+
+      color: var(--text-muted);
+    }
+
+    .project-title {
+      max-width: 22ch;
+      margin: 0;
+
+      font-family: var(--font-display);
+      font-size: clamp(34px, 3.1vw, 44px);
+      font-weight: 600;
+      line-height: 1.03;
+
+      letter-spacing: -0.018em;
+
+      color: var(--text-primary);
+
+      text-wrap: balance;
     }
 
     .project-summary {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--s2) var(--s4);
-      font-size: var(--fs-13);
+      align-items: center;
+      gap: 5px 12px;
+
+      margin-top: 12px;
+
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.3;
+
       color: var(--text-muted);
     }
 
-    @media (min-width: 48rem) {
-      .project-header {
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: end;
-      }
-      .project-summary {
-        justify-content: flex-end;
-      }
+    .project + .project {
+      margin-top: 64px;
+      padding-top: 48px;
+
+      border-top: 1px solid var(--border-subtle);
     }
 
     /* =========================================================
-       EXACT TASK CARD
+       6. TASK LIST & CARDS
        ========================================================= */
     .task-list {
       display: grid;
-      gap: var(--s3);
+      gap: 10px;
     }
 
     .task-card {
       position: relative;
+
       display: grid;
-      gap: var(--s3);
-      padding: var(--s4);
+
+      padding: 22px 24px;
+
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+
       background:
         linear-gradient(
           180deg,
-          rgba(255,255,255,.016),
-          rgba(255,255,255,0)
+          rgba(255, 255, 255, 0.014),
+          rgba(255, 255, 255, 0)
         ),
-        var(--surface);
-      border: 1px solid var(--border-soft);
-      border-radius: var(--radius-card);
+        var(--surface-1);
+
+      box-shadow: none;
+
       transition:
-        background-color 150ms ease,
-        border-color 150ms ease;
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
     }
 
     .task-card:hover,
     .task-card:focus-within {
+      border-color: var(--border-default);
       background-color: var(--surface-2);
-      border-color: var(--border);
     }
 
-    @media (min-width: 48rem) {
-      .task-card {
-        padding: var(--s5);
-      }
-    }
-
-    .task-main {
+    .task-header {
       display: grid;
-      gap: var(--s2);
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+
+      gap: 16px;
+    }
+
+    .task-title {
+      max-width: 66ch;
+      margin: 0;
+
+      font-family: var(--font-ui);
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.34;
+
+      letter-spacing: -0.004em;
+
+      color: var(--text-primary);
+    }
+
+    .task-edit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 44px;
+      min-height: 40px;
+
+      margin-top: -8px;
+      margin-right: -8px;
+
+      padding: 0 8px;
+
+      border: 0;
+
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+
+      color: var(--text-interactive);
+      background: transparent;
+      cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+
+    .task-edit:hover,
+    .task-edit:focus-visible {
+      color: var(--text-primary);
+    }
+
+    .task-description {
+      max-width: 58ch;
+
+      margin-top: 8px;
+      margin-bottom: 0;
+
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.52;
+
+      color: var(--text-secondary);
     }
 
     .task-footer {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
-      gap: var(--s2) var(--s4);
-      padding-block-start: var(--s1);
+
+      gap: 6px 20px;
+
+      margin-top: 18px;
     }
 
-    .task-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--s2) var(--s4);
-      font-size: var(--fs-13);
+    .task-meta-item {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.3;
+
       color: var(--text-muted);
     }
 
-    .task-edit {
-      padding: 0;
-      border: 0;
-      font: inherit;
-      font-size: var(--fs-13);
-      font-weight: 500;
-      color: var(--text-faint);
-      background: transparent;
-      cursor: pointer;
-      transition: color 120ms ease;
-    }
-
-    .task-edit:hover,
-    .task-edit:focus-visible {
-      color: var(--text);
-    }
-
-    /* Exact status treatment */
-    .task-status {
-      color: var(--text-muted);
-    }
-
-    .task-status[data-status="waiting"] {
-      color: var(--info);
-    }
-
-    .task-status[data-status="done"],
-    .task-status[data-status="complete"] {
-      color: var(--success);
-    }
-
-    /* Exceptional attention states */
-    .attention {
+    .task-attention {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
-      font-size: var(--fs-12);
+      gap: 7px;
+
+      font-family: var(--font-ui);
+      font-size: 14px;
       font-weight: 600;
+
       color: var(--danger);
     }
 
-    .attention::before {
+    .task-attention::before {
       content: "";
-      inline-size: 5px;
-      block-size: 5px;
+
+      width: 6px;
+      height: 6px;
+
       border-radius: 50%;
+
       background: currentColor;
     }
 
-    /* Blocker callout inline */
-    .blocker-note {
-      color: var(--info);
-      font-size: var(--fs-13);
-      font-style: italic;
-    }
-
-    /* =========================================================
-       EXACT EDITING CONTROLS
-       ========================================================= */
+    /* In-place task editing controls */
     .task-edit-form {
       display: grid;
-      gap: var(--s3);
+      gap: 12px;
     }
 
     .edit-field,
     .edit-select {
       inline-size: 100%;
       min-block-size: 42px;
+
       padding: 0.65rem 0.75rem;
+
       font-family: var(--font-ui);
-      font-size: var(--fs-16);
+      font-size: 16px;
       line-height: 1.4;
-      color: var(--text);
+
+      color: var(--text-primary);
       background: var(--canvas);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-input);
+
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-control);
+
       outline: none;
     }
 
     .edit-field:focus,
     .edit-select:focus {
-      border-color: var(--border-focus);
+      border-color: var(--border-strong);
       box-shadow: 0 0 0 3px rgba(195, 145, 97, 0.11);
     }
 
-    .edit-grid-row {
+    .edit-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--s3);
+      gap: 12px;
     }
 
-    .edit-field-group {
+    .edit-group {
       display: grid;
-      gap: var(--s1);
+      gap: 4px;
     }
 
-    .edit-field-label {
-      font-size: var(--fs-12);
+    .edit-label {
+      font-size: 12px;
       font-weight: 500;
       color: var(--text-muted);
     }
@@ -495,22 +545,25 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      gap: var(--s2);
-      padding-block-start: var(--s1);
+      gap: 8px;
+      padding-top: 4px;
     }
 
     .save-button {
       min-block-size: 40px;
-      padding-inline: var(--s4);
+      padding-inline: 16px;
+
       border: 1px solid var(--accent);
-      border-radius: var(--radius-input);
+      border-radius: var(--radius-control);
+
       font-family: var(--font-ui);
-      font-size: var(--fs-14);
+      font-size: 14px;
       font-weight: 600;
+
       color: #17130f;
       background: var(--accent);
       cursor: pointer;
-      transition: background-color 120ms ease;
+      transition: background-color var(--transition-fast);
     }
 
     .save-button:hover {
@@ -520,58 +573,108 @@
 
     .cancel-button {
       min-block-size: 40px;
-      padding-inline: var(--s3);
+      padding-inline: 12px;
+
       border: 0;
       font-family: var(--font-ui);
-      font-size: var(--fs-14);
+      font-size: 14px;
       color: var(--text-muted);
       background: transparent;
       cursor: pointer;
     }
 
     .cancel-button:hover {
-      color: var(--text);
+      color: var(--text-primary);
     }
 
-    /* Status & Loading feedback */
-    .status-feedback {
-      font-size: var(--fs-13);
+    /* =========================================================
+       7. MOBILE RULES (< 640px)
+       ========================================================= */
+    @media (max-width: 639px) {
+      .task-card {
+        padding: 18px 16px;
+      }
+
+      .task-header {
+        gap: 10px;
+      }
+
+      .project-title {
+        font-size: 34px;
+      }
+
+      .project + .project {
+        margin-top: 56px;
+        padding-top: 40px;
+      }
+
+      .task-footer {
+        gap: 7px 16px;
+      }
+
+      .edit-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .loading-notice {
+      font-size: 14px;
       color: var(--text-muted);
-      padding-block: var(--s4);
       font-style: italic;
+      padding: 24px 0;
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
+  <div class="page-shell">
 
-    <!-- TOP HEADER -->
-    <header class="page-header">
-      <div class="header-top">
+    <!-- APPLICATION HEADER -->
+    <header class="app-header">
+      <div class="app-header__top">
         <h1 class="app-title">Student Action Plan</h1>
-        <div class="meta" id="header-student-meta">Loading…</div>
+        <div class="header-context" id="header-context">Loading…</div>
       </div>
 
-      <nav class="header-nav" aria-label="Student selection">
-        <button type="button" class="student-btn active" id="btn-peter" onclick="selectStudent('PETER-KIM')">Peter Kim</button>
-        <button type="button" class="student-btn" id="btn-paul" onclick="selectStudent('PAUL-KIM')">Paul Kim</button>
-        <button type="button" class="change-student-link" onclick="toggleCustomStudent()">Change student</button>
-        <form id="custom-student-form" class="custom-student-form" style="display: none;" onsubmit="handleCustomStudentSubmit(event)">
-          <input type="text" id="custom-student-input" placeholder="Student ID…">
-          <button type="submit">Load</button>
-        </form>
+      <nav class="student-switcher" aria-label="Student selector">
+        <button
+          type="button"
+          class="student-choice"
+          id="choice-peter"
+          aria-current="false"
+          onclick="selectStudent('PETER-KIM')"
+        >Peter Kim</button>
+
+        <button
+          type="button"
+          class="student-choice"
+          id="choice-paul"
+          aria-current="false"
+          onclick="selectStudent('PAUL-KIM')"
+        >Paul Kim</button>
+
+        <button
+          type="button"
+          class="change-student"
+          id="btn-change-student"
+          onclick="toggleCustomStudentPrompt()"
+        >Change student</button>
+
+        <div id="custom-student-container" class="inline-custom-student" style="display: none;">
+          <input type="text" id="custom-student-input" placeholder="Enter student ID">
+          <button type="button" onclick="handleCustomStudentLoad()">Load</button>
+        </div>
       </nav>
     </header>
 
-    <!-- MAIN PROJECTS CONTAINER -->
+    <!-- PROJECTS LIST -->
     <main id="projects-container">
-      <div class="status-feedback">Loading projects and tasks…</div>
+      <div class="loading-notice">Loading projects and tasks…</div>
     </main>
 
   </div>
 
-  <!-- JAVASCRIPT ENGINE -->
+  <!-- APPLICATION SCRIPT -->
   <script>
     "use strict";
 
@@ -583,54 +686,63 @@
     const state = {
       currentStudent: getInitialStudent(),
       projects: [],
-      editingTaskId: null
+      editingTaskId: null,
+      lastUpdated: null
     };
 
     function getInitialStudent() {
-      const p = new URLSearchParams(window.location.search).get("student");
-      return (p ? p.trim().toUpperCase() : "") || localStorage.getItem("sap_student_id") || CONFIG.defaultStudent;
+      const param = new URLSearchParams(window.location.search).get("student");
+      return (param ? param.trim().toUpperCase() : "") || localStorage.getItem("sap_active_student") || CONFIG.defaultStudent;
     }
 
     function selectStudent(studentId) {
       if (!studentId) return;
       state.currentStudent = studentId.trim().toUpperCase();
-      localStorage.setItem("sap_student_id", state.currentStudent);
+      state.editingTaskId = null;
+      localStorage.setItem("sap_active_student", state.currentStudent);
 
       const url = new URL(window.location.href);
       url.searchParams.set("student", state.currentStudent);
       window.history.pushState({}, "", url);
 
-      updateHeaderNav();
-      fetchDashboard();
+      updateStudentButtons();
+      fetchPlan();
     }
 
-    function updateHeaderNav() {
-      document.getElementById("btn-peter")?.classList.toggle("active", state.currentStudent === "PETER-KIM");
-      document.getElementById("btn-paul")?.classList.toggle("active", state.currentStudent === "PAUL-KIM");
+    function updateStudentButtons() {
+      const isPeter = state.currentStudent === "PETER-KIM";
+      const isPaul = state.currentStudent === "PAUL-KIM";
+
+      const peterBtn = document.getElementById("choice-peter");
+      const paulBtn = document.getElementById("choice-paul");
+
+      if (peterBtn) peterBtn.setAttribute("aria-current", isPeter ? "true" : "false");
+      if (paulBtn) paulBtn.setAttribute("aria-current", isPaul ? "true" : "false");
     }
 
-    function toggleCustomStudent() {
-      const form = document.getElementById("custom-student-form");
-      if (form) {
-        form.style.display = form.style.display === "none" ? "inline-flex" : "none";
-        if (form.style.display !== "none") {
-          document.getElementById("custom-student-input")?.focus();
-        }
+    function toggleCustomStudentPrompt() {
+      const container = document.getElementById("custom-student-container");
+      if (!container) return;
+      const isOpen = container.style.display !== "none";
+      container.style.display = isOpen ? "none" : "inline-flex";
+      if (!isOpen) {
+        document.getElementById("custom-student-input")?.focus();
       }
     }
 
-    function handleCustomStudentSubmit(e) {
-      e.preventDefault();
-      const val = document.getElementById("custom-student-input").value.trim();
+    function handleCustomStudentLoad() {
+      const input = document.getElementById("custom-student-input");
+      const val = input?.value.trim();
       if (val) {
         selectStudent(val);
-        toggleCustomStudent();
+        input.value = "";
+        toggleCustomStudentPrompt();
       }
     }
 
-    async function fetchDashboard() {
+    async function fetchPlan() {
       const container = document.getElementById("projects-container");
-      container.innerHTML = `<div class="status-feedback">Loading projects and tasks…</div>`;
+      container.innerHTML = `<div class="loading-notice">Loading projects and tasks…</div>`;
 
       try {
         const url = `${CONFIG.scriptUrl}?student=${encodeURIComponent(state.currentStudent)}&_t=${Date.now()}`;
@@ -638,22 +750,22 @@
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const data = await res.json();
-        processData(data);
-        render();
+        state.lastUpdated = data.lastUpdated ? new Date(data.lastUpdated) : new Date();
+        parseProjects(data);
+        updateHeaderContext();
+        renderProjects();
 
       } catch (err) {
-        console.error("Dashboard error:", err);
-        container.innerHTML = `<div class="status-feedback">Unable to load projects. Please refresh or check connection.</div>`;
+        console.error("Fetch error:", err);
+        container.innerHTML = `<div class="loading-notice">Unable to load data. Please check connection and refresh.</div>`;
       }
     }
 
-    function processData(data) {
-      // Group projects with tasks
-      const allTodos = Array.isArray(data.todos) ? data.todos : [];
-      let projectsList = [];
+    function parseProjects(data) {
+      let projectList = [];
 
       if (data.actionBrief && Array.isArray(data.actionBrief.projects)) {
-        projectsList = data.actionBrief.projects.map(p => {
+        projectList = data.actionBrief.projects.map(p => {
           const tasks = [
             ...(p.roles?.student || []),
             ...(p.roles?.parent || []),
@@ -670,14 +782,14 @@
           };
         });
       } else {
-        // Fallback reconstruction from flat todos
+        const allTodos = Array.isArray(data.todos) ? data.todos : [];
         const map = new Map();
         allTodos.forEach(t => {
-          const pId = t.projectId || "PRJ-DEFAULT";
+          const pId = t.projectId || "PRJ-GENERAL";
           if (!map.has(pId)) {
             map.set(pId, {
               projectId: pId,
-              projectName: t.projectName || "General Project",
+              projectName: t.projectName || "General",
               categoryCode: "",
               projectStatus: "active",
               targetDate: "",
@@ -687,200 +799,398 @@
           }
           map.get(pId).tasks.push(t);
         });
-        projectsList = Array.from(map.values());
+        projectList = Array.from(map.values());
       }
 
-      // Filter out empty projects and sort
-      state.projects = projectsList.filter(p => p.tasks.length > 0);
-
-      // Update header meta
-      const totalTasks = state.projects.reduce((acc, p) => acc + p.tasks.length, 0);
-      const studentName = state.currentStudent === "PETER-KIM" ? "Peter Kim" : (state.currentStudent === "PAUL-KIM" ? "Paul Kim" : state.currentStudent);
-      document.getElementById("header-student-meta").textContent = `${studentName} · ${totalTasks} open task${totalTasks === 1 ? "" : "s"}`;
+      state.projects = projectList.filter(p => p.tasks.length > 0);
     }
 
-    function render() {
+    function updateHeaderContext() {
+      const totalOpenTasks = state.projects.reduce((acc, p) => acc + p.tasks.length, 0);
+      const timeString = formatClockTime(state.lastUpdated);
+      const headerContext = document.getElementById("header-context");
+      if (headerContext) {
+        headerContext.textContent = `${totalOpenTasks} open task${totalOpenTasks === 1 ? "" : "s"} · Updated ${timeString}`;
+      }
+    }
+
+    function renderProjects() {
       const container = document.getElementById("projects-container");
+      if (!container) return;
 
       if (state.projects.length === 0) {
-        container.innerHTML = `<div class="status-feedback">No active projects or tasks for this student.</div>`;
+        container.innerHTML = `<div class="loading-notice">No active projects or tasks.</div>`;
         return;
       }
 
-      container.innerHTML = state.projects.map(project => renderProject(project)).join("");
-    }
+      container.innerHTML = "";
 
-    function renderProject(p) {
-      const category = formatCategory(p.categoryCode);
-      const totalTasks = p.tasks.length;
-      const waitingCount = p.tasks.filter(t => isWaiting(t)).length;
-      const targetStr = p.targetDate ? `Target ${formatTargetDate(p.targetDate)}` : "";
+      state.projects.forEach(project => {
+        const projectEl = document.createElement("section");
+        projectEl.className = "project";
 
-      return `
-        <section class="project" id="project-${escapeHtml(p.projectId)}">
-          <header class="project-header">
-            <div>
-              ${category ? `<div class="eyebrow">${escapeHtml(category)}</div>` : ""}
-              <h2 class="project-title">${escapeHtml(p.projectName)}</h2>
-            </div>
-            <div class="project-summary">
-              ${targetStr ? `<span>${escapeHtml(targetStr)}</span>` : ""}
-              <span>${totalTasks} open task${totalTasks === 1 ? "" : "s"}</span>
-              ${waitingCount > 0 ? `<span>${waitingCount} waiting</span>` : ""}
-            </div>
-          </header>
+        // Header
+        const header = document.createElement("header");
+        header.className = "project-header";
 
-          <div class="task-list">
-            ${p.tasks.map(t => renderTaskCard(t, p.projectId)).join("")}
-          </div>
-        </section>
-      `;
+        // Eyebrow
+        const eyebrowText = formatCategoryEyebrow(project.categoryCode);
+        if (eyebrowText) {
+          const eyebrow = document.createElement("div");
+          eyebrow.className = "project-eyebrow";
+          eyebrow.textContent = eyebrowText;
+          header.appendChild(eyebrow);
+        }
+
+        // Title
+        const title = document.createElement("h2");
+        title.className = "project-title";
+        title.textContent = project.projectName;
+        header.appendChild(title);
+
+        // Summary
+        const summary = document.createElement("div");
+        summary.className = "project-summary";
+
+        const parts = [];
+        if (project.targetDate) {
+          parts.push(`Target ${formatShortMonthDay(project.targetDate)}`);
+        }
+        parts.push(`${project.tasks.length} open task${project.tasks.length === 1 ? "" : "s"}`);
+
+        const waitingCount = project.tasks.filter(t => isWaiting(t)).length;
+        if (waitingCount > 0) {
+          parts.push(`${waitingCount} waiting`);
+        }
+
+        parts.forEach((txt, idx) => {
+          if (idx > 0) {
+            const sep = document.createElement("span");
+            sep.setAttribute("aria-hidden", "true");
+            sep.textContent = "·";
+            summary.appendChild(sep);
+          }
+          const item = document.createElement("span");
+          item.textContent = txt;
+          summary.appendChild(item);
+        });
+
+        header.appendChild(summary);
+        projectEl.appendChild(header);
+
+        // Task List
+        const taskList = document.createElement("div");
+        taskList.className = "task-list";
+
+        project.tasks.forEach(task => {
+          taskList.appendChild(renderTaskCard(task, project.projectId));
+        });
+
+        projectEl.appendChild(taskList);
+        container.appendChild(projectEl);
+      });
     }
 
     function renderTaskCard(task, projectId) {
+      const card = document.createElement("article");
+      card.className = "task-card";
+
       if (state.editingTaskId === task.workItemId) {
-        return renderTaskEdit(task, projectId);
+        // Edit Form
+        const form = document.createElement("form");
+        form.className = "task-edit-form";
+        form.onsubmit = (e) => handleSaveTask(e, task.workItemId);
+
+        // Title
+        const titleGroup = document.createElement("div");
+        titleGroup.className = "edit-group";
+        const titleLabel = document.createElement("label");
+        titleLabel.className = "edit-label";
+        titleLabel.textContent = "Task title";
+        const titleInput = document.createElement("input");
+        titleInput.type = "text";
+        titleInput.className = "edit-field";
+        titleInput.id = `edit-title-${task.workItemId}`;
+        titleInput.value = task.title || "";
+        titleInput.required = true;
+        titleGroup.append(titleLabel, titleInput);
+
+        // Description
+        const descGroup = document.createElement("div");
+        descGroup.className = "edit-group";
+        const descLabel = document.createElement("label");
+        descLabel.className = "edit-label";
+        descLabel.textContent = "Description";
+        const descInput = document.createElement("textarea");
+        descInput.className = "edit-field";
+        descInput.rows = 2;
+        descInput.id = `edit-desc-${task.workItemId}`;
+        descInput.value = task.notes || "";
+        descGroup.append(descLabel, descInput);
+
+        // Row for Due Date & Status
+        const row = document.createElement("div");
+        row.className = "edit-row";
+
+        const dueGroup = document.createElement("div");
+        dueGroup.className = "edit-group";
+        const dueLabel = document.createElement("label");
+        dueLabel.className = "edit-label";
+        dueLabel.textContent = "Due date";
+        const dueInput = document.createElement("input");
+        dueInput.type = "date";
+        dueInput.className = "edit-field";
+        dueInput.id = `edit-due-${task.workItemId}`;
+        dueInput.value = task.dueDate || "";
+        dueGroup.append(dueLabel, dueInput);
+
+        const statusGroup = document.createElement("div");
+        statusGroup.className = "edit-group";
+        const statusLabel = document.createElement("label");
+        statusLabel.className = "edit-label";
+        statusLabel.textContent = "Status";
+        const statusSelect = document.createElement("select");
+        statusSelect.className = "edit-select";
+        statusSelect.id = `edit-status-${task.workItemId}`;
+
+        const statusOptions = [
+          { val: "ready", label: "Ready" },
+          { val: "in_progress", label: "In progress" },
+          { val: "waiting", label: "Waiting" },
+          { val: "planned", label: "Planned" },
+          { val: "review", label: "Review" },
+          { val: "done", label: "Done" }
+        ];
+
+        const curStatus = String(task.itemStatus || "").toLowerCase();
+        statusOptions.forEach(opt => {
+          const optEl = document.createElement("option");
+          optEl.value = opt.val;
+          optEl.textContent = opt.label;
+          if (curStatus === opt.val || (opt.val === "done" && (curStatus === "complete" || curStatus === "done"))) {
+            optEl.selected = true;
+          }
+          statusSelect.appendChild(optEl);
+        });
+
+        statusGroup.append(statusLabel, statusSelect);
+        row.append(dueGroup, statusGroup);
+
+        // Actions
+        const actions = document.createElement("div");
+        actions.className = "edit-actions";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.type = "button";
+        cancelBtn.className = "cancel-button";
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.onclick = () => {
+          state.editingTaskId = null;
+          renderProjects();
+        };
+
+        const saveBtn = document.createElement("button");
+        saveBtn.type = "submit";
+        saveBtn.className = "save-button";
+        saveBtn.textContent = "Save";
+
+        actions.append(cancelBtn, saveBtn);
+        form.append(titleGroup, descGroup, row, actions);
+        card.appendChild(form);
+        return card;
       }
 
-      const isTaskOverdue = checkOverdue(task.dueDate);
-      const statusDisplay = formatStatusLabel(task.itemStatus);
-      const statusAttr = getStatusAttr(task.itemStatus);
-      const ownerDisplay = formatOwnerDisplay(task);
-      const dueDisplay = task.dueDate ? `Due ${formatShortDate(task.dueDate)}` : "";
+      // Normal Card View
+      const taskHeader = document.createElement("header");
+      taskHeader.className = "task-header";
 
-      return `
-        <article class="task-card" id="task-${escapeHtml(task.workItemId)}">
-          <div class="task-main">
-            <h3 class="task-title">${escapeHtml(task.title)}</h3>
-            ${task.notes ? `<p class="task-description">${escapeHtml(task.notes)}</p>` : ""}
-            ${task.waitingOn ? `<p class="blocker-note">Waiting on: ${escapeHtml(task.waitingOn)}</p>` : ""}
-          </div>
+      const title = document.createElement("h3");
+      title.className = "task-title";
+      title.textContent = task.title;
 
-          <footer class="task-footer">
-            <div class="task-meta">
-              ${dueDisplay ? `<span>${escapeHtml(dueDisplay)}</span>` : ""}
-              <span class="task-status" data-status="${escapeHtml(statusAttr)}">${escapeHtml(statusDisplay)}</span>
-              ${ownerDisplay ? `<span>${escapeHtml(ownerDisplay)}</span>` : ""}
-              ${isTaskOverdue ? `<span class="attention">Overdue</span>` : ""}
-            </div>
-            <button type="button" class="task-edit" onclick="startEdit('${escapeHtml(task.workItemId)}')">Edit</button>
-          </footer>
-        </article>
-      `;
+      const editBtn = document.createElement("button");
+      editBtn.className = "task-edit";
+      editBtn.type = "button";
+      editBtn.textContent = "Edit";
+      editBtn.onclick = () => {
+        state.editingTaskId = task.workItemId;
+        renderProjects();
+      };
+
+      taskHeader.append(title, editBtn);
+      card.appendChild(taskHeader);
+
+      if (task.notes) {
+        const desc = document.createElement("p");
+        desc.className = "task-description";
+        desc.textContent = task.notes;
+        card.appendChild(desc);
+      }
+
+      // Footer
+      const footer = document.createElement("footer");
+      footer.className = "task-footer";
+
+      // 1. Due Date
+      if (task.dueDate) {
+        const dueMeta = document.createElement("span");
+        dueMeta.className = "task-meta-item";
+        dueMeta.textContent = `Due ${formatShortMonthDay(task.dueDate)}`;
+        footer.appendChild(dueMeta);
+      }
+
+      // 2. Lifecycle Status
+      const statusMeta = document.createElement("span");
+      statusMeta.className = "task-meta-item";
+      statusMeta.textContent = formatLifecycleStatus(task.itemStatus);
+      footer.appendChild(statusMeta);
+
+      // 3. Owner
+      const ownerName = resolveOwnerText(task);
+      if (ownerName) {
+        const ownerMeta = document.createElement("span");
+        ownerMeta.className = "task-meta-item";
+        ownerMeta.textContent = ownerName;
+        footer.appendChild(ownerMeta);
+      }
+
+      // 4. Overdue / Due Attention
+      const attentionText = getDueAttention(task.dueDate);
+      if (attentionText) {
+        const attention = document.createElement("span");
+        attention.className = "task-attention";
+        attention.textContent = attentionText;
+        footer.appendChild(attention);
+      }
+
+      card.appendChild(footer);
+      return card;
     }
 
-    function renderTaskEdit(task, projectId) {
-      return `
-        <article class="task-card" id="task-${escapeHtml(task.workItemId)}">
-          <form class="task-edit-form" onsubmit="handleSaveEdit(event, '${escapeHtml(task.workItemId)}', '${escapeHtml(projectId)}')">
-            <div class="edit-field-group">
-              <label class="edit-field-label">Task title</label>
-              <input type="text" class="edit-field" id="edit-title-${escapeHtml(task.workItemId)}" value="${escapeAttr(task.title)}" required>
-            </div>
-
-            <div class="edit-field-group">
-              <label class="edit-field-label">Description / Notes</label>
-              <textarea class="edit-field" id="edit-notes-${escapeHtml(task.workItemId)}" rows="2">${escapeHtml(task.notes || "")}</textarea>
-            </div>
-
-            <div class="edit-grid-row">
-              <div class="edit-field-group">
-                <label class="edit-field-label">Due date</label>
-                <input type="date" class="edit-field" id="edit-due-${escapeHtml(task.workItemId)}" value="${escapeAttr(task.dueDate || "")}">
-              </div>
-              <div class="edit-field-group">
-                <label class="edit-field-label">Status</label>
-                <select class="edit-select" id="edit-status-${escapeHtml(task.workItemId)}">
-                  <option value="ready" ${task.itemStatus === "ready" ? "selected" : ""}>Ready</option>
-                  <option value="in_progress" ${task.itemStatus === "in_progress" ? "selected" : ""}>In progress</option>
-                  <option value="waiting" ${task.itemStatus === "waiting" ? "selected" : ""}>Waiting</option>
-                  <option value="review" ${task.itemStatus === "review" ? "selected" : ""}>Review</option>
-                  <option value="complete" ${task.itemStatus === "complete" ? "selected" : ""}>Done</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="edit-actions">
-              <button type="button" class="cancel-button" onclick="cancelEdit()">Cancel</button>
-              <button type="submit" class="save-button">Save</button>
-            </div>
-          </form>
-        </article>
-      `;
-    }
-
-    function startEdit(workItemId) {
-      state.editingTaskId = workItemId;
-      render();
-    }
-
-    function cancelEdit() {
-      state.editingTaskId = null;
-      render();
-    }
-
-    function handleSaveEdit(e, workItemId, projectId) {
+    function handleSaveTask(e, workItemId) {
       e.preventDefault();
       const title = document.getElementById(`edit-title-${workItemId}`)?.value.trim();
-      const notes = document.getElementById(`edit-notes-${workItemId}`)?.value.trim();
+      const notes = document.getElementById(`edit-desc-${workItemId}`)?.value.trim();
       const dueDate = document.getElementById(`edit-due-${workItemId}`)?.value.trim();
-      const itemStatus = document.getElementById(`edit-status-${workItemId}`)?.value;
+      const status = document.getElementById(`edit-status-${workItemId}`)?.value;
 
-      // Update in state
       for (const p of state.projects) {
-        const found = p.tasks.find(t => t.workItemId === workItemId);
-        if (found) {
-          found.title = title;
-          found.notes = notes;
-          found.dueDate = dueDate;
-          found.itemStatus = itemStatus;
+        const t = p.tasks.find(item => item.workItemId === workItemId);
+        if (t) {
+          t.title = title;
+          t.notes = notes;
+          t.dueDate = dueDate;
+          t.itemStatus = status;
           break;
         }
       }
 
       state.editingTaskId = null;
-      render();
+      renderProjects();
     }
 
     /* =========================================================
-       HELPERS & FORMATTERS
+       EXACT SPECIFICATION HELPERS
        ========================================================= */
-    function formatCategory(code) {
+    function getDueAttention(value) {
+      const due = parseDate(value);
+
+      if (!due) {
+        return "";
+      }
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const dueDay = new Date(
+        due.getFullYear(),
+        due.getMonth(),
+        due.getDate()
+      );
+
+      const dayMs = 24 * 60 * 60 * 1000;
+
+      const difference =
+        Math.round((dueDay - today) / dayMs);
+
+      if (difference < 0) {
+        const days = Math.abs(difference);
+
+        return days === 1
+          ? "1 day overdue"
+          : `${days} days overdue`;
+      }
+
+      if (difference === 0) {
+        return "Due today";
+      }
+
+      if (difference === 1) {
+        return "Due tomorrow";
+      }
+
+      return "";
+    }
+
+    function formatLifecycleStatus(value) {
+      const normalized =
+        String(value || "")
+          .trim()
+          .toLowerCase()
+          .replaceAll("_", " ");
+
+      const statuses = {
+        "planned": "Planned",
+        "ready": "Ready",
+        "in progress": "In progress",
+        "waiting": "Waiting",
+        "review": "Review",
+        "done": "Done"
+      };
+
+      return statuses[normalized] || value || "Ready";
+    }
+
+    function resolveOwnerText(task) {
+      const label = String(task.ownerLabel || "").trim();
+      if (label) return label;
+
+      const staff = String(task.ownerStaffId || "").trim();
+      if (staff === "PTR-JOSH-RAGBIR") return "Josh Ragbir";
+      if (staff === "STF-HYEYOUNG") return "Hyeyoung Kim";
+      if (staff === "STF-KANGHO") return "Kangho Kim";
+      if (staff) return staff;
+
+      const student = String(task.ownerStudentId || "").trim();
+      if (student === "PETER-KIM") return "Peter Kim";
+      if (student === "PAUL-KIM") return "Paul Kim";
+      return student;
+    }
+
+    function formatCategoryEyebrow(code) {
       if (!code) return "";
       return String(code).replace(/_/g, " · ").toUpperCase();
     }
 
-    function formatTargetDate(dateStr) {
-      if (!dateStr) return "";
-      const d = parseDate(dateStr);
-      if (!d) return dateStr;
+    function formatShortMonthDay(val) {
+      const d = parseDate(val);
+      if (!d) return val;
       return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
     }
 
-    function formatShortDate(dateStr) {
-      if (!dateStr) return "";
-      const d = parseDate(dateStr);
-      if (!d) return dateStr;
-      return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    function formatClockTime(date) {
+      if (!date) return "";
+      return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
     }
 
     function parseDate(val) {
       if (!val) return null;
-      const match = String(val).match(/^(\d{4})-(\d{2})-(\d{2})/);
-      if (match) {
-        return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+      const m = String(val).match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (m) {
+        return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
       }
       const d = new Date(val);
       return isNaN(d.getTime()) ? null : d;
-    }
-
-    function checkOverdue(dueStr) {
-      if (!dueStr) return false;
-      const d = parseDate(dueStr);
-      if (!d) return false;
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return d < today;
     }
 
     function isWaiting(task) {
@@ -888,55 +1198,9 @@
       return s === "waiting" || Boolean(task.waitingOn);
     }
 
-    function formatStatusLabel(s) {
-      const clean = String(s || "ready").toLowerCase();
-      if (clean === "in_progress") return "In progress";
-      if (clean === "waiting") return "Waiting";
-      if (clean === "review") return "Review";
-      if (clean === "complete" || clean === "done") return "Done";
-      if (clean === "planned") return "Planned";
-      return "Ready";
-    }
-
-    function getStatusAttr(s) {
-      const clean = String(s || "").toLowerCase();
-      if (clean === "waiting") return "waiting";
-      if (clean === "complete" || clean === "done") return "done";
-      return "default";
-    }
-
-    function formatOwnerDisplay(task) {
-      const staff = String(task.ownerStaffId || "").trim();
-      const label = String(task.ownerLabel || "").trim();
-      const student = String(task.ownerStudentId || "").trim();
-
-      if (label) return label;
-      if (staff === "PTR-JOSH-RAGBIR") return "Josh Ragbir";
-      if (staff === "STF-HYEYOUNG") return "Hyeyoung Kim";
-      if (staff === "STF-KANGHO") return "Kangho Kim";
-      if (staff) return staff;
-      if (student === "PETER-KIM") return "Peter Kim";
-      if (student === "PAUL-KIM") return "Paul Kim";
-      return student;
-    }
-
-    function escapeHtml(str) {
-      if (!str) return "";
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function escapeAttr(str) {
-      return escapeHtml(str);
-    }
-
-    // INIT
-    updateHeaderNav();
-    fetchDashboard();
+    // INITIALIZATION
+    updateStudentButtons();
+    fetchPlan();
   </script>
 </body>
 </html>
